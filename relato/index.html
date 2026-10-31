@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rios de Sabará · Conte sua história</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<meta name="description" content="Conte o que você lembra das enchentes em Sabará: endereço, até onde a água chegou, horário. Pode mandar áudio e fotos.">
+<style>
+:root{--bg:#ffffff;--panel:#ffffff;--fg:#0b1c2c;--muted:#53606c;--line:#dfe4ea;--accent:#1d5fa8;--accent-fg:#fff;--ok:#1baf7a;--warn:#eb6834;--err:#c4314b;--chip:#eef3fb;
+ --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171e;--panel:#141d25;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--accent:#6aa6e6;--accent-fg:#fff;--ok:#199e70;--warn:#d95926;--err:#e05570;--chip:#1d2a38}}
+:root[data-theme="dark"]{--bg:#10171e;--panel:#141d25;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--accent:#6aa6e6;--accent-fg:#fff;--ok:#199e70;--warn:#d95926;--err:#e05570;--chip:#1d2a38}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-block:20px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
+header h1{margin:2px 0 6px;font-size:26px;line-height:1.15}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:14px;min-width:0}
+h2{margin:0;font-size:18px}
+label.f{display:grid;gap:6px;font-weight:600;font-size:15px}
+label.f small,.hint{font-weight:400;color:var(--muted);font-size:13px}
+input[type=text],input[type=tel],input[type=number],select,textarea{font:inherit;color:var(--fg);background:color-mix(in srgb,var(--fg) 4%,var(--bg));border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+legend{font-weight:600;font-size:15px;margin-bottom:6px;padding:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:14px;cursor:pointer}
+.opts input{accent-color:var(--accent);margin:0}
+.opts label:has(input:checked){border-color:var(--accent);outline:1px solid var(--accent)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cheia{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px;display:grid;gap:14px;background:var(--panel)}
+.cheia-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cheia-h h3{margin:0;font-size:16px}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:10px 14px}
+button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:700;padding:14px 18px;font-size:17px}
+button.link{border:0;background:none;color:var(--err);padding:4px 6px;font-size:14px}
+button:disabled{opacity:.55;cursor:not-allowed}
+.rec{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.recbtn{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.recbtn .d{width:12px;height:12px;border-radius:50%;background:var(--err)}
+.recbtn.on .d{animation:pisca 1s infinite}
+@keyframes pisca{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.recbtn.on .d{animation:none}}
+.lista{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.lista li{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px}
+.lista audio{max-width:100%;height:36px;flex:1 1 200px}
+.lista img{width:56px;height:56px;object-fit:cover;border-radius:6px}
+.msg{padding:12px 14px;border-radius:8px;border-left:4px solid var(--c,var(--accent));background:var(--panel);font-size:15px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.consent input{margin-top:4px;accent-color:var(--accent);width:18px;height:18px;flex:none}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+footer{font-size:13px;color:var(--muted)}
+a{color:var(--accent)}
+[hidden]{display:none!important}
+.site{position:sticky;top:0;z-index:1200;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.site .in{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:700;font-size:17px;color:var(--fg);text-decoration:none;padding-block:12px;white-space:nowrap}
+.brand span{color:var(--accent)}
+nav.abas{display:flex;gap:2px}
+nav.abas a{padding:15px 10px 13px;color:var(--muted);text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
+nav.abas a:hover{color:var(--fg)}
+nav.abas a[aria-current]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+@media (max-width:680px){
+ nav.abas{position:fixed;left:0;right:0;bottom:0;z-index:1200;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+ nav.abas a{text-align:center;padding:13px 2px 12px;font-size:13px}
+ nav.abas a[aria-current]{box-shadow:inset 0 3px 0 var(--accent)}
+ body{padding-bottom:calc(52px + env(safe-area-inset-bottom,0px))}}
+</style>
+</head>
+<body>
+<header class="site"><div class="in">
+  <a class="brand" href="https://monitoramentodosriossabara.github.io/">Rios de <span>Sabará</span></a>
+  <nav class="abas" aria-label="Seções">
+    <a href="https://monitoramentodosriossabara.github.io/">Agora</a>
+    <a href="https://monitoramentodosriossabara.github.io/painel/#mapa">Mapa</a>
+    <a href="https://monitoramentodosriossabara.github.io/painel/#prever">Prever</a>
+    <a href="https://monitoramentodosriossabara.github.io/painel/#historico">Histórico</a>
+    <a href="https://monitoramentodosriossabara.github.io/relato/" aria-current="page">Contar</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Sabará · Enchentes</div>
+  <h1>Conte o que você lembra das enchentes</h1>
+  <p class="muted" style="margin:0">Estamos juntando lembranças de moradores para entender até onde e a que horas a água chega em cada rua. Responda o que lembrar; nada é obrigatório além do endereço. Se preferir, <b>grave um áudio</b> contando tudo.</p>
+</header>
+
+<form id="f" novalidate>
+<div style="display:grid;gap:16px">
+
+<section class="card">
+  <h2>1. Onde</h2>
+  <label class="f">Endereço <small>Rua e número, ou um ponto de referência</small>
+    <input type="text" id="endereco" maxlength="300" autocomplete="street-address" placeholder="Ex.: Rua São Cristóvão, 261" required></label>
+  <label class="f">Bairro
+    <input type="text" id="bairro" maxlength="100" list="bairros" placeholder="Ex.: Paciência"></label>
+  <datalist id="bairros"><option>Centro</option><option>Paciência</option><option>Roça Grande</option><option>Roças Grandes</option><option>Caieira</option><option>Praia dos Bandeirantes</option><option>Siderúrgica</option><option>Vila Michel</option><option>Catita</option><option>Sobradinho</option><option>Arraial Velho</option><option>General Carneiro</option><option>Borba Gato</option><option>Marzagão</option><option>Rosário</option><option>Nossa Senhora de Fátima</option><option>Raposos</option></datalist>
+  <label class="f">Perto de quê? <small>Opcional: escola, praça, ponte, comércio</small>
+    <input type="text" id="referencia" maxlength="300"></label>
+</section>
+
+<section class="card">
+  <h2>2. As enchentes que você lembra</h2>
+  <p class="hint" style="margin:0">Preencha uma por vez. Use "Adicionar outra enchente" para contar mais de uma.</p>
+  <div id="cheias" style="display:grid;gap:14px"></div>
+  <button type="button" id="maisCheia">+ Adicionar outra enchente</button>
+</section>
+
+<section class="card">
+  <h2>3. Áudio, fotos e vídeos</h2>
+  <p class="hint" style="margin:0">Pode gravar um áudio contando com suas palavras (até 5 minutos cada). Fotos da época ou da marca da água na parede ajudam muito; se puder, fotografe a marca com uma fita métrica do lado.</p>
+  <div class="rec">
+    <button type="button" class="recbtn" id="rec"><span class="d" aria-hidden="true"></span><span id="recTxt">Gravar áudio</span></button>
+    <span class="hint" id="recTempo" aria-live="polite"></span>
+  </div>
+  <label class="f">Anexar fotos, vídeos ou áudios do celular
+    <input type="file" id="arquivos" accept="image/*,audio/*,video/*" multiple></label>
+  <ul class="lista" id="anexos" aria-label="Anexos"></ul>
+  <p class="hint" style="margin:0">Até 12 arquivos, de até 25 MB cada.</p>
+</section>
+
+<section class="card">
+  <h2>4. Mais alguma coisa?</h2>
+  <label class="f">Observações <small>Opcional</small>
+    <textarea id="obs" maxlength="4000" placeholder="Qualquer detalhe: o que perdeu, como foi a saída, se a água ficou parada..."></textarea></label>
+  <label class="consent"><input type="checkbox" id="aceitaContato"> <span>Aceito ser procurado(a) para tirar alguma dúvida sobre este relato.</span></label>
+  <label class="f" id="contatoBox" hidden>Seu WhatsApp ou e-mail
+    <input type="tel" id="contato" maxlength="120" autocomplete="tel"></label>
+</section>
+
+<section class="card">
+  <label class="consent"><input type="checkbox" id="consent" required> <span>Concordo que este relato (endereço, informações da enchente, áudios e fotos) seja usado no estudo sobre enchentes de Sabará. Nomes não são publicados; o contato, se informado, fica só com a pesquisadora. <a href="#privacidade">Como os dados são usados</a></span></label>
+  <div id="erro" class="msg" style="--c:var(--err)" hidden role="alert"></div>
+  <div class="prog" id="prog" hidden><i></i></div>
+  <button type="submit" class="primary" id="enviar">Enviar relato</button>
+</section>
+
+</div>
+</form>
+
+<section class="card" id="ok" hidden>
+  <h2>Obrigada! Seu relato foi enviado.</h2>
+  <p style="margin:0">Cada relato ajuda a entender melhor as enchentes da cidade. Se lembrar de mais alguma coisa, pode mandar outro.</p>
+  <button type="button" id="novo">Enviar outro relato</button>
+</section>
+
+<footer id="privacidade">
+  <p><b>Como os dados são usados.</b> Os relatos vão para um banco de dados privado: ninguém de fora consegue ler as respostas, só a pesquisadora responsável. As informações servem para comparar com as medições dos rios e calibrar o mapa de áreas alagáveis do painel <a href="https://monitoramentodosriossabara.github.io/">Como está o rio agora</a>. Nomes e contatos nunca são publicados. Para pedir a exclusão de um relato, fale com a pesquisadora.</p>
+  <p>Estudo voluntário de Simone de Figueiredo Cunha, com auxílio de IA. Não é um canal da Defesa Civil: em emergência, ligue <b>199</b>.</p>
+</footer>
+</div>
+
+<script>
+const API='https://ekfyviemlszovciroacn.supabase.co';
+const KEY='sb_publishable_Bhsw4dhgFwk0jno5kZMeYQ_3tfouypX';
+const BUCKET='relatos-anexos', MAXF=12, MAXB=25*1024*1024, MAXREC=300;
+const $=s=>document.querySelector(s);
+const anexos=[]; // {file|blob, nome, tipo, url}
+let nCheia=0;
+
+const ANOS=['1979','1985','1992','1995','1997','2003','2008','2011','2012','2016','2020','2022','2023','2024','2025','2026'];
+function radios(nome,opcoes){return '<div class="opts">'+opcoes.map(o=>`<label><input type="radio" name="${nome}" value="${o}">${o}</label>`).join('')+'</div>';}
+function novaCheia(){
+  const i=++nCheia, d=document.createElement('div');d.className='cheia';d.dataset.i=i;
+  d.innerHTML=`<div class="cheia-h"><h3>Enchente ${document.querySelectorAll('.cheia').length+1}</h3>${i>1?'<button type="button" class="link" data-rm>Remover</button>':''}</div>
+  <div class="row2">
+    <label class="f">Ano<select name="ano"><option value="">Escolha</option>${ANOS.map(a=>`<option>${a}</option>`).join('')}<option value="outro">Outro ano</option><option value="não lembro">Não lembro</option></select></label>
+    <label class="f">Dia ou mês <small>se lembrar</small><input type="text" name="data" maxlength="60" placeholder="Ex.: janeiro, dia 8"></label>
+  </div>
+  <label class="f" hidden data-outro>Qual ano?<input type="number" name="anoOutro" min="1900" max="2100" inputmode="numeric"></label>
+  <fieldset><legend>Qual rio?</legend>${radios('rio'+i,['Rio das Velhas','Rio Sabará','Os dois','Córrego','Não sei'])}</fieldset>
+  <fieldset><legend>Até onde a água chegou?</legend>${radios('ate'+i,['Só na rua','No passeio','No portão ou quintal','Dentro de casa'])}</fieldset>
+  <label class="f">Altura dentro de casa <small>em centímetros, ou compare: tornozelo, joelho, cintura, tomada, janela</small>
+    <input type="text" name="altura" maxlength="80" placeholder="Ex.: 45 cm, ou na altura do joelho"></label>
+  <fieldset><legend>A que horas a água começou a entrar?</legend>${radios('hora'+i,['Madrugada','Manhã','Tarde','Noite'])}
+    <input type="text" name="horaExata" maxlength="60" placeholder="Hora mais exata, se lembrar (ex.: umas 21h)"></fieldset>
+  <fieldset><legend>Como a água subiu?</legend>${radios('subiu'+i,['Devagar','De repente','Subiu, parou e subiu de novo'])}</fieldset>
+  <fieldset><legend>Estava chovendo forte aí na hora?</legend>${radios('chuva'+i,['Sim','Não','Não lembro'])}</fieldset>
+  <label class="f">Quanto tempo a água ficou? <small>Opcional</small><input type="text" name="duracao" maxlength="80" placeholder="Ex.: baixou no mesmo dia; ficou 3 dias"></label>`;
+  d.querySelector('select[name=ano]').onchange=e=>{d.querySelector('[data-outro]').hidden=e.target.value!=='outro';};
+  const rm=d.querySelector('[data-rm]');if(rm)rm.onclick=()=>{d.remove();renumerar();};
+  $('#cheias').appendChild(d);
+}
+function renumerar(){document.querySelectorAll('.cheia h3').forEach((h,k)=>h.textContent='Enchente '+(k+1));}
+$('#maisCheia').onclick=()=>{novaCheia();document.querySelector('.cheia:last-child select').focus();};
+novaCheia();
+
+$('#aceitaContato').onchange=e=>{$('#contatoBox').hidden=!e.target.checked;};
+
+// ---- anexos
+function addAnexo(blob,nome){
+  if(anexos.length>=MAXF){erro(`No máximo ${MAXF} arquivos por relato.`);return;}
+  if(blob.size>MAXB){erro(`"${nome}" tem mais de 25 MB. Tente um vídeo mais curto.`);return;}
+  const a={blob,nome,tipo:blob.type||'application/octet-stream',url:URL.createObjectURL(blob)};anexos.push(a);mostrarAnexos();
+}
+function mostrarAnexos(){
+  const ul=$('#anexos');ul.innerHTML='';
+  anexos.forEach((a,k)=>{const li=document.createElement('li');
+    if(a.tipo.startsWith('audio/')){const au=document.createElement('audio');au.controls=true;au.src=a.url;li.appendChild(au);}
+    else if(a.tipo.startsWith('image/')){const im=document.createElement('img');im.src=a.url;im.alt='';li.appendChild(im);}
+    const s=document.createElement('span');s.textContent=a.nome+' ('+(a.blob.size/1048576).toFixed(1)+' MB)';li.appendChild(s);
+    const b=document.createElement('button');b.type='button';b.className='link';b.textContent='Remover';b.onclick=()=>{URL.revokeObjectURL(a.url);anexos.splice(k,1);mostrarAnexos();};li.appendChild(b);
+    ul.appendChild(li);});
+}
+$('#arquivos').onchange=e=>{[...e.target.files].forEach(f=>addAnexo(f,f.name));e.target.value='';};
+
+// ---- gravação
+let rec=null,chunks=[],t0=0,tick=null,stream=null;
+const recOk=!!(navigator.mediaDevices&&window.MediaRecorder);
+if(!recOk){$('#rec').disabled=true;$('#recTempo').textContent='Seu navegador não grava áudio aqui. Grave no WhatsApp ou no gravador do celular e anexe o arquivo abaixo.';}
+$('#rec').onclick=async()=>{
+  if(rec&&rec.state==='recording'){rec.stop();return;}
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){$('#recTempo').textContent='Não foi possível usar o microfone. Verifique a permissão do navegador ou anexe um áudio gravado no celular.';return;}
+  const tipos=['audio/webm;codecs=opus','audio/mp4','audio/webm','audio/ogg'];const mt=tipos.find(t=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t));
+  rec=new MediaRecorder(stream,mt?{mimeType:mt}:undefined);chunks=[];
+  rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  rec.onstop=()=>{clearInterval(tick);stream.getTracks().forEach(t=>t.stop());$('#rec').classList.remove('on');$('#recTxt').textContent='Gravar outro áudio';$('#recTempo').textContent='';
+    const tipo=(rec.mimeType||'audio/webm').split(';')[0];const blob=new Blob(chunks,{type:tipo});
+    if(blob.size>0)addAnexo(blob,'Áudio '+(anexos.filter(a=>a.tipo.startsWith('audio/')).length+1)+'.'+(tipo.includes('mp4')?'m4a':tipo.includes('ogg')?'ogg':'webm'));};
+  rec.start(1000);t0=Date.now();$('#rec').classList.add('on');$('#recTxt').textContent='Parar gravação';
+  tick=setInterval(()=>{const s=Math.round((Date.now()-t0)/1000);$('#recTempo').textContent=`Gravando… ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;if(s>=MAXREC)rec.stop();},500);
+};
+
+// ---- envio
+function erro(t){const e=$('#erro');e.textContent=t;e.hidden=!t;if(t)e.scrollIntoView({block:'center',behavior:'smooth'});}
+function val(d,sel){const x=d.querySelector(sel);return x?x.value.trim():'';}
+function coletarCheias(){
+  return [...document.querySelectorAll('.cheia')].map(d=>{const i=d.dataset.i,r=n=>{const x=d.querySelector(`input[name="${n}${i}"]:checked`);return x?x.value:null;};
+    let ano=val(d,'select[name=ano]');if(ano==='outro')ano=val(d,'input[name=anoOutro]')||'outro';
+    const c={ano,data:val(d,'input[name=data]'),rio:r('rio'),ate_onde:r('ate'),altura:val(d,'input[name=altura]'),periodo:r('hora'),hora:val(d,'input[name=horaExata]'),como_subiu:r('subiu'),chovendo:r('chuva'),duracao:val(d,'input[name=duracao]')};
+    Object.keys(c).forEach(k=>{if(!c[k])delete c[k];});return c;}).filter(c=>Object.keys(c).length);
+}
+const uuid=()=>crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16);});
+const ext=a=>{const m=a.nome.match(/\.([a-z0-9]{1,5})$/i);return m?m[1].toLowerCase():(a.tipo.split('/')[1]||'bin').replace(/[^a-z0-9]/g,'').slice(0,5);};
+
+$('#f').onsubmit=async ev=>{
+  ev.preventDefault();erro('');
+  const endereco=$('#endereco').value.trim();
+  if(endereco.length<3){erro('Informe o endereço ou um ponto de referência.');$('#endereco').focus();return;}
+  if(!$('#consent').checked){erro('Para enviar, marque a caixa de concordância.');return;}
+  if(rec&&rec.state==='recording'){erro('Pare a gravação do áudio antes de enviar.');return;}
+  const cheias=coletarCheias();
+  if(!cheias.length&&!anexos.length&&!$('#obs').value.trim()){erro('Conte pelo menos uma enchente, grave um áudio ou escreva nas observações.');return;}
+  const btn=$('#enviar');btn.disabled=true;btn.textContent='Enviando…';
+  const prog=$('#prog'),bar=prog.firstElementChild;prog.hidden=false;bar.style.width='5%';
+  const id=uuid(),paths=[];
+  try{
+    for(let k=0;k<anexos.length;k++){
+      const a=anexos[k],p=`r/${id}/${k+1}.${ext(a)}`;
+      const r=await fetch(`${API}/storage/v1/object/${BUCKET}/${p}`,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':a.tipo,'x-upsert':'false'},body:a.blob});
+      if(!r.ok)throw new Error('anexo '+(k+1)+': '+r.status);
+      paths.push(p);bar.style.width=(5+85*(k+1)/anexos.length)+'%';
+    }
+    const corpo={endereco,bairro:$('#bairro').value.trim()||null,referencia:$('#referencia').value.trim()||null,cheias,anexos:paths,
+      observacoes:$('#obs').value.trim()||null,aceita_contato:$('#aceitaContato').checked,contato:$('#aceitaContato').checked?($('#contato').value.trim()||null):null,consentimento:true};
+    const r=await fetch(`${API}/rest/v1/relatos`,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(corpo)});
+    if(!r.ok)throw new Error('relato: '+r.status);
+    bar.style.width='100%';
+    $('#f').hidden=true;$('#ok').hidden=false;$('#ok').scrollIntoView({block:'start'});
+  }catch(e){
+    erro('Não foi possível enviar agora. Verifique a internet e tente de novo. Se continuar, mande o relato pelo WhatsApp. ('+e.message+')');
+  }finally{btn.disabled=false;btn.textContent='Enviar relato';prog.hidden=true;bar.style.width='0';}
+};
+$('#novo').onclick=()=>location.reload();
+</script>
+</body>
+</html>
