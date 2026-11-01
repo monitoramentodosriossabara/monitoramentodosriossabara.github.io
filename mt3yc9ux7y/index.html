@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Rios de Sabará · Agora</title>
+<meta name="description" content="Situação do Rio das Velhas e do Rio Sabará, chuva medida e previsão do tempo em Sabará, atualizadas a cada 15 minutos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Visual A: claro e direto. Cores de alerta fixas: verde, amarelo, laranja, vermelho. */
+:root{--bg:#ffffff;--fill:#f4f6f8;--panel:#ffffff;--fg:#0b1c2c;--muted:#53606c;--line:#dfe4ea;--grid:#e9edf1;
+ --accent:#1d5fa8;--velhas:#1d5fa8;--sabara:#0f8a7e;--chuva:#3b7fd0;
+ --s0:#1f9d6a;--s1:#d99a00;--s2:#e0662f;--s3:#c2364b;
+ --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171e;--fill:#18222c;--panel:#141d25;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--grid:#212c36;
+ --accent:#6aa6e6;--velhas:#6aa6e6;--sabara:#35c2b0;--chuva:#5c9be0;--s0:#2bb07c;--s1:#e0a91a;--s2:#ea7a46;--s3:#e2566a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10171e;--fill:#18222c;--panel:#141d25;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--grid:#212c36;
+ --accent:#6aa6e6;--velhas:#6aa6e6;--sabara:#35c2b0;--chuva:#5c9be0;--s0:#2bb07c;--s1:#e0a91a;--s2:#ea7a46;--s3:#e2566a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5}
+a{color:var(--accent)}
+/* cabeçalho e abas (iguais nas páginas do site) */
+.site{position:sticky;top:0;z-index:1200;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.site .in{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:700;font-size:17px;color:var(--fg);text-decoration:none;padding-block:12px;white-space:nowrap}
+.brand span{color:var(--accent)}
+nav.abas{display:flex;gap:2px}
+nav.abas a{padding:15px 10px 13px;color:var(--muted);text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
+nav.abas a:hover{color:var(--fg)}
+nav.abas a[aria-current]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+@media (max-width:680px){
+ nav.abas{position:fixed;left:0;right:0;bottom:0;z-index:1200;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:0 max(0px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(0px,env(safe-area-inset-left,0px))}
+ nav.abas a{text-align:center;padding:13px 2px 12px;font-size:13px}
+ nav.abas a[aria-current]{box-shadow:inset 0 3px 0 var(--accent)}
+ body{padding-bottom:calc(52px + env(safe-area-inset-bottom,0px))}}
+.wrap{max-width:960px;margin:0 auto;padding-block:16px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
+.muted{color:var(--muted)}
+.status{font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--s0);display:inline-block}
+.dot.stale{background:var(--s2)}
+/* faixa principal */
+.hero{padding:18px;border-radius:12px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 11%,var(--bg));display:grid;gap:6px}
+.hero .k{font-size:13px;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.07em}
+.hero h1{margin:0;font-size:clamp(24px,5vw,32px);line-height:1.15;text-wrap:balance}
+.hero p{margin:0;color:var(--muted);max-width:62ch}
+.top2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0;align-content:start}
+.card>h2,.card>h3{margin:0}
+h2{font-size:19px;line-height:1.25;text-wrap:balance}
+h3{font-size:17px;line-height:1.25;text-wrap:balance}
+.card>p{margin:0}
+/* tempo em Sabará */
+.wx{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.wx .t{font-size:44px;font-weight:700;line-height:1}
+.wx .d{font-size:15px;color:var(--muted)}
+.wx .d b{color:var(--fg)}
+.hours{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;align-items:end;height:60px;border-bottom:1px solid var(--line)}
+.hours i{display:block;background:var(--chuva);border-radius:2px 2px 0 0;opacity:.35;min-height:1px}
+.hours i.mm{opacity:1}
+.hl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px}
+.leg2{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.leg2 i{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--chuva);margin-right:5px;vertical-align:-1px}
+.prevbox{padding:10px 14px;border-radius:8px;border-left:4px solid var(--c);background:var(--fill);font-size:15px;margin:0}
+/* rios */
+.rio{display:grid;gap:6px;padding-block:4px}
+.rio+.rio{border-top:1px solid var(--line);padding-top:14px}
+.rio .l{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.rio .nm{font-weight:700;font-size:17px}
+.rio .nm small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.rio .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;line-height:1.1}
+.rio .v small{display:block;font-size:13px;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:.05em}
+.barwrap{position:relative;margin-block:4px}
+.bar{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--s0) 0 var(--t1),var(--s1) var(--t1) var(--t2),var(--s2) var(--t2) var(--t3),var(--s3) var(--t3) 100%);opacity:.3}
+.mk{position:absolute;top:-4px;width:4px;height:20px;border-radius:2px;background:var(--fg);transform:translateX(-2px)}
+.sc{position:relative;height:16px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.sc span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.sc span:first-child{transform:none}.sc span:last-child{transform:translateX(-100%)}
+.rio .info{font-size:14px;color:var(--muted);margin:0}
+.rio .motivo{font-size:14px;margin:0}
+.link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:12px;background:var(--fill);color:var(--fg);text-decoration:none;font-weight:700}
+.link small{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.link:hover{outline:2px solid var(--accent)}
+.aviso{border-left:4px solid var(--s2);font-size:14px}
+.aviso p{margin:0}
+details.mais{border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+details.mais>summary{cursor:pointer;padding:14px 16px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.mais>summary::after{content:"+";color:var(--accent);font-size:20px;line-height:1}
+details.mais[open]>summary::after{content:"−"}
+details.mais>div{padding:0 16px 16px;display:grid;gap:12px}
+svg{width:100%;height:auto;display:block}
+svg text{font-size:11px;fill:var(--muted);font-family:var(--f-body)}
+svg .lab{fill:var(--fg);font-weight:700}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl{overflow-x:auto}
+.leg{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:2px;font-size:13px}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.caminho{margin:0;padding-left:22px;display:grid;gap:2px;font-size:14px}
+table.tempo td,table.tempo th{white-space:nowrap}
+.cond{display:inline-flex;align-items:center;gap:6px}
+.erro{color:var(--s3);font-weight:700}
+.oficial{margin:0;padding:12px 14px;border-radius:10px;background:var(--fill);border-left:4px solid var(--s2);font-size:14px}
+.dc{border:2px solid var(--c);border-radius:12px;padding:14px 16px;display:grid;gap:6px;background:var(--panel)}
+.dc .k{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--c)}
+.dc h2{margin:0;font-size:16px;line-height:1.3}
+.dc p{margin:0;font-size:15px}
+.dc small{color:var(--muted);font-size:13px}
+.dcs{display:grid;gap:10px}
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);display:grid;gap:8px}
+footer .lai{padding:10px 14px;border-left:4px solid var(--accent);background:var(--fill);border-radius:8px;color:var(--fg)}
+</style>
+</head>
+<body>
+<header class="site"><div class="in">
+  <a class="brand" href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/">Rios de <span>Sabará</span></a>
+  <nav class="abas" aria-label="Seções">
+    <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/" aria-current="page">Agora</a>
+    <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa">Mapa</a>
+    <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#prever">Prever</a>
+    <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#historico">Histórico</a>
+    <a href="https://monitoramentodosriossabara.github.io/relato/">Contar</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+<div class="status" id="status"><span class="dot" id="dot"></span><span id="stxt">Carregando…</span></div>
+
+<section class="hero" id="hero" style="--c:var(--s0)" aria-live="polite">
+  <div class="k" id="herok">Carregando</div>
+  <h1 id="heroh">Lendo os rios e a previsão…</h1>
+  <p id="herop"></p>
+</section>
+
+<p class="oficial"><strong>Atenção: esta não é uma ferramenta oficial.</strong> É um painel informativo, feito de forma voluntária, e os estágios acima são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>.</p>
+
+<div id="alertasdc"></div>
+
+<div id="usinas"></div>
+
+<div class="top2">
+  <section class="card" id="tempoSab">
+    <h2>Tempo em Sabará</h2>
+    <div class="wx"><span class="t" id="sabT">—</span><span class="d" id="sabD">Carregando a previsão…</span></div>
+    <div class="hours" id="sabH" aria-label="Chance de chuva por hora nas próximas 24 horas"></div>
+    <div class="hl"><span id="sabH0"></span><span id="sabH1"></span></div>
+    <div class="leg2"><span><i style="opacity:.35"></i>chance de chuva por hora</span><span><i></i>hora com 1 mm ou mais previsto</span></div>
+    <div id="prevaviso"></div>
+  </section>
+
+  <section class="card">
+    <h2>Os rios agora</h2>
+    <div id="cards"></div>
+  </section>
+</div>
+
+<a class="link" href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa"><span>Até onde a água chega em cada bairro<small>Suba o nível do rio no mapa e veja as ruas que ficam abaixo da água</small></span><span aria-hidden="true">→</span></a>
+
+<section class="card">
+  <h2>Chuva medida agora</h2>
+  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (atenção) e 60 mm ou mais (nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
+  <div class="tbl"><table id="tabchuva" style="min-width:0"></table></div>
+  <p class="muted" style="font-size:13px" id="pluvoff"></p>
+</section>
+
+<details class="mais">
+  <summary>Previsão para as outras cidades da bacia</summary>
+  <div>
+    <p class="muted" style="margin:0">Previsão do Open-Meteo, atualizada de hora em hora. Chuva forte prevista em Caeté e rio acima é o primeiro sinal de cheia, antes de os rios subirem. As barras mostram a chuva prevista hora a hora nas próximas 48 horas.</p>
+    <div class="tbl"><table id="tabtempo" class="tempo"></table></div>
+    <p class="muted" style="margin:0;font-size:13px">Previsão é estimativa e erra, principalmente em tempestades de verão, que são muito localizadas. O que conta para alerta são as medições dos rios e dos pluviômetros.</p>
+  </div>
+</details>
+
+<section class="card">
+  <h3>Rio das Velhas, medido em Raposos: últimas 72 horas</h3>
+  <p class="muted">Raposos fica logo acima de Sabará. As linhas tracejadas são os níveis em que, nas cheias passadas, a água chegou a cada lugar.</p>
+  <div id="gvelhas"></div>
+</section>
+
+<section class="card">
+  <h3>Rio Sabará, medido em Sabará (ponte da Av. Longitudinal): últimas 72 horas</h3>
+  <p class="muted">Sensor do Cemaden dentro de Sabará. As linhas tracejadas são as cotas oficiais do Cemaden para este ponto. As barras são a chuva por hora em Caeté, na cabeceira do rio: o Rio Sabará costuma subir 2 a 4 horas depois de chuva forte lá.</p>
+  <div id="gsabara"></div>
+</section>
+
+<details class="mais">
+  <summary>A água vem das represas ou da chuva perto de Sabará?</summary>
+  <div>
+    <p class="muted" style="margin:0">O Rio das Velhas passa por estas réguas antes de chegar a Sabará. Duas ficam em rios que deságuam nele, junto a pequenas usinas com represa (PCHs):</p>
+    <ol class="caminho">
+      <li><b>Rio Itabirito, em Itabirito</b>, na usina PCH Rio de Pedras (Cemig)</li>
+      <li><b>Rio do Peixe, em Nova Lima</b>, logo abaixo de uma usina (PCH)</li>
+      <li><b>Rio das Velhas, em Rio Acima</b>, depois que esses dois rios já entraram nele</li>
+      <li><b>Rio das Velhas, em Raposos</b>, a última régua antes de Sabará</li>
+    </ol>
+    <p class="muted" style="margin:0">O gráfico mostra quanto cada régua subiu nos últimos 3 dias. Quando as réguas 1 e 2 sobem primeiro, a água está vindo de cima (chuva lá ou operação das usinas) e chega a Raposos horas depois. <b>Quando só Raposos sobe</b>, a água vem da chuva perto de Sabará. As réguas mostram o nível, não a operação das comportas; esse registro é da própria usina.</p>
+    <p class="prevbox" id="usinastatus" style="--c:var(--s0)">Lendo as réguas das usinas…</p>
+    <div id="gorigem"></div>
+  </div>
+</details>
+
+<details class="mais">
+  <summary>Nível dos rios: todas as réguas</summary>
+  <div><div class="tbl"><table id="tab"></table></div></div>
+</details>
+
+<footer>
+  <div><strong>Morou ou mora na beira do rio?</strong> <a href="https://monitoramentodosriossabara.github.io/relato/">Conte o que você lembra das enchentes</a> (pode mandar áudio e fotos).</div>
+  <div class="lai">Este painel depende dos dados oficiais da Defesa Civil, solicitados pela Lei de Acesso à Informação, para cruzar as informações da melhor forma possível.</div>
+  <div>Dados: ANA (Agência Nacional de Águas), estações telemétricas 41195050 Rio das Velhas em Rio Acima, 41200430 Rio das Velhas em Raposos, 41210001 Ribeirão Caeté em Caeté, 41180500 Rio Itabirito na PCH Rio de Pedras e 41193000 Rio do Peixe em Nova Lima; Cemaden, estação hidrológica 315670023H Ribeirão Sabará (Av. Longitudinal) e pluviômetros automáticos; previsão do tempo Open-Meteo. Coleta automática a cada 15 minutos; a ANA costuma publicar com 30 a 60 minutos de atraso. A página se atualiza sozinha a cada 5 minutos.</div>
+  <div>Painel desenvolvido por <strong>Simone de Figueiredo Cunha</strong> com auxílio de IA.</div>
+</footer>
+</main>
+
+<script>
+const URL_API='https://ekfyviemlszovciroacn.supabase.co/rest/v1/';
+const KEY='sb_publishable_Bhsw4dhgFwk0jno5kZMeYQ_3tfouypX';
+const CORES=['--s0','--s1','--s2','--s3'];
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt=(v,d=2)=>v==null||isNaN(v)?'—':Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const hora=iso=>iso?new Date(iso).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+async function api(p){const r=await fetch(URL_API+p,{headers:{apikey:KEY}});if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
+
+const ESCALA={velhas:{max:750,lim:[450,565,670],nomes:['atenção 4,50','Roças Grandes 5,65','Caieira 6,70']},
+  sabara:{max:520,lim:[269,359,448],nomes:['atenção 2,69','alerta 3,59','transborda 4,48']}};
+const TIT=['Sem risco de enchente agora','Atenção: rio acima do normal','Alerta: risco de enchente','Alerta máximo: risco alto de enchente'];
+let nivelGeral=0, sitCache=null;
+function cards(sit,res){
+  sitCache=sit;
+  const box=document.getElementById('cards');box.innerHTML='';
+  const by=Object.fromEntries(res.map(r=>[r.codigo,r]));
+  for(const s of sit){
+    const velhas=s.rio==='Rio das Velhas', sensor=!!(s.onde&&s.onde.includes('Longitudinal'));
+    const ref=velhas?by['41200430']:(sensor?by['315670023H']:by['41210001']);
+    const cor=css(CORES[s.nivel_alerta]||'--s0');
+    const d=document.createElement('div');d.className='rio';d.style.setProperty('--c',cor);
+    const varr=s.variacao_3h_cm;
+    const tend=varr==null?'':(varr>5?'subindo':varr<-5?'baixando':'estável')+' ('+(varr>0?'+':'')+fmt(varr/100)+' m em 3 h)';
+    const onde=!s.onde?'':s.onde.includes('Raposos')?'medido em Raposos':sensor?'medido em Sabará, Av. Longitudinal':'medido em Caeté';
+    const esc=velhas?ESCALA.velhas:(sensor?ESCALA.sabara:null);
+    let barra='';
+    if(esc&&s.nivel_referencia_cm!=null){
+      const pc=v=>Math.max(0,Math.min(100,v/esc.max*100));
+      barra=`<div class="barwrap"><div class="bar" style="--t1:${pc(esc.lim[0])}%;--t2:${pc(esc.lim[1])}%;--t3:${pc(esc.lim[2])}%"></div><span class="mk" style="left:${pc(s.nivel_referencia_cm)}%"></span></div>
+      <div class="sc"><span style="left:0">0</span><span style="left:${pc(esc.lim[0])}%">${esc.nomes[0]}</span><span style="left:100%">${fmt(esc.max/100,1)} m</span></div>`;
+    }
+    d.innerHTML=`<div class="l"><span class="nm">${s.rio}<small>${onde}</small></span><span class="v">${fmt(s.nivel_referencia_cm/100)} m<small></small></span></div>${barra}
+      <p class="info">${tend?tend+' · ':''}chuva 6 h / 24 h: ${fmt(ref?.chuva_6h,0)} / ${fmt(ref?.chuva_24h,0)} mm · leitura ${hora(s.ultima_leitura)}</p>
+      <p class="motivo"></p>`;
+    d.querySelector('.v small').textContent=s.estagio;
+    if(s.nivel_alerta>0)d.querySelector('.motivo').textContent=s.motivo;else d.querySelector('.motivo').remove();
+    box.appendChild(d);
+  }
+  heroRios();
+}
+let prevHero='',dcHero='';
+function heroRios(){
+  if(!sitCache)return;
+  const n=Math.max(0,...sitCache.map(s=>s.nivel_alerta||0));nivelGeral=n;
+  const hero=document.getElementById('hero');hero.style.setProperty('--c',css(CORES[n]));
+  const pior=sitCache.find(s=>(s.nivel_alerta||0)===n);
+  document.getElementById('herok').textContent=n?pior.estagio:'Normal';
+  document.getElementById('heroh').textContent=TIT[n];
+  const txt=n?sitCache.filter(s=>s.nivel_alerta>0).map(s=>s.rio+': '+s.motivo).join(' '):'O Rio das Velhas e o Rio Sabará estão no nível normal.';
+  document.getElementById('herop').textContent=txt+(prevHero?' '+prevHero:'')+(dcHero?' '+dcHero:'');
+}
+
+function grafico(host,serie,opt){
+  host.innerHTML='';
+  const W=Math.max(320,Math.round(host.clientWidth||860)),R=W<600?92:150,L=44,T=12,ch=W<600?150:170,H=ch+(opt.chuva?110:50);
+  const t1=Date.now(),t0=t1-72*3600e3,x=t=>L+(t-t0)/(t1-t0)*(W-L-R);
+  const nv=serie.filter(p=>p.nivel_cm!=null);
+  const vmax=Math.max(opt.ymin, ...nv.map(p=>p.nivel_cm))*1.08;
+  const y=v=>T+ch-v/vmax*ch;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':opt.titulo});
+  const step=vmax>500?200:vmax>200?100:50;
+  for(let g=0;g<=vmax;g+=step){el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:css('--grid')},svg);const t=el('text',{x:L-6,y:y(g)+4,'text-anchor':'end'},svg);t.textContent=fmt(g/100,1)+' m';}
+  for(let d=new Date(t0);d<=t1;d=new Date(d.getTime()+3600e3)){const hh=Number(d.toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',hour12:false}));if(hh%(W<600?24:12))continue;const t=el('text',{x:x(d),y:T+ch+16,'text-anchor':'middle'},svg);t.textContent=d.toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit'})+' '+String(hh).padStart(2,'0')+'h';}
+  (opt.limites||[]).forEach(([v,lab,cor])=>{if(v>vmax)return;el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:css(cor),'stroke-dasharray':'5 4','stroke-width':1.5},svg);const t=el('text',{x:W-R+6,y:y(v)+4},svg);t.textContent=W<600?fmt(v/100)+' m':fmt(v/100)+' m · '+lab;});
+  let p='';nv.forEach(q=>{p+=(p?'L':'M')+x(new Date(q.datahora))+','+y(q.nivel_cm);});
+  el('path',{d:p,fill:'none',stroke:css(opt.cor),'stroke-width':2.4},svg);
+  if(nv.length){const u=nv[nv.length-1];el('circle',{cx:x(new Date(u.datahora)),cy:y(u.nivel_cm),r:4,fill:css(opt.cor)},svg);}
+  if(opt.chuva){
+    // chuva por hora
+    const hrs={};serie.forEach(q=>{if(q.chuva_mm){const k=Math.floor(new Date(q.datahora)/3600e3);hrs[k]=(hrs[k]||0)+q.chuva_mm;}});
+    const cy0=T+ch+28,chh=H-cy0-8,cm=Math.max(20,...Object.values(hrs));
+    const bw=(W-L-R)/72*0.8;
+    Object.entries(hrs).forEach(([k,v])=>{const h=v/cm*chh;el('rect',{x:x(k*3600e3)-bw/2,y:cy0+chh-h,width:bw,height:h,fill:css('--chuva'),rx:1},svg);});
+    el('line',{x1:L,x2:W-R,y1:cy0+chh,y2:cy0+chh,stroke:css('--grid')},svg);
+    const t2=el('text',{x:W-R+6,y:cy0+12},svg);t2.textContent=opt.chuvaLab||'Chuva por hora';
+    const t=el('text',{x:W-R+6,y:cy0+26},svg);t.textContent='(máx. '+fmt(cm,0)+' mm)';
+  }
+  if(!nv.length){const t=el('text',{x:W/2,y:T+ch/2,'text-anchor':'middle'},svg);t.textContent='Sem leituras nas últimas 72 h';}
+  host.appendChild(svg);
+}
+
+const PLUV=[['Sabará','315670023H','Ribeirão Sabará (Av. Longitudinal)'],['Sabará','CEM-6224','Borba Gato'],['Sabará','CEM-6211','Ravena'],['Sabará','CEM-6222','N. S. de Fátima'],['Sabará','CEM-3126','Santa Inês'],
+ ['Caeté','41210001','Centro (ANA)'],['Caeté','CEM-6218','Penedia'],['Caeté','CEM-6217','José Brandão'],['Caeté','CEM-6219','Cidade Jardim'],
+ ['Raposos','41200430','Rio das Velhas (ANA)'],['Nova Lima','CEM-4256','Honório Bicalho'],['Nova Lima','41193000','Rio do Peixe (ANA)'],['Nova Lima','CEM-4153','Jardim Canadá'],
+ ['Rio Acima','41195050','Rio das Velhas (ANA)'],['Itabirito','CEM-19403','Itabirito']];
+function chuvaTab(res){
+  const by=Object.fromEntries(res.map(r=>[r.codigo,r])),agora=Date.now();
+  const cel=(v,d,lim)=>{if(v==null)return '<td class="n">—</td>';const c=lim&&v>=lim[1]?'--s2':lim&&v>=lim[0]?'--s1':null;return `<td class="n"${c?` style="font-weight:700;color:${css(c)}"`:''}>${fmt(v,d)}</td>`;};
+  const off=[];
+  const rows=PLUV.map(([cid,cod,loc])=>{const r=by[cod];const ult=r&&r.ultima_chuva?new Date(r.ultima_chuva).getTime():0;const velho=!ult||agora-ult>3*3600e3;
+    if(velho){off.push(cid+' – '+loc);}
+    return `<tr${velho?' style="opacity:.55"':''}><td style="white-space:normal;min-width:140px"><b>${cid}</b><br><span class="muted" style="font-size:13px">${loc}</span></td>`+(velho?'<td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td>':
+      cel(r.chuva_1h,1)+cel(r.chuva_6h,0,[30,60])+cel(r.chuva_24h,0,[50,100])+cel(r.chuva_72h,0,[120,200]))+`<td>${ult?hora(r.ultima_chuva):'sem dado'}</td></tr>`;}).join('');
+  document.getElementById('tabchuva').innerHTML='<thead><tr><th>Onde</th><th class="n">1 h (mm)</th><th class="n">6 h</th><th class="n">24 h</th><th class="n">72 h</th><th>Última leitura</th></tr></thead><tbody>'+rows+'</tbody>';
+  document.getElementById('pluvoff').textContent=off.length?'Sem leitura nas últimas 3 horas (em cinza): '+off.join(', ')+'. Pluviômetros do Cemaden que estão fora do ar há meses e não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).':'Pluviômetros do Cemaden fora do ar há meses, que não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).';
+}
+
+const ORD=['315670023H','41210001','41200430','41195050','41193000','41180500'];
+function tabela(res){
+  const t=document.getElementById('tab');
+  t.innerHTML='<thead><tr><th>Rio</th><th>Onde é medido</th><th class="n">Nível</th><th class="n">Máx. 24 h</th><th class="n">Chuva 1 h</th><th class="n">6 h</th><th class="n">24 h</th><th class="n">72 h</th><th>Última leitura</th></tr></thead><tbody>'+
+   res.filter(r=>ORD.includes(r.codigo)).sort((a,b)=>ORD.indexOf(a.codigo)-ORD.indexOf(b.codigo)).map(r=>`<tr><td>${r.rio}</td><td>${r.nome}</td><td class="n">${fmt(r.nivel_cm/100)} m</td><td class="n">${fmt(r.max_24h_cm/100)} m</td><td class="n">${fmt(r.chuva_1h,1)}</td><td class="n">${fmt(r.chuva_6h,0)}</td><td class="n">${fmt(r.chuva_24h,0)}</td><td class="n">${fmt(r.chuva_72h,0)}</td><td>${hora(r.ultima_leitura)}</td></tr>`).join('')+'</tbody>';
+}
+
+function origem(host,dados){
+  host.innerHTML='';
+  const EST=[['41180500','1. Rio Itabirito em Itabirito (usina)','--s1'],['41193000','2. Rio do Peixe em Nova Lima (usina)','--s2'],['41195050','3. Rio das Velhas em Rio Acima','--s0'],['41200430','4. Rio das Velhas em Raposos','--velhas']];
+  const W=Math.max(320,Math.round(host.clientWidth||860)),mob=W<600,R=mob?12:250,L=44,T=12,ch=mob?150:170,H=ch+40;
+  const t1=Date.now(),t0=t1-72*3600e3,x=t=>L+(t-t0)/(t1-t0)*(W-L-R);
+  const ser=EST.map(([c,n,cor])=>{const p=dados.filter(q=>q.estacao===c);const mn=p.length?Math.min(...p.map(q=>q.nivel_cm)):0;return {n,cor,p:p.map(q=>({t:new Date(q.datahora),v:q.nivel_cm-mn}))};});
+  const vmax=Math.max(100,...ser.flatMap(s=>s.p.map(q=>q.v)))*1.1, y=v=>T+ch-v/vmax*ch;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Subida de cada régua nas últimas 72 horas'});
+  const step=vmax>400?200:vmax>200?100:50;
+  for(let g=0;g<=vmax;g+=step){el('line',{x1:L,x2:W-R,y1:y(g),y2:y(g),stroke:css('--grid')},svg);const t=el('text',{x:L-6,y:y(g)+4,'text-anchor':'end'},svg);t.textContent='+'+fmt(g/100,1)+' m';}
+  for(let d=new Date(t0);d<=t1;d=new Date(d.getTime()+3600e3)){const hh=Number(d.toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',hour12:false}));if(hh%(W<600?24:12))continue;const t=el('text',{x:x(d),y:T+ch+16,'text-anchor':'middle'},svg);t.textContent=d.toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit'})+' '+String(hh).padStart(2,'0')+'h';}
+  const ys=[];
+  ser.forEach(s=>{if(!s.p.length)return;let p='';s.p.forEach(q=>{p+=(p?'L':'M')+x(q.t)+','+y(q.v);});el('path',{d:p,fill:'none',stroke:css(s.cor),'stroke-width':2.2},svg);
+    if(mob)return;const u=s.p[s.p.length-1];let yy=y(u.v)+4;while(ys.some(o=>Math.abs(o-yy)<13))yy+=13;ys.push(yy);
+    const t=el('text',{x:W-R+6,y:yy,class:'lab'},svg);t.style.fill=css(s.cor);t.textContent=s.n;});
+  host.appendChild(svg);
+  if(mob||ser.some(s=>!s.p.length)){const ul=document.createElement('ul');ul.className='leg';ser.forEach(s=>{const li=document.createElement('li');li.innerHTML=`<i style="background:${css(s.cor)}"></i>`;li.append(s.n+(s.p.length?'':' — sem dado agora'));ul.appendChild(li);});host.appendChild(ul);}
+}
+
+const CIDADES=[['Sabará',-19.886,-43.807],['Caeté',-19.880,-43.669],['Raposos',-19.966,-43.804],['Nova Lima',-19.985,-43.847],['Rio Acima',-20.088,-43.788],['Itabirito',-20.253,-43.801]];
+const WMO={0:'Céu limpo',1:'Poucas nuvens',2:'Parcialmente nublado',3:'Nublado',45:'Neblina',48:'Neblina',51:'Garoa fraca',53:'Garoa',55:'Garoa forte',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',66:'Chuva gelada',67:'Chuva gelada',71:'Neve',73:'Neve',75:'Neve',80:'Pancadas fracas',81:'Pancadas de chuva',82:'Pancadas fortes',95:'Trovoadas',96:'Trovoadas com granizo',99:'Trovoadas com granizo'};
+const ICO=c=>c==null?'':c<=1?'☀️':c<=2?'⛅':c<=48?'☁️':c<=67?'🌧️':c<=82?'🌦️':'⛈️';
+let tempoCache=null,tempoEm=0;
+async function tempo(){
+  const box=document.getElementById('tabtempo'),av=document.getElementById('prevaviso');
+  try{
+    if(!tempoCache||Date.now()-tempoEm>30*60e3){
+      const u='https://api.open-meteo.com/v1/forecast?latitude='+CIDADES.map(c=>c[1]).join(',')+'&longitude='+CIDADES.map(c=>c[2]).join(',')+
+        '&current=temperature_2m,precipitation,weather_code,relative_humidity_2m&hourly=precipitation,precipitation_probability&forecast_days=3&timezone=America%2FSao_Paulo';
+      const r=await fetch(u);if(!r.ok)throw new Error(r.status);let j=await r.json();if(!Array.isArray(j))j=[j];tempoCache=j;tempoEm=Date.now();
+    }
+    const agora=Date.now();const W=150,H=26;
+    const linhas=tempoCache.map((d,k)=>{
+      const nome=CIDADES[k][0],cur=d.current||{};
+      const hs=d.hourly.time.map((t,i)=>({t:new Date(t+':00-03:00').getTime(),p:d.hourly.precipitation[i]||0,pr:d.hourly.precipitation_probability?.[i]}))
+        .filter(h=>h.t>=agora-3600e3&&h.t<agora+48*3600e3);
+      const s24=hs.filter(h=>h.t<agora+24*3600e3).reduce((a,h)=>a+h.p,0), s48=hs.reduce((a,h)=>a+h.p,0);
+      let m6=0;for(let i=0;i<hs.length;i++){m6=Math.max(m6,hs.slice(i,i+6).reduce((a,h)=>a+h.p,0));}
+      const prob=Math.max(0,...hs.filter(h=>h.t<agora+24*3600e3).map(h=>h.pr??0));
+      const mx=Math.max(5,...hs.map(h=>h.p)),bw=W/48;
+      const bars=hs.slice(0,48).map((h,i)=>{const hh=h.p/mx*(H-2);return h.p>0?`<rect x="${(i*bw).toFixed(1)}" y="${(H-hh).toFixed(1)}" width="${(bw*0.8).toFixed(1)}" height="${hh.toFixed(1)}" rx="0.5" fill="${css('--chuva')}"/>`:'';}).join('');
+      const spark=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Chuva prevista hora a hora em ${nome}"><line x1="0" x2="${W}" y1="${H-0.5}" y2="${H-0.5}" stroke="${css('--grid')}"/><line x1="${W/2}" x2="${W/2}" y1="0" y2="${H}" stroke="${css('--grid')}" stroke-dasharray="2 2"/>${bars}</svg>`;
+      return {nome,cur,s24,s48,m6,prob,spark};
+    });
+    // destaque: Sabará
+    {const d=tempoCache[0],cur=d.current||{};
+     const hs=d.hourly.time.map((t,i)=>({t:new Date(t+':00-03:00').getTime(),p:d.hourly.precipitation[i]||0,pr:d.hourly.precipitation_probability?.[i]??0}))
+       .filter(h=>h.t>=agora-3600e3+1&&h.t<agora+24*3600e3).slice(0,24);
+     const l=linhas[0];
+     document.getElementById('sabT').textContent=fmt(cur.temperature_2m,0)+'°';
+     const chov=cur.precipitation>0?`chovendo ${fmt(cur.precipitation,1)} mm agora`:'sem chuva agora';
+     document.getElementById('sabD').innerHTML=`<b></b><br>${chov}<br>Próximas 24 h: <b>${l.s24<1?'menos de 1':'cerca de '+fmt(l.s24,0)} mm</b>, chance máxima ${fmt(l.prob,0)}%`;
+     document.querySelector('#sabD b').textContent=(ICO(cur.weather_code)+' '+(WMO[cur.weather_code]||'')).trim();
+     document.getElementById('sabH').innerHTML=hs.map(h=>`<i class="${h.p>=1?'mm':''}" style="height:${Math.max(2,h.pr)}%" title="${new Date(h.t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})}h: ${h.pr}% de chance, ${fmt(h.p,1)} mm"></i>`).join('');
+     const hh=t=>new Date(t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})+'h';
+     if(hs.length){document.getElementById('sabH0').textContent=hh(hs[0].t);document.getElementById('sabH1').textContent=hh(hs[hs.length-1].t);}
+    }
+    box.innerHTML='<thead><tr><th>Cidade</th><th class="n">Chuva prev. 24 h</th><th>Agora</th><th class="n">Temp.</th><th class="n">Chovendo</th><th class="n">Prev. 48 h</th><th class="n">Chance de chuva</th><th>Próximas 48 h</th></tr></thead><tbody>'+
+      linhas.map(l=>`<tr><td>${l.nome}</td><td class="n"><b>${fmt(l.s24,0)} mm</b></td><td><span class="cond">${ICO(l.cur.weather_code)} ${WMO[l.cur.weather_code]||'—'}</span></td><td class="n">${fmt(l.cur.temperature_2m,0)}°C</td><td class="n">${fmt(l.cur.precipitation,1)} mm</td><td class="n">${fmt(l.s48,0)} mm</td><td class="n">${fmt(l.prob,0)}%</td><td>${l.spark}</td></tr>`).join('')+'</tbody>';
+    // aviso de previsão (regras de partida do painel)
+    const cae=linhas.find(l=>l.nome==='Caeté'), cima=linhas.filter(l=>['Raposos','Nova Lima','Rio Acima','Itabirito'].includes(l.nome));
+    const media72=cima.reduce((a,l)=>a+l.s48,0)/cima.length;
+    let nivel=0,txt='Sem chuva forte prevista para Caeté e rio acima nas próximas 48 horas.';
+    if(cae.m6>=60){nivel=2;txt=`Previsão de até ${fmt(cae.m6,0)} mm em 6 horas em Caeté. Nas cheias passadas, 60 mm em 6 h na bacia levaram o Rio Sabará a sair do leito em 2 a 4 horas. Acompanhe o sensor da Av. Longitudinal.`;}
+    else if(cae.m6>=30){nivel=1;txt=`Previsão de até ${fmt(cae.m6,0)} mm em 6 horas em Caeté. Isso já fez o Rio Sabará subir bastante em eventos passados.`;}
+    if(media72>=120){nivel=Math.max(nivel,1);txt+=` Previsão de ${fmt(media72,0)} mm em 48 h rio acima (média de Raposos, Nova Lima, Rio Acima e Itabirito): o Rio das Velhas pode subir nos próximos dias.`;}
+    av.innerHTML=`<p class="prevbox" style="--c:${css(CORES[nivel])}"></p>`;av.firstChild.textContent=txt;
+    const sab=linhas[0];prevHero=nivel?'Previsão: chuva forte em Caeté ou rio acima, veja abaixo.':(sab.m6>=20?`Previsão de até ${fmt(sab.m6,0)} mm em 6 horas em Sabará.`:'Não há chuva forte prevista para as próximas 48 horas.');heroRios();
+  }catch(e){box.innerHTML='<tbody><tr><td class="erro">Não foi possível carregar a previsão do tempo agora.</td></tr></tbody>';av.innerHTML='';document.getElementById('sabD').innerHTML='<span class="erro">Não foi possível carregar a previsão agora.</span>';}
+}
+
+function usinas(au){
+  const st=document.getElementById('usinastatus');
+  if(!au){st.textContent='Não foi possível ler as réguas das usinas agora.';return;}
+  const sub=au.filter(u=>u.subida_cm>=40);
+  if(!sub.length){st.style.setProperty('--c',css('--s0'));
+    st.textContent='Réguas das usinas sem subida rápida nas últimas 3 horas.';return;}
+  st.style.setProperty('--c',css('--s1'));
+  st.textContent=sub.map(u=>`${u.nome}: subiu ${fmt(u.subida_cm/100)} m em cerca de 1 hora, com ${fmt(u.chuva_3h_local,0)} mm de chuva no local nas últimas 3 horas.`).join(' ')+
+    (sub.some(u=>u.suspeita)?' Como choveu pouco ali, a subida pode vir de chuva mais acima ou de operação da usina; as réguas não permitem saber qual.':' A subida acompanha a chuva no local.');
+}
+function aguaChegando(ar){
+  const box=document.getElementById('usinas');box.innerHTML='';
+  const a=ar&&ar[0];if(!a||!a.ativo)return;
+  const partes=[];
+  if(a.subida_rio_acima_3h_cm>=60)partes.push(`O Rio das Velhas em Rio Acima subiu ${fmt(a.subida_rio_acima_3h_cm/100)} m nas últimas 3 horas.`);
+  if(a.subida_usina_cm)partes.push(`A régua de ${a.usinas} subiu ${fmt(a.subida_usina_cm/100)} m em cerca de 1 hora.`);
+  const sec=document.createElement('section');sec.className='card aviso';sec.style.borderLeftColor=css('--s1');sec.style.borderWidth='2px 2px 2px 6px';sec.style.borderColor=css('--s1');
+  const p=document.createElement('p');p.innerHTML='<strong>Subida rápida rio acima.</strong> ';
+  p.append(partes.join(' ')+' Essa água costuma chegar a Raposos de 3 a 8 horas depois, e a Sabará logo em seguida. Acompanhe o nível em Raposos logo abaixo.');
+  sec.appendChild(p);box.appendChild(sec);
+}
+
+
+const SEV={Extreme:['--s3','Extremo'],Severe:['--s3','Grave'],Moderate:['--s2','Moderado'],Minor:['--s1','Baixo'],Unknown:['--s1','']};
+async function alertasDC(){
+  const box=document.getElementById('alertasdc');
+  try{
+    const al=await api('alertas_dc_ativos?select=*&order=enviado_em.desc&limit=5');
+    box.innerHTML='';dcHero=al.length?'Há '+(al.length>1?al.length+' alertas oficiais':'um alerta oficial')+' da Defesa Civil em vigor para a região, veja abaixo.':'';heroRios();if(!al.length)return;
+    const w=document.createElement('section');w.className='dcs';w.setAttribute('aria-label','Alertas da Defesa Civil');
+    for(const a of al){
+      const [cor,nome]=SEV[a.severidade]||SEV.Unknown;
+      const d=document.createElement('div');d.className='dc';d.style.setProperty('--c',css(cor));
+      d.innerHTML='<div class="k"></div><h2></h2><p class="t"></p><p class="i"></p><small></small>';
+      d.querySelector('.k').textContent='Alerta oficial da Defesa Civil'+(nome?' · risco '+nome.toLowerCase():'');
+      d.querySelector('h2').textContent=a.titulo||a.evento||'Alerta';
+      const t=d.querySelector('.t');if(a.descricao&&a.descricao!==a.titulo)t.textContent=a.descricao;else t.remove();
+      const i=d.querySelector('.i');if(a.instrucao)i.textContent=a.instrucao;else i.remove();
+      d.querySelector('small').textContent='Enviado '+hora(a.enviado_em)+(a.fim?' · válido até '+hora(a.fim):'')+(a.emissor?' · '+a.emissor:'');
+      w.appendChild(d);
+    }
+    box.appendChild(w);
+  }catch(e){box.innerHTML='';}
+}
+async function carregar(){
+  const st=document.getElementById('stxt'),dot=document.getElementById('dot');
+  try{
+    const desde=new Date(Date.now()-72*3600e3).toISOString();
+    const [sit,res,lr,lc,col,lo,au,ar]=await Promise.all([
+      api('situacao_rios?select=*'),
+      api('ana_resumo?select=*'),
+      api(`ana_leituras?select=datahora,nivel_cm,chuva_mm&estacao=eq.41200430&datahora=gte.${desde}&order=datahora`),
+      api(`ana_leituras?select=datahora,nivel_cm,chuva_mm,estacao&estacao=in.(41210001,315670023H)&datahora=gte.${desde}&order=datahora`),
+      api('ana_coletas?select=executado_em,ok&order=executado_em.desc&limit=1'),
+      api(`ana_leituras?select=datahora,nivel_cm,estacao&estacao=in.(41180500,41193000,41195050,41200430)&nivel_cm=not.is.null&datahora=gte.${desde}&order=datahora`),
+      api('alerta_usinas?select=*').catch(()=>null),
+      api('alerta_rio_acima?select=*').catch(()=>null)]);
+    cards(sit,res);
+    grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:500,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',
+      limites:[[450,'atenção','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
+    const sens=lc.filter(q=>q.estacao==='315670023H'&&q.nivel_cm!=null), cae=lc.filter(q=>q.estacao==='41210001');
+    const serieSab=(sens.length?sens.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null})):cae.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null}))).concat(cae.map(q=>({datahora:q.datahora,nivel_cm:null,chuva_mm:q.chuva_mm})));
+    serieSab.sort((x,y)=>new Date(x.datahora)-new Date(y.datahora));
+    grafico(document.getElementById('gsabara'),serieSab,{cor:'--sabara',ymin:sens.length?500:150,chuva:true,chuvaLab:'Chuva em Caeté',titulo:'Nível do Rio Sabará e chuva em Caeté nas últimas 72 horas',
+      limites:sens.length?[[269,'atenção','--s1'],[359,'alerta','--s2'],[448,'transbordamento','--s3']]:[[237,'pico de dez/2022','--s2']]});
+    origem(document.getElementById('gorigem'),lo);
+    usinas(au);
+    aguaChegando(ar);
+    alertasDC();
+    tabela(res);
+    chuvaTab(res);
+    const ult=res.map(r=>r.ultima_leitura).filter(Boolean).sort().pop();
+    const atraso=ult?(Date.now()-new Date(ult))/60000:Infinity;
+    dot.className='dot'+(atraso>180?' stale':'');
+    st.textContent=`Leitura mais recente da ANA: ${hora(ult)}`+(atraso>180?' — a ANA está sem dados novos há mais de 3 horas.':'')+` · Página atualizada às ${new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}`;
+  }catch(e){
+    dot.className='dot stale';st.innerHTML='<span class="erro">Não foi possível carregar os dados agora.</span> Tentando de novo em 5 minutos.';
+  }
+}
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(carregar,400);});
+document.querySelectorAll('details.mais').forEach(d=>d.addEventListener('toggle',()=>{if(d.open)carregar();}));
+carregar();tempo();setInterval(()=>{carregar();tempo();},5*60e3);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)carregar();});
+</script>
+</body>
+</html>
