@@ -6,7 +6,7 @@
 <title>Rios de Sabará · Conte sua história</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&display=swap">
 <meta name="description" content="Conte o que você lembra das enchentes em Sabará: endereço, até onde a água chegou, horário. Pode mandar áudio e fotos.">
 <style>
 :root{--bg:#ffffff;--panel:#ffffff;--fg:#0b1c2c;--muted:#53606c;--line:#dfe4ea;--accent:#1d5fa8;--accent-fg:#fff;--ok:#1baf7a;--warn:#eb6834;--err:#c4314b;--chip:#eef3fb;
@@ -71,6 +71,27 @@ nav.abas a[aria-current]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--acc
  nav.abas a{text-align:center;padding:13px 2px 12px;font-size:13px}
  nav.abas a[aria-current]{box-shadow:inset 0 3px 0 var(--accent)}
  body{padding-bottom:calc(52px + env(safe-area-inset-bottom,0px))}}
+
+/* Tema Rios de Sabará: azul do rio, creme e dourado (mesmo dos stories) */
+:root{--navy:#0c2640;--goldb:#d4ad55;--gold:#9a7428;--bg:#f7f2e8;--panel:#fffdf8;--fill:#efe7d6;--fg:#0b1c2c;--muted:#5a6470;--line:#e3d9c4;--grid:#ebe3d2;--accent:#1d5fa8;--f-serif:"Fraunces",Georgia,"Times New Roman",serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1d31;--panel:#0f263d;--fill:#14304c;--fg:#f2ede3;--muted:#a9b8c6;--line:#21405f;--grid:#1a3550;--accent:#7fb2ea;--gold:#d4ad55;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a1d31;--panel:#0f263d;--fill:#14304c;--fg:#f2ede3;--muted:#a9b8c6;--line:#21405f;--grid:#1a3550;--accent:#7fb2ea;--gold:#d4ad55;color-scheme:dark}
+body{background:var(--bg);color:var(--fg)}
+h1,h2,h3{font-family:var(--f-serif);letter-spacing:-.005em}
+h1{font-weight:900} h2,h3{font-weight:700}
+.site{background:linear-gradient(90deg,#0c2640,#143f68);border-bottom:2px solid var(--goldb)}
+.brand{color:#f7f2e8!important;font-family:var(--f-serif);font-weight:900;font-size:21px}
+.brand span{color:var(--goldb)!important;font-style:italic;font-weight:700}
+nav.abas a,nav.abas button{color:#b9c9d8!important}
+nav.abas a:hover,nav.abas button:hover{color:#fff!important}
+nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!important;background:none!important;border-color:transparent!important;box-shadow:inset 0 -3px 0 var(--goldb)!important}
+@media (max-width:680px){nav.abas{background:#0c2640!important;border-top:2px solid var(--goldb)!important}
+ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{box-shadow:inset 0 3px 0 var(--goldb)!important}}
+
+header h1{font-family:var(--f-serif);font-weight:900;font-size:32px}
+.eyebrow{color:var(--gold)!important}
+.card{border-radius:16px}
+.cheia{border-left-color:var(--goldb)}
 </style>
 </head>
 <body>

@@ -7,29 +7,31 @@
 <meta name="description" content="Conte o que você lembra das enchentes em Sabará e ajude a construir uma ferramenta voluntária de informação sobre os rios.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,700&display=swap">
 <style>
-:root{--bg:#ffffff;--fill:#f4f6f8;--fg:#0b1c2c;--muted:#53606c;--line:#dfe4ea;--accent:#1d5fa8;--accent-fg:#ffffff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171e;--fill:#18222c;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--accent:#6aa6e6;--accent-fg:#0b1c2c;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#10171e;--fill:#18222c;--fg:#e8eef4;--muted:#9aa7b3;--line:#26323d;--accent:#6aa6e6;--accent-fg:#0b1c2c;color-scheme:dark}
+:root{--bg:#0c2640;--fg:#f7f2e8;--muted:#c3d1de;--gold:#d4ad55;--accent:#d4ad55;--accent-fg:#0c2640;--box:rgba(255,255,255,.06);color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:17px;line-height:1.55}
-main{max-width:560px;margin:0 auto;padding-block:max(48px,env(safe-area-inset-top,0px)) 48px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:grid;gap:20px}
-.brand{font-weight:700;font-size:18px}.brand span{color:var(--accent)}
-h1{margin:0;font-size:clamp(28px,7vw,36px);line-height:1.15;text-wrap:balance}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 70% at 20% 0%,#1a4a78 0%,#0c2640 55%,#081b2e 100%) fixed;background-color:var(--bg);color:var(--fg);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:18px;line-height:1.55}
+main{max-width:560px;margin:0 auto;padding-block:max(56px,env(safe-area-inset-top,0px)) 140px;padding-left:max(22px,env(safe-area-inset-left,0px));padding-right:max(22px,env(safe-area-inset-right,0px));display:grid;gap:22px;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.brand i{display:block;width:6px;height:22px;border-left:2px solid currentColor;background:repeating-linear-gradient(180deg,currentColor 0 3px,transparent 3px 6px)}
+h1{margin:0;font-family:"Fraunces",Georgia,serif;font-weight:900;font-size:clamp(36px,9vw,52px);line-height:1.04;text-wrap:balance}
+h1 em{font-style:italic;font-weight:700;color:var(--gold)}
 p{margin:0;color:var(--muted)}
-.cta{display:block;text-align:center;background:var(--accent);color:var(--accent-fg);font-weight:700;text-decoration:none;padding:16px;border-radius:12px;font-size:18px}
-.box{padding:14px 16px;border-radius:12px;background:var(--fill);border-left:4px solid #e0662f;font-size:15px;color:var(--fg)}
+.cta{display:block;text-align:center;background:var(--accent);color:var(--accent-fg);font-weight:700;text-decoration:none;padding:17px;border-radius:14px;font-size:19px}
+.box{padding:14px 16px;border-radius:14px;background:var(--box);border-left:4px solid #e0662f;font-size:15px;color:var(--fg)}
+.ondas{position:fixed;left:0;right:0;bottom:0;height:120px;z-index:0;pointer-events:none}
 </style>
 </head>
 <body>
 <main>
-  <div class="brand">Rios de <span>Sabará</span></div>
-  <h1>Uma ferramenta sobre os nossos rios está em construção</h1>
+  <div class="brand"><i></i>Rios de Sabará</div>
+  <h1>Uma ferramenta sobre os nossos rios está <em>em construção.</em></h1>
   <p>Um projeto voluntário para reunir, num só lugar, os dados públicos sobre o Rio das Velhas, o Rio Sabará e a chuva, e ajudar os moradores a estarem prontos para agir.</p>
   <p>Para ela funcionar bem, precisamos saber até onde a água chegou nas enchentes passadas. Se você mora ou morou na beira do rio, conte o que lembra.</p>
   <a class="cta" href="relato/">Contar minha história</a>
   <p class="box"><strong>Não é um canal oficial.</strong> Em caso de risco, ligue para a Defesa Civil no <strong>199</strong> e receba alertas por SMS enviando seu CEP para <strong>40199</strong>.</p>
 </main>
+<svg class="ondas" viewBox="0 0 1080 240" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 C180 30 320 110 540 60 S900 20 1080 60 V240 H0Z" fill="#1d5fa8" opacity=".5"/><path d="M0 130 C220 90 380 170 620 120 S960 90 1080 130 V240 H0Z" fill="#0f3a68"/></svg>
 </body>
 </html>
