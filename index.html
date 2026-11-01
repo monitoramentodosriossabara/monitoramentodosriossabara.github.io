@@ -102,6 +102,13 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 table.tempo td,table.tempo th{white-space:nowrap}
 .cond{display:inline-flex;align-items:center;gap:6px}
 .erro{color:var(--s3);font-weight:700}
+.oficial{margin:0;padding:12px 14px;border-radius:10px;background:var(--fill);border-left:4px solid var(--s2);font-size:14px}
+.dc{border:2px solid var(--c);border-radius:12px;padding:14px 16px;display:grid;gap:6px;background:var(--panel)}
+.dc .k{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--c)}
+.dc h2{margin:0;font-size:16px;line-height:1.3}
+.dc p{margin:0;font-size:15px}
+.dc small{color:var(--muted);font-size:13px}
+.dcs{display:grid;gap:10px}
 footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);display:grid;gap:8px}
 footer .lai{padding:10px 14px;border-left:4px solid var(--accent);background:var(--fill);border-radius:8px;color:var(--fg)}
 </style>
@@ -127,6 +134,10 @@ footer .lai{padding:10px 14px;border-left:4px solid var(--accent);background:var
   <p id="herop"></p>
 </section>
 
+<p class="oficial"><strong>Atenção: esta não é uma ferramenta oficial.</strong> É um painel informativo, feito de forma voluntária, e os estágios acima são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>.</p>
+
+<div id="alertasdc"></div>
+
 <div id="usinas"></div>
 
 <div class="top2">
@@ -146,10 +157,6 @@ footer .lai{padding:10px 14px;border-left:4px solid var(--accent);background:var
 </div>
 
 <a class="link" href="https://monitoramentodosriossabara.github.io/painel/#mapa"><span>Até onde a água chega em cada bairro<small>Suba o nível do rio no mapa e veja as ruas que ficam abaixo da água</small></span><span aria-hidden="true">→</span></a>
-
-<section class="card aviso">
-  <p><strong>Informativo, não é alerta oficial.</strong> Os estágios são regras tiradas das cheias de 2020 a 2026 e podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> e cadastre seu CEP para receber alertas por SMS enviando o CEP para <strong>40199</strong>.</p>
-</section>
 
 <section class="card">
   <h2>Chuva medida agora</h2>
@@ -251,7 +258,7 @@ function cards(sit,res){
   }
   heroRios();
 }
-let prevHero='';
+let prevHero='',dcHero='';
 function heroRios(){
   if(!sitCache)return;
   const n=Math.max(0,...sitCache.map(s=>s.nivel_alerta||0));nivelGeral=n;
@@ -260,7 +267,7 @@ function heroRios(){
   document.getElementById('herok').textContent=n?pior.estagio:'Normal';
   document.getElementById('heroh').textContent=TIT[n];
   const txt=n?sitCache.filter(s=>s.nivel_alerta>0).map(s=>s.rio+': '+s.motivo).join(' '):'O Rio das Velhas e o Rio Sabará estão no nível normal.';
-  document.getElementById('herop').textContent=txt+(prevHero?' '+prevHero:'');
+  document.getElementById('herop').textContent=txt+(prevHero?' '+prevHero:'')+(dcHero?' '+dcHero:'');
 }
 
 function grafico(host,serie,opt){
@@ -408,6 +415,28 @@ function aguaChegando(ar){
   sec.appendChild(p);box.appendChild(sec);
 }
 
+
+const SEV={Extreme:['--s3','Extremo'],Severe:['--s3','Grave'],Moderate:['--s2','Moderado'],Minor:['--s1','Baixo'],Unknown:['--s1','']};
+async function alertasDC(){
+  const box=document.getElementById('alertasdc');
+  try{
+    const al=await api('alertas_dc_ativos?select=*&order=enviado_em.desc&limit=5');
+    box.innerHTML='';dcHero=al.length?'Há '+(al.length>1?al.length+' alertas oficiais':'um alerta oficial')+' da Defesa Civil em vigor para a região, veja abaixo.':'';heroRios();if(!al.length)return;
+    const w=document.createElement('section');w.className='dcs';w.setAttribute('aria-label','Alertas da Defesa Civil');
+    for(const a of al){
+      const [cor,nome]=SEV[a.severidade]||SEV.Unknown;
+      const d=document.createElement('div');d.className='dc';d.style.setProperty('--c',css(cor));
+      d.innerHTML='<div class="k"></div><h2></h2><p class="t"></p><p class="i"></p><small></small>';
+      d.querySelector('.k').textContent='Alerta oficial da Defesa Civil'+(nome?' · risco '+nome.toLowerCase():'');
+      d.querySelector('h2').textContent=a.titulo||a.evento||'Alerta';
+      const t=d.querySelector('.t');if(a.descricao&&a.descricao!==a.titulo)t.textContent=a.descricao;else t.remove();
+      const i=d.querySelector('.i');if(a.instrucao)i.textContent=a.instrucao;else i.remove();
+      d.querySelector('small').textContent='Enviado '+hora(a.enviado_em)+(a.fim?' · válido até '+hora(a.fim):'')+(a.emissor?' · '+a.emissor:'');
+      w.appendChild(d);
+    }
+    box.appendChild(w);
+  }catch(e){box.innerHTML='';}
+}
 async function carregar(){
   const st=document.getElementById('stxt'),dot=document.getElementById('dot');
   try{
@@ -432,6 +461,7 @@ async function carregar(){
     origem(document.getElementById('gorigem'),lo);
     usinas(au);
     aguaChegando(ar);
+    alertasDC();
     tabela(res);
     chuvaTab(res);
     const ult=res.map(r=>r.ultima_leitura).filter(Boolean).sort().pop();
