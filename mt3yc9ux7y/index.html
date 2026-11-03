@@ -269,6 +269,8 @@ const ESCALA={velhas:{max:750,lim:[450,565,670],nomes:['atenção 4,50','Roças 
   sabara:{max:520,lim:[269,359,448],nomes:['atenção 2,69','alerta 3,59','transborda 4,48']}};
 const TIT=['Sem risco de enchente agora','Atenção: rio acima do normal','Alerta: risco de enchente','Alerta máximo: risco alto de enchente'];
 let nivelGeral=0, sitCache=null;
+let vazaoRaposos=null;
+const GUIA=q=>q==null?null:q>=400?['Emergência','--s3']:q>=150?['Alerta','--s2']:q>=100?['Atenção','--s1']:['Normal','--s0'];
 function cards(sit,res){
   sitCache=sit;
   const box=document.getElementById('cards');box.innerHTML='';
@@ -290,7 +292,10 @@ function cards(sit,res){
     }
     d.innerHTML=`<div class="l"><span class="nm">${s.rio}<small>${onde}</small></span><span class="v">${fmt(s.nivel_referencia_cm/100)} m<small></small></span></div>${barra}
       <p class="info">${tend?tend+' · ':''}chuva 6 h / 24 h: ${fmt(ref?.chuva_6h,0)} / ${fmt(ref?.chuva_24h,0)} mm · leitura ${hora(s.ultima_leitura)}</p>
+      <p class="info guia"></p>
       <p class="motivo"></p>`;
+    {const g=d.querySelector('.guia');const gg=velhas?GUIA(vazaoRaposos):null;
+     if(gg){g.innerHTML=`Vazão em Raposos: <b>${fmt(vazaoRaposos,0)} m³/s</b> · guia da Defesa Civil: <b style="color:${css(gg[1])}">${gg[0].toLowerCase()}</b> (atenção a partir de 100 m³/s, alerta 150, emergência 400)`;}else g.remove();}
     d.querySelector('.v small').textContent=s.estagio;
     if(s.nivel_alerta>0)d.querySelector('.motivo').textContent=s.motivo;else d.querySelector('.motivo').remove();
     box.appendChild(d);
@@ -484,12 +489,13 @@ async function carregar(){
     const [sit,res,lr,lc,col,lo,au,ar]=await Promise.all([
       api('situacao_rios?select=*'),
       api('ana_resumo?select=*'),
-      api(`ana_leituras?select=datahora,nivel_cm,chuva_mm&estacao=eq.41200430&datahora=gte.${desde}&order=datahora`),
+      api(`ana_leituras?select=datahora,nivel_cm,chuva_mm,vazao_m3s&estacao=eq.41200430&datahora=gte.${desde}&order=datahora`),
       api(`ana_leituras?select=datahora,nivel_cm,chuva_mm,estacao&estacao=in.(41210001,315670023H)&datahora=gte.${desde}&order=datahora`),
       api('ana_coletas?select=executado_em,ok&order=executado_em.desc&limit=1'),
       api(`ana_leituras?select=datahora,nivel_cm,estacao&estacao=in.(41180500,41193000,41195050,41200430)&nivel_cm=not.is.null&datahora=gte.${desde}&order=datahora`),
       api('alerta_usinas?select=*').catch(()=>null),
       api('alerta_rio_acima?select=*').catch(()=>null)]);
+    {const q=lr.filter(x=>x.vazao_m3s!=null);vazaoRaposos=q.length?Number(q[q.length-1].vazao_m3s):null;}
     cards(sit,res);
     grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:500,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',
       limites:[[450,'atenção','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
