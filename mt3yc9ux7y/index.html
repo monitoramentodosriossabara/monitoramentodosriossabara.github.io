@@ -57,10 +57,13 @@ h3{font-size:17px;line-height:1.25;text-wrap:balance}
 .wx .t{font-size:44px;font-weight:700;line-height:1}
 .wx .d{font-size:15px;color:var(--muted)}
 .wx .d b{color:var(--fg)}
-.hours{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;align-items:end;height:60px;border-bottom:1px solid var(--line)}
+.hours{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:2px;align-items:end;height:60px;border-bottom:1px solid var(--line)}
 .hours i{display:block;background:var(--chuva);border-radius:2px 2px 0 0;opacity:.35;min-height:1px}
 .hours i.mm{opacity:1}
-.hl{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);gap:8px}
+.hl{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:2px;font-size:11px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.hl span{white-space:nowrap;overflow:visible}
+.hl span.d0{color:var(--fg);font-weight:700}
+@media (max-width:700px){.hl span:nth-child(3n+2),.hl span:nth-child(3n+3){visibility:hidden}}
 .leg2{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .leg2 i{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--chuva);margin-right:5px;vertical-align:-1px}
 .prevbox{padding:10px 14px;border-radius:8px;border-left:4px solid var(--c);background:var(--fill);font-size:15px;margin:0}
@@ -155,7 +158,10 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 .link{background:var(--navy);color:#f7f2e8;border-radius:16px}
 .link small{color:#b9c9d8}
 .link span[aria-hidden]{color:var(--goldb);font-size:22px}
-.oficial{background:var(--fill)}
+.oficial{background:color-mix(in srgb,var(--s2) 13%,var(--panel));border:2px solid var(--s2);border-left-width:8px;border-radius:14px;padding:18px 20px;font-size:16px;display:grid;gap:8px}
+.oficial p{margin:0}
+.oficial .of-tit{font-family:var(--f-serif);font-weight:900;font-size:clamp(21px,3.2vw,28px);line-height:1.2;color:var(--s3);display:flex;align-items:center;gap:12px;text-wrap:balance}
+.of-ic{flex:none;width:36px;height:36px;border-radius:50%;background:var(--s3);color:#fff;display:grid;place-items:center;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:22px;font-weight:700}
 details.mais>summary{font-family:var(--f-serif);font-size:18px}
 details.mais>summary::after{color:var(--gold)}
 footer .lai{border-left-color:var(--goldb)}
@@ -182,7 +188,7 @@ footer .lai{border-left-color:var(--goldb)}
   <p id="herop"></p>
 </section>
 
-<p class="oficial"><strong>Atenção: esta não é uma ferramenta oficial.</strong> É um painel informativo, feito de forma voluntária, e os estágios do painel (rio normal, subindo, alto e muito alto) são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>. Os contatos estão no fim da página.</p>
+<div class="oficial" role="note"><p class="of-tit"><span class="of-ic" aria-hidden="true">!</span>Atenção: esta não é uma ferramenta oficial.</p><p>É um painel informativo, feito de forma voluntária, e os estágios do painel (rio normal, subindo, alto e muito alto) são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>. Os contatos estão no fim da página.</p></div>
 
 <div id="alertasdc"></div>
 
@@ -193,7 +199,7 @@ footer .lai{border-left-color:var(--goldb)}
     <h2>Tempo em Sabará</h2>
     <div class="wx"><span class="t" id="sabT">—</span><span class="d" id="sabD">Carregando a previsão…</span></div>
     <div class="hours" id="sabH" aria-label="Chance de chuva por hora nas próximas 24 horas"></div>
-    <div class="hl"><span id="sabH0"></span><span id="sabH1"></span></div>
+    <div class="hl" id="sabHL" aria-hidden="true"></div>
     <div class="leg2"><span><i style="opacity:.35"></i>chance de chuva por hora</span><span><i></i>hora com 1 mm ou mais previsto</span></div>
     <div id="prevaviso"></div>
   </section>
@@ -442,7 +448,8 @@ async function tempo(){
      document.querySelector('#sabD b').textContent=(ICO(cur.weather_code)+' '+(WMO[cur.weather_code]||'')).trim();
      document.getElementById('sabH').innerHTML=hs.map(h=>`<i class="${h.p>=1?'mm':''}" style="height:${Math.max(2,h.pr)}%" title="${new Date(h.t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})}h: ${h.pr}% de chance, ${fmt(h.p,1)} mm"></i>`).join('');
      const hh=t=>new Date(t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})+'h';
-     if(hs.length){document.getElementById('sabH0').textContent=hh(hs[0].t);document.getElementById('sabH1').textContent=hh(hs[hs.length-1].t);}
+     const hn=t=>+new Date(t).toLocaleString('en-US',{timeZone:'America/Sao_Paulo',hour:'numeric',hour12:false})%24;
+     document.getElementById('sabHL').innerHTML=hs.map(h=>{const n=hn(h.t);return `<span class="${n===0?'d0':''}" title="${hh(h.t)}">${n}h</span>`;}).join('');
     }
     box.innerHTML='<thead><tr><th>Cidade</th><th class="n">Chuva prev. 24 h</th><th>Agora</th><th class="n">Temp.</th><th class="n">Chovendo</th><th class="n">Prev. 48 h</th><th class="n">Chance de chuva</th><th>Próximas 48 h</th></tr></thead><tbody>'+
       linhas.map(l=>`<tr><td>${l.nome}</td><td class="n"><b>${fmt(l.s24,0)} mm</b></td><td><span class="cond">${ICO(l.cur.weather_code)} ${WMO[l.cur.weather_code]||'—'}</span></td><td class="n">${fmt(l.cur.temperature_2m,0)}°C</td><td class="n">${fmt(l.cur.precipitation,1)} mm</td><td class="n">${fmt(l.s48,0)} mm</td><td class="n">${fmt(l.prob,0)}%</td><td>${l.spark}</td></tr>`).join('')+'</tbody>';
