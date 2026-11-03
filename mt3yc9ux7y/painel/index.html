@@ -689,7 +689,7 @@ h1{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,4vw,32px);l
 h2{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0;text-wrap:balance}
 h3{font-family:var(--f-display);font-weight:700;font-size:17px;margin:0}
 .eyebrow{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.12em;font-size:13px;color:var(--s1);font-weight:600}
-p{margin:0;max-width:72ch}
+p{margin:0}
 .muted{color:var(--muted)}
 .finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
 .find{background:var(--fill);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px}
@@ -773,7 +773,7 @@ nav.abas button:focus-visible,nav.abas a:focus-visible{outline:2px solid var(--a
 .intro{display:grid;gap:6px}
 .rodape .lai{border-left-color:var(--accent)!important}
 .tab{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
-.rodape{margin-top:12px;padding-top:20px;border-top:1px solid var(--line);display:grid;gap:12px;max-width:760px}
+.rodape{margin-top:12px;padding-top:20px;border-top:1px solid var(--line);display:grid;gap:12px}
 .rodape .aviso{margin:0;padding:12px 16px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--velhas);border-radius:6px;font-size:14px}
 .rodape .autoria{margin:0;color:var(--muted);font-size:14px}
 .agora{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--line);border-left:4px solid var(--s1);border-radius:8px;background:var(--panel);color:var(--fg);text-decoration:none;max-width:520px}
@@ -852,7 +852,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div class="legend"><span><i style="background:var(--velhas)"></i>Cheia do Rio das Velhas</span><span><i style="background:var(--sabara)"></i>Cheia do Rio Sabará</span><span><i style="background:var(--hit)"></i>Bairro atingido</span><span><i style="background:var(--goldb);border-radius:50%"></i>Relato de morador</span><span id="lgeo" hidden><i style="background:#f2c94c"></i>Encosta ocupada 20–30% <i style="background:#e8802c;margin-left:8px"></i>30–45% <i style="background:#c8352b;margin-left:8px"></i>acima de 45%</span><span><i style="background:#6b3fa0;border-radius:0;transform:rotate(45deg)"></i>Deslizamento / enxurrada registrados</span></div>
 </div>
 <div class="grid2">
-  <section><h2>Bairros e a subida que os atinge</h2>
+  <section style="grid-column:1/-1"><h2>Bairros e a subida que os atinge</h2>
     <p style="color:var(--muted);margin:0 0 8px">Nível em Raposos (Rio das Velhas) ou subida do Rio Sabará em que a água chega a menos de ~400 m do ponto do bairro. A última coluna é o nível da régua em que a Defesa Civil desloca equipes para o bairro. Em destaque, os atingidos com os níveis escolhidos.</p>
     <div style="overflow-x:auto"><table><thead><tr><th>Bairro</th><th class="n">Velhas: Raposos</th><th class="n">Sabará: subida</th><th class="n">Régua (Def. Civil)</th></tr></thead><tbody id="tb"></tbody></table></div>
     <p style="margin:10px 0 0;padding:10px 12px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;font-size:14px"><b>Pelo Plano de Contingência da Prefeitura</b> (estudo do Serviço Geológico do Brasil), são 18 bairros em área de risco de inundação, com 2.388 pessoas: Sobradinho (100 famílias), Caieira (80), Arraial Velho (74), Roça Grande (50), Paciência (48), Borges (45), Centro (40), Siderúrgica (40), Praia dos Bandeirantes (35), Córrego da Ilha (30), Nações Unidas (25), N. S. de Fátima (25), Pereira Vieira (22), Beira Linha (20), General Carneiro (20), Itacolomi (20), Marzagão (20) e Fogo Apagou (15).</p></section>
@@ -883,9 +883,9 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
     <p>Das 7 ocorrências de deslizamento localizadas, 6 caem em encostas marcadas, e a do Morro São Francisco fica em encosta de 39–44%. O gatilho foi a chuva: acumulado de vários dias, mais uma pancada forte (dez/2025: 47 mm em 1 h, seis horas antes).</p>
     <p class="muted" style="font-size:13px">Limites: o relevo tem quadrados de 30 m e não enxerga cortes de barranco nem muros de arrimo, que é onde quase todos os acidentes começaram. A camada mostra onde olhar primeiro, não substitui a vistoria da Defesa Civil nem o mapa oficial de áreas de risco.</p></section>
   <section class="note"><h2>Como ler e limites do protótipo</h2>
-    <div class="cal"><b>Comparação com 2020:</b> Centro, Paciência e Roça Grande foram atingidos. Só pelo Rio das Velhas, os três aparecem juntos a partir de ~8 m. Com o Rio Sabará também cheio, o Centro é atingido bem antes. A calibração precisa de marcas de cheia reais.</div>
+    <div class="cal"><b>Comparação com 2020 e 2022:</b> com os botões das duas cheias, Paciência, Caieira, Arraial Velho e Roça Grande aparecem atingidos, como aconteceu. O Centro foi atingido pelo Rio Sabará represado: suba os dois controles juntos. Marcas de cheia medidas nas casas (com fita métrica) melhoram o ajuste.</div>
     <ul>
-      <li>O "nível normal" é a superfície do rio no relevo de satélite, não o zero da régua da Defesa Civil.</li>
+      <li>O controle do Rio das Velhas usa o nível em Raposos. A altura da água no mapa é estimada como esse nível menos 3 m, e a régua de Sabará pela relação das leituras de jan. e mar. de 2026.</li>
       <li>O relevo é de superfície: telhados e árvores contam como chão, então a mancha urbana sai menor que a real. Erro vertical típico: 2 a 4 m. Cada quadradinho tem 30 m.</li>
       <li>Córregos menores (como o Soledade, em Borba Gato) ainda não estão no modelo.</li>
       <li>Ruas e bairros: OpenStreetMap. O ponto do bairro fica no centro dele, às vezes no alto do morro.</li>
@@ -1000,7 +1000,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   </tbody></table></div>
   <p class="muted">Para o alerta, isso quer dizer que o limite do Rio Sabará precisa mudar conforme o nível do Rio das Velhas: com o Velhas acima da cota em Raposos, o Sabará transborda bem antes. O simulador de manchas já considera esse refluxo.</p></section>
 <section class="card"><h2>O que falta medir em Sabará</h2>
-  <ul style="margin:0;padding-left:18px;display:grid;gap:4px;max-width:80ch">
+  <ul style="margin:0;padding-left:18px;display:grid;gap:4px">
     <li><b>Nível do Rio Sabará no Centro.</b> O sensor do Cemaden na ponte da Av. Longitudinal (estação 315670023H) começou a medir em <b>23/04/2021</b>, parou em <b>24/02/2023</b> e só voltou em <b>26/10/2026</b>: ficou <b>3 anos e 8 meses parado</b>, mais tempo do que funcionou (1 ano e 10 meses). Ele não mediu a cheia de 2020 nem nenhum evento de 2023 a 2026; mediu só as cheias de jan/2022 e dez/2022. Desde 26/10/2026 a página "Como está o rio agora" registra o nível dele a cada 15 minutos. Um segundo sensor perto da Praça de Esportes ainda ajudaria a separar "cheia do Rio Sabará" de "represamento pelo Velhas".</li>
     <li><b>Nível do Rio das Velhas em Sabará.</b> Só a régua da Prefeitura, com leituras publicadas de vez em quando no Instagram. A câmera ao vivo no YouTube não guarda histórico. Registrar a régua a cada 15 minutos, por uma pessoa ou automaticamente pela imagem da câmera, criaria a série que falta.</li>
     <li><b>Chuva hora a hora na cidade.</b> Está nos pluviômetros do Cemaden. O download é pelo formulário do Mapa Interativo, um mês por pedido.</li>
@@ -1015,7 +1015,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <p class="muted">Chuva acumulada até o momento de referência e nível do rio. Um traço indica dado ausente ou pluviômetro com defeito naquele período.</p>
   <div class="tbl"><table id="tsig"></table></div></section>
 <section class="card"><h2>Limites e próximos passos</h2>
-  <ul style="margin:0;padding-left:18px;display:grid;gap:4px;max-width:80ch">
+  <ul style="margin:0;padding-left:18px;display:grid;gap:4px">
     <li>A chuva diária de Sabará é lida às 7h e soma as 24 horas anteriores, por isso aparece como uma barra larga terminando às 7h.</li>
     <li>São números de 2 a 4 eventos por rio. Servem como primeiro ajuste dos alertas, não como regra definitiva.</li>
     <li>Os dados de telemetria são brutos (não consistidos pela ANA). Alguns pluviômetros pararam de registrar em certos eventos.</li>
