@@ -275,7 +275,7 @@ function cards(sit,res){
   const by=Object.fromEntries(res.map(r=>[r.codigo,r]));
   for(const s of sit){
     const velhas=s.rio==='Rio das Velhas', sensor=!!(s.onde&&s.onde.includes('Longitudinal'));
-    const ref=velhas?by['41200430']:(sensor?by['315670023H']:by['41210001']);
+    const ref=velhas?by['41200430']:(sensor?by['CEM-6224']:by['41210001']); // chuva do Rio Sabará: Borba Gato (pluviômetro da Av. Longitudinal com defeito)
     const cor=css(CORES[s.nivel_alerta]||'--s0');
     const d=document.createElement('div');d.className='rio';d.style.setProperty('--c',cor);
     const varr=s.variacao_3h_cm;
@@ -338,7 +338,8 @@ function grafico(host,serie,opt){
   host.appendChild(svg);
 }
 
-const PLUV=[['Sabará','315670023H','Ribeirão Sabará (Av. Longitudinal)'],['Sabará','CEM-6224','Borba Gato'],['Sabará','CEM-6211','Ravena'],['Sabará','CEM-6222','N. S. de Fátima'],['Sabará','CEM-3126','Santa Inês'],
+// 315670023H (Av. Longitudinal): pluviômetro com defeito desde 02/11/2026 (0,2 mm/h constante); fora da tabela até o conserto
+const PLUV=[['Sabará','CEM-6224','Borba Gato'],['Sabará','CEM-6211','Ravena'],['Sabará','CEM-6222','N. S. de Fátima'],['Sabará','CEM-3126','Santa Inês'],
  ['Caeté','41210001','Centro (ANA)'],['Caeté','CEM-6218','Penedia'],['Caeté','CEM-6217','José Brandão'],['Caeté','CEM-6219','Cidade Jardim'],
  ['Raposos','41200430','Rio das Velhas (ANA)'],['Nova Lima','CEM-4256','Honório Bicalho'],['Nova Lima','41193000','Rio do Peixe (ANA)'],['Nova Lima','CEM-4153','Jardim Canadá'],
  ['Rio Acima','41195050','Rio das Velhas (ANA)'],['Itabirito','CEM-19403','Itabirito']];
@@ -351,7 +352,7 @@ function chuvaTab(res){
     return `<tr${velho?' style="opacity:.55"':''}><td style="white-space:normal;min-width:140px"><b>${cid}</b><br><span class="muted" style="font-size:13px">${loc}</span></td>`+(velho?'<td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td>':
       cel(r.chuva_1h,1)+cel(r.chuva_6h,0,[30,60])+cel(r.chuva_24h,0,[50,100])+cel(r.chuva_72h,0,[120,200]))+`<td>${ult?hora(r.ultima_chuva):'sem dado'}</td></tr>`;}).join('');
   document.getElementById('tabchuva').innerHTML='<thead><tr><th>Onde</th><th class="n">1 h (mm)</th><th class="n">6 h</th><th class="n">24 h</th><th class="n">72 h</th><th>Última leitura</th></tr></thead><tbody>'+rows+'</tbody>';
-  document.getElementById('pluvoff').textContent=off.length?'Sem leitura nas últimas 3 horas (em cinza): '+off.join(', ')+'. Pluviômetros do Cemaden que estão fora do ar há meses e não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).':'Pluviômetros do Cemaden fora do ar há meses, que não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).';
+  document.getElementById('pluvoff').textContent=off.length?'Sem leitura nas últimas 3 horas (em cinza): '+off.join(', ')+'. Pluviômetro da estação da Av. Longitudinal com defeito desde 02/11/2026, fora da tabela. Pluviômetros do Cemaden que estão fora do ar há meses e não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).':'Pluviômetro da estação da Av. Longitudinal com defeito desde 02/11/2026, fora da tabela. Pluviômetros do Cemaden fora do ar há meses, que não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).';
 }
 
 const ORD=['315670023H','41210001','41200430','41195050','41193000','41180500'];
