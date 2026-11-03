@@ -784,6 +784,13 @@ nav.abas button:focus-visible,nav.abas a:focus-visible{outline:2px solid var(--a
 @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--s3) 60%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
 .calib{padding:12px 16px;border:1px solid var(--line);border-left:4px solid var(--s2);border-radius:12px;background:var(--panel);font-size:14px;line-height:1.5}
+
+@media (max-width:600px){table{font-size:13px} th,td{padding:6px 5px}}
+/* responsivo: tabelas quebram o texto em vez de esticar o cartão */
+td{white-space:normal;overflow-wrap:break-word}
+td.n,th.n{white-space:nowrap;overflow-wrap:normal}
+.tbl{max-width:100%}
+.card,.note,section{min-width:0}
 .tab[hidden]{display:none}
 .contatos .ct{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px}
 .contatos .ct a{display:grid;gap:2px;padding:12px 14px;border-radius:12px;background:var(--fill);color:var(--fg);text-decoration:none;border:1px solid var(--line)}
@@ -1144,7 +1151,7 @@ function render(){
   // ranking das cheias
   {const c=document.getElementById('crank'),rk=D.ranking;
    c.innerHTML=`<div class="head"><h2>As maiores cheias do Rio das Velhas desde 1990</h2><span class="chip">Pico na régua da ANA</span></div><p class="muted">Ponte Raul Soares (Lagoa Santa) fica abaixo de Sabará e soma a água do Rio Sabará e do Arrudas. Honório Bicalho (Nova Lima) fica acima. As réguas antigas eram lidas só às 7h e às 17h, então o pico real pode ter sido maior.</p><div class="chart"></div>`;
-   const W=1100,rowH=34,L=110,R=380,H=rk.length*rowH+30,mx=1300,xs=v=>L+v/mx*(W-L-R);
+   const W=1320,rowH=34,L=110,R=560,H=rk.length*rowH+30,mx=1300,xs=v=>L+v/mx*(W-L-R);
    const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img','aria-label':'Ranking das maiores cheias'});
    [0,400,800,1200].forEach(g=>{el('line',{x1:xs(g),x2:xs(g),y1:0,y2:H-24,stroke:css('--grid')},svg);const t=el('text',{x:xs(g),y:H-8,'text-anchor':'middle'},svg);t.textContent=(g/100)+' m';});
    rk.forEach((r,i)=>{const y0=i*rowH+4;const t=el('text',{x:L-8,y:y0+16,'text-anchor':'end',class:'lab'},svg);t.textContent=r.ev;
