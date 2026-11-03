@@ -110,6 +110,11 @@ table.tempo td,table.tempo th{white-space:nowrap}
 .dc p{margin:0;font-size:15px}
 .dc small{color:var(--muted);font-size:13px}
 .dcs{display:grid;gap:10px}
+.contatos .ct{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px}
+.contatos .ct a{display:grid;gap:2px;padding:12px 14px;border-radius:12px;background:var(--fill);color:var(--fg);text-decoration:none;border:1px solid var(--line)}
+.contatos .ct a:hover{outline:2px solid var(--accent)}
+.contatos .ct b{font-family:var(--f-serif,inherit);font-size:22px;font-weight:900}
+.contatos .ct span{font-size:13px;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--muted);display:grid;gap:8px}
 footer .lai{padding:10px 14px;border-left:4px solid var(--accent);background:var(--fill);border-radius:8px;color:var(--fg)}
 
@@ -173,7 +178,7 @@ footer .lai{border-left-color:var(--goldb)}
   <p id="herop"></p>
 </section>
 
-<p class="oficial"><strong>Atenção: esta não é uma ferramenta oficial.</strong> É um painel informativo, feito de forma voluntária, e os estágios acima são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>.</p>
+<p class="oficial"><strong>Atenção: esta não é uma ferramenta oficial.</strong> É um painel informativo, feito de forma voluntária, e os estágios do painel (rio normal, subindo, alto e muito alto) são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>. Os contatos estão no fim da página.</p>
 
 <div id="alertasdc"></div>
 
@@ -199,7 +204,7 @@ footer .lai{border-left-color:var(--goldb)}
 
 <section class="card">
   <h2>Chuva medida agora</h2>
-  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (atenção) e 60 mm ou mais (nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
+  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (amarelo) e 60 mm ou mais (laranja; nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
   <div class="tbl"><table id="tabchuva" style="min-width:0"></table></div>
   <p class="muted" style="font-size:13px" id="pluvoff"></p>
 </section>
@@ -246,6 +251,17 @@ footer .lai{border-left-color:var(--goldb)}
   <div><div class="tbl"><table id="tab"></table></div></div>
 </details>
 
+<section class="card contatos" aria-label="Contatos da Defesa Civil de Sabará">
+  <h2>Contatos da Defesa Civil de Sabará</h2>
+  <div class="ct">
+    <a href="tel:199"><b>199</b><span>Emergência, 24 horas</span></a>
+    <a href="tel:+553136727722"><b>(31) 3672-7722</b><span>Defesa Civil de Sabará</span></a>
+    <a href="https://wa.me/5531997234853"><b>(31) 99723-4853</b><span>WhatsApp da Defesa Civil</span></a>
+    <a href="sms:40199"><b>40199</b><span>Envie seu CEP por SMS e receba os alertas oficiais</span></a>
+  </div>
+  <p class="muted" style="margin:0;font-size:14px">Rua Marquês de Sapucaí, 317, Largo do Marquês, Centro · <a href="https://www.instagram.com/defesacivilsabara/">Instagram @defesacivilsabara</a></p>
+</section>
+
 <footer>
   <div><strong>Morou ou mora na beira do rio?</strong> <a href="https://monitoramentodosriossabara.github.io/relato/">Conte o que você lembra das enchentes</a> (pode mandar áudio e fotos).</div>
   <div class="lai">Este painel depende dos dados oficiais da Defesa Civil, solicitados pela Lei de Acesso à Informação. Na resposta de 03/11/2026, a Defesa Civil informou que não há registro histórico das leituras da régua nem das cheias de 2020 e 2022; por isso os relatos dos moradores são a principal fonte para calibrar os alertas.</div>
@@ -265,9 +281,9 @@ const NS='http://www.w3.org/2000/svg';
 const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
 async function api(p){const r=await fetch(URL_API+p,{headers:{apikey:KEY}});if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
-const ESCALA={velhas:{max:750,lim:[450,565,670],nomes:['atenção 4,50','Roças Grandes 5,65','Caieira 6,70']},
-  sabara:{max:520,lim:[269,359,448],nomes:['atenção 2,69','alerta 3,59','transborda 4,48']}};
-const TIT=['Sem risco de enchente agora','Atenção: rio acima do normal','Alerta: risco de enchente','Alerta máximo: risco alto de enchente'];
+const ESCALA={velhas:{max:750,lim:[450,565,670],nomes:['subindo 4,50','Roças Grandes 5,65','Caieira 6,70']},
+  sabara:{max:520,lim:[269,359,448],nomes:['2,69 (Cemaden)','alerta 3,59','transborda 4,48']}};
+const TIT=['Rio normal: sem risco de enchente agora','Rio subindo: fique atento','Rio alto: risco de enchente','Rio muito alto: risco alto de enchente'];
 let nivelGeral=0, sitCache=null;
 let vazaoRaposos=null;
 const GUIA=q=>q==null?null:q>=400?['Emergência','--s3']:q>=150?['Alerta','--s2']:q>=100?['Atenção','--s1']:['Normal','--s0'];
@@ -308,7 +324,7 @@ function heroRios(){
   const n=Math.max(0,...sitCache.map(s=>s.nivel_alerta||0));nivelGeral=n;
   const hero=document.getElementById('hero');hero.style.setProperty('--c',css(CORES[n]));
   const pior=sitCache.find(s=>(s.nivel_alerta||0)===n);
-  document.getElementById('herok').textContent=n?pior.estagio:'Normal';
+  document.getElementById('herok').textContent=n?pior.estagio:'Rio normal';
   document.getElementById('heroh').textContent=TIT[n];
   const txt=n?sitCache.filter(s=>s.nivel_alerta>0).map(s=>s.rio+': '+s.motivo).join(' '):'O Rio das Velhas e o Rio Sabará estão no nível normal.';
   document.getElementById('herop').textContent=txt+(prevHero?' '+prevHero:'')+(dcHero?' '+dcHero:'');
@@ -498,12 +514,12 @@ async function carregar(){
     {const q=lr.filter(x=>x.vazao_m3s!=null);vazaoRaposos=q.length?Number(q[q.length-1].vazao_m3s):null;}
     cards(sit,res);
     grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:500,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',
-      limites:[[450,'atenção','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
+      limites:[[450,'rio subindo','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
     const sens=lc.filter(q=>q.estacao==='315670023H'&&q.nivel_cm!=null), cae=lc.filter(q=>q.estacao==='41210001');
     const serieSab=(sens.length?sens.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null})):cae.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null}))).concat(cae.map(q=>({datahora:q.datahora,nivel_cm:null,chuva_mm:q.chuva_mm})));
     serieSab.sort((x,y)=>new Date(x.datahora)-new Date(y.datahora));
     grafico(document.getElementById('gsabara'),serieSab,{cor:'--sabara',ymin:sens.length?500:150,chuva:true,chuvaLab:'Chuva em Caeté',titulo:'Nível do Rio Sabará e chuva em Caeté nas últimas 72 horas',
-      limites:sens.length?[[269,'atenção','--s1'],[359,'alerta','--s2'],[448,'transbordamento','--s3']]:[[237,'pico de dez/2022','--s2']]});
+      limites:sens.length?[[269,'atenção (Cemaden)','--s1'],[359,'alerta (Cemaden)','--s2'],[448,'transbordamento','--s3']]:[[237,'pico de dez/2022','--s2']]});
     origem(document.getElementById('gorigem'),lo);
     usinas(au);
     aguaChegando(ar);

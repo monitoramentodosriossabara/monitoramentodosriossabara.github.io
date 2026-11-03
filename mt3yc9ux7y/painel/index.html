@@ -727,6 +727,7 @@ button:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 #riscos .ctl .read{font-family:var(--f-mono);font-size:20px;color:var(--c);font-variant-numeric:tabular-nums}
 #riscos .ctl small{color:var(--muted)}
 #riscos input[type=range]{width:100%;accent-color:var(--c)}
+#riscos .presets button{font-size:13px;padding:4px 10px;border-radius:999px}
 #riscos input[type=range]:focus-visible{outline:2px solid var(--c);outline-offset:3px}
 #riscos .staff{height:10px;border:1px solid var(--line);position:relative;background:repeating-linear-gradient(90deg,var(--fg) 0 1px,transparent 1px calc(100%/12))}
 #riscos .mapbox{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -784,6 +785,12 @@ nav.abas button:focus-visible,nav.abas a:focus-visible{outline:2px solid var(--a
 @media (prefers-reduced-motion:reduce){.pulse{animation:none}}
 .calib{padding:12px 16px;border:1px solid var(--line);border-left:4px solid var(--s2);border-radius:12px;background:var(--panel);font-size:14px;line-height:1.5}
 .tab[hidden]{display:none}
+.contatos .ct{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:10px}
+.contatos .ct a{display:grid;gap:2px;padding:12px 14px;border-radius:12px;background:var(--fill);color:var(--fg);text-decoration:none;border:1px solid var(--line)}
+.contatos .ct a:hover{outline:2px solid var(--accent)}
+.contatos .ct b{font-family:var(--f-serif,inherit);font-size:22px;font-weight:900}
+.contatos .ct span{font-size:13px;color:var(--muted)}
+
 
 /* Tema Rios de Sabará: azul do rio, creme e dourado (mesmo dos stories) */
 :root{--navy:#0c2640;--goldb:#d4ad55;--gold:#9a7428;--bg:#f7f2e8;--panel:#fffdf8;--fill:#efe7d6;--fg:#0b1c2c;--muted:#5a6470;--line:#e3d9c4;--grid:#ebe3d2;--accent:#1d5fa8;--f-serif:"Fraunces",Georgia,"Times New Roman",serif}
@@ -823,23 +830,24 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 </div>
 <div class="tab" id="tab-mapa" role="tabpanel"><section id="riscos" style="display:grid;gap:18px;min-width:0;grid-template-columns:minmax(0,1fr)">
 <p class="muted" style="margin:0">Suba cada rio no seu controle e veja no mapa, rua por rua, o que fica abaixo da água. Marque "Risco geológico" para ver as encostas ocupadas e os deslizamentos já registrados. Use o zoom para ver os nomes das ruas.</p>
-<div class="calib" role="note"><strong>Mapa aproximado, ainda não calibrado.</strong> A mancha foi calculada só com o relevo de satélite (quadrados de 30 m, que contam telhados e árvores como chão; erro típico de 2 a 4 m na altura). No Centro e na Caieira ela mostra <b>menos água do que já aconteceu</b>: em jan/2022 a água saiu do leito na Caieira bem antes do que o mapa indica. O controle mede metros acima do rio visto pelo satélite, não a régua da Ponte Saldanha Marinho. Use o mapa só para ver quais áreas são mais baixas. Ele está sendo ajustado com relatos de moradores e dados da Defesa Civil.</div>
+<div class="calib" role="note"><strong>Mapa ajustado com a régua oficial e relatos de moradores.</strong> A mancha vem do relevo de satélite (quadrados de 30 m; erro típico de 2 a 4 m na altura) e foi ajustada para o nível do Rio das Velhas em Raposos usando os pontos da Defesa Civil (régua em 3,10 m e 3,50 m, do Relatório de Mapeamento de Áreas de Risco de 2023) e as cheias de 2020 e 2022. O ajuste erra para o lado da cautela: em alguns bairros o mapa mostra água um pouco antes do que já aconteceu. Use para saber quais ruas são mais baixas, não para medir a altura exata da água.</div>
 <div class="controls">
-  <div class="ctl v"><div class="top"><label for="sv">Rio das Velhas</label><span class="read" id="rv"></span></div>
-    <input type="range" id="sv" min="0" max="24" step="1" value="16"><div class="staff" aria-hidden="true"></div>
-    <small>Metros acima do nível normal. 0 = rio normal.</small></div>
+  <div class="ctl v"><div class="top"><label for="sv">Rio das Velhas, nível em Raposos</label><span class="read" id="rv"></span></div>
+    <input type="range" id="sv" min="4" max="21" step="1" value="19"><div class="staff" aria-hidden="true"></div>
+    <small id="rvr"></small>
+    <div class="presets" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-r="6.5">Régua 3,10 m</button><button type="button" data-r="7.3">Régua 3,50 m</button><button type="button" data-r="9.3">Cheia de 2022</button><button type="button" data-r="9.8">Cheia de 2020</button></div></div>
   <div class="ctl s"><div class="top"><label for="ss">Rio Sabará (Córrego/Ribeirão Sabará)</label><span class="read" id="rs"></span></div>
-    <input type="range" id="ss" min="0" max="24" step="1" value="3"><div class="staff" aria-hidden="true"></div>
+    <input type="range" id="ss" min="0" max="24" step="1" value="0"><div class="staff" aria-hidden="true"></div>
     <small>Subida própria do Rio Sabará, por chuva forte na bacia dele.</small></div>
 </div>
 <div class="mapbox"><div id="map" role="region" aria-label="Mapa de Sabará com manchas de inundação"></div>
-  <div class="tog"><label><input type="checkbox" id="relevo" checked> Relevo</label><label><input type="checkbox" id="geo"> Risco geológico</label><label><input type="checkbox" id="ocor" checked> Ocorrências</label></div>
-  <div class="legend"><span><i style="background:var(--velhas)"></i>Cheia do Rio das Velhas</span><span><i style="background:var(--sabara)"></i>Cheia do Rio Sabará</span><span><i style="background:var(--hit)"></i>Bairro atingido</span><span id="lgeo" hidden><i style="background:#f2c94c"></i>Encosta ocupada 20–30% <i style="background:#e8802c;margin-left:8px"></i>30–45% <i style="background:#c8352b;margin-left:8px"></i>acima de 45%</span><span><i style="background:#6b3fa0;border-radius:0;transform:rotate(45deg)"></i>Deslizamento / enxurrada registrados</span></div>
+  <div class="tog"><label><input type="checkbox" id="relevo" checked> Relevo</label><label><input type="checkbox" id="geo"> Risco geológico</label><label><input type="checkbox" id="ocor" checked> Ocorrências</label><label><input type="checkbox" id="rel" checked> Relatos de moradores</label></div>
+  <div class="legend"><span><i style="background:var(--velhas)"></i>Cheia do Rio das Velhas</span><span><i style="background:var(--sabara)"></i>Cheia do Rio Sabará</span><span><i style="background:var(--hit)"></i>Bairro atingido</span><span><i style="background:var(--goldb);border-radius:50%"></i>Relato de morador</span><span id="lgeo" hidden><i style="background:#f2c94c"></i>Encosta ocupada 20–30% <i style="background:#e8802c;margin-left:8px"></i>30–45% <i style="background:#c8352b;margin-left:8px"></i>acima de 45%</span><span><i style="background:#6b3fa0;border-radius:0;transform:rotate(45deg)"></i>Deslizamento / enxurrada registrados</span></div>
 </div>
 <div class="grid2">
   <section><h2>Bairros e a subida que os atinge</h2>
-    <p style="color:var(--muted);margin:0 0 8px">Subida em que a água chega a menos de ~400 m do ponto do bairro, para cada rio. Em destaque, os atingidos com os níveis escolhidos.</p>
-    <div style="overflow-x:auto"><table><thead><tr><th>Bairro</th><th class="n">Velhas</th><th class="n">Sabará</th></tr></thead><tbody id="tb"></tbody></table></div>
+    <p style="color:var(--muted);margin:0 0 8px">Nível em Raposos (Rio das Velhas) ou subida do Rio Sabará em que a água chega a menos de ~400 m do ponto do bairro. A última coluna é o nível da régua em que a Defesa Civil desloca equipes para o bairro. Em destaque, os atingidos com os níveis escolhidos.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Bairro</th><th class="n">Velhas: Raposos</th><th class="n">Sabará: subida</th><th class="n">Régua (Def. Civil)</th></tr></thead><tbody id="tb"></tbody></table></div>
     <p style="margin:10px 0 0;padding:10px 12px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;font-size:14px"><b>Pelo Plano de Contingência da Prefeitura</b> (estudo do Serviço Geológico do Brasil), são 18 bairros em área de risco de inundação, com 2.388 pessoas: Sobradinho (100 famílias), Caieira (80), Arraial Velho (74), Roça Grande (50), Paciência (48), Borges (45), Centro (40), Siderúrgica (40), Praia dos Bandeirantes (35), Córrego da Ilha (30), Nações Unidas (25), N. S. de Fátima (25), Pereira Vieira (22), Beira Linha (20), General Carneiro (20), Itacolomi (20), Marzagão (20) e Fogo Apagou (15).</p></section>
   <section class="note" style="grid-column:1/-1"><h2>Ruas atingidas e pontos de encontro</h2>
   <p style="margin:0 0 8px;color:var(--muted)">Do Plano de Contingência 2021–2024 da Prefeitura, reproduzido no Relatório de Mapeamento de Áreas de Risco de 2023. Em caso de inundação, este é o ponto de encontro de cada bairro.</p>
@@ -908,17 +916,17 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div style="display:grid;gap:8px;min-width:0"><h3>Rio das Velhas (Roças Grandes, Caieira, Paciência)</h3>
    <p class="muted">Cheia lenta, que vem de longe. Antecedência de 12 a 24 horas.</p>
    <div class="tbl"><table><thead><tr><th>Nível</th><th>Quando acionar</th><th>O que esperar</th></tr></thead><tbody>
-   <tr><td><b>Atenção</b></td><td>72 h de chuva rio acima ≥ 120 mm (média de Rio Acima, Nova Lima e Itabirito) <b>ou</b> Raposos ≥ 4,5 m subindo</td><td>Jan/2026: Raposos 4,5 m e régua de Sabará 2,10 m. Mar/2026: Raposos 5,5 m e régua 2,60 m, depois de 124 mm em um dia em Itabirito</td></tr>
-   <tr><td><b>Alerta</b></td><td>Raposos ≥ 5,65 m (cota de inundação) e subindo</td><td>Água começa a sair do leito em Roças Grandes. Pico chega cerca de 20 h depois</td></tr>
-   <tr><td><b>Alerta máximo</b></td><td>Raposos ≥ 6,7 m, ou Rio Acima ≥ 9 m</td><td>Caieira e Ponte Saldanha Marinho alagando. Ainda faltam de 8 a 12 h e cerca de 2,5 m de subida</td></tr>
+   <tr><td><b>Rio subindo</b></td><td>72 h de chuva rio acima ≥ 120 mm (média de Rio Acima, Nova Lima e Itabirito) <b>ou</b> Raposos ≥ 4,5 m subindo</td><td>Jan/2026: Raposos 4,5 m e régua de Sabará 2,10 m. Mar/2026: Raposos 5,5 m e régua 2,60 m, depois de 124 mm em um dia em Itabirito</td></tr>
+   <tr><td><b>Rio alto</b></td><td>Raposos ≥ 5,65 m (cota de inundação) e subindo</td><td>Água começa a sair do leito em Roças Grandes. Pico chega cerca de 20 h depois</td></tr>
+   <tr><td><b>Rio muito alto</b></td><td>Raposos ≥ 6,7 m, ou Rio Acima ≥ 9 m</td><td>Caieira e Ponte Saldanha Marinho alagando. Ainda faltam de 8 a 12 h e cerca de 2,5 m de subida</td></tr>
    </tbody></table></div>
    <p class="note">De Raposos 5,65 m até 6,9 m: 7 a 9 h. Pico em Rio Acima chega a Raposos de 3 a 8 h depois. Nas duas grandes cheias choveu ≥ 100 mm em 24 h rio acima, com 15 dias anteriores já acima de 270 mm.</p></div>
   <div style="display:grid;gap:8px;min-width:0"><h3>Rio Sabará (Centro, Laranjeiras, Rodoviária, Dona Bilu)</h3>
    <p class="muted">Cheia rápida, de chuva forte na própria bacia. Antecedência de 2 a 4 horas.</p>
    <div class="tbl"><table><thead><tr><th>Nível</th><th>Quando acionar</th><th>O que esperar</th></tr></thead><tbody>
-   <tr><td><b>Atenção</b></td><td>Chuva em 3 h ≥ 30 mm em Caeté (Penedia, Caeté ANA) ou no Centro</td><td>Dez/2024: 34 mm em 6 h e o rio subiu sem sair do leito</td></tr>
-   <tr><td><b>Alerta</b></td><td>Chuva em 6 h ≥ 60 mm em Caeté <b>e</b> no Centro, <b>ou</b> sensor do Centro ≥ 2,0 m subindo</td><td>Dez/2022: de 2,0 m a 3,8 m em cerca de 3 h</td></tr>
-   <tr><td><b>Alerta máximo</b></td><td>Sensor do Centro ≥ 3,0 m, ou Caeté ≥ 2,0 m subindo</td><td>Transbordamento perto da Dona Bilu e da Rodoviária em até 1 h</td></tr>
+   <tr><td><b>Rio subindo</b></td><td>Chuva em 3 h ≥ 30 mm em Caeté (Penedia, Caeté ANA) ou no Centro</td><td>Dez/2024: 34 mm em 6 h e o rio subiu sem sair do leito</td></tr>
+   <tr><td><b>Rio alto</b></td><td>Chuva em 6 h ≥ 60 mm em Caeté <b>e</b> no Centro, <b>ou</b> sensor do Centro ≥ 2,0 m subindo</td><td>Dez/2022: de 2,0 m a 3,8 m em cerca de 3 h</td></tr>
+   <tr><td><b>Rio muito alto</b></td><td>Sensor do Centro ≥ 3,0 m, ou Caeté ≥ 2,0 m subindo</td><td>Transbordamento perto da Dona Bilu e da Rodoviária em até 1 h</td></tr>
    </tbody></table></div>
    <p class="note">O nível normal do Rio Sabará no Centro é cerca de 0,5 m. Transbordou nas duas vezes medidas com 3,7 a 3,8 m. A chuva forte é o primeiro sinal; o nível só confirma.</p></div>
   </div>
@@ -1010,6 +1018,16 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   </ul>
   <p class="note">Fontes: ANA (Hidro-Telemetria e séries históricas, estações 41195050, 41200430, 41210001, 41199998, 41340000, 01943006, 01943010), SGB/SACE (cotas de inundação), Sou Sabará, Folha de Sabará, O Tempo, Estado de Minas e relatos de moradores.</p></section>
 </div>
+<section class="card contatos" aria-label="Contatos da Defesa Civil de Sabará">
+  <h2>Contatos da Defesa Civil de Sabará</h2>
+  <div class="ct">
+    <a href="tel:199"><b>199</b><span>Emergência, 24 horas</span></a>
+    <a href="tel:+553136727722"><b>(31) 3672-7722</b><span>Defesa Civil de Sabará</span></a>
+    <a href="https://wa.me/5531997234853"><b>(31) 99723-4853</b><span>WhatsApp da Defesa Civil</span></a>
+    <a href="sms:40199"><b>40199</b><span>Envie seu CEP por SMS e receba os alertas oficiais</span></a>
+  </div>
+  <p class="muted" style="margin:0;font-size:14px">Rua Marquês de Sapucaí, 317, Largo do Marquês, Centro · <a href="https://www.instagram.com/defesacivilsabara/">Instagram @defesacivilsabara</a></p>
+</section>
 <footer class="rodape">
   <p class="aviso"><strong>Sobre os dados.</strong> Este painel usa dados públicos da ANA, do Cemaden e das publicações da Defesa Civil de Sabará. Os dados oficiais da Defesa Civil foram solicitados pela Lei de Acesso à Informação. Na resposta de 03/11/2026, a Defesa Civil informou que não há registro histórico das leituras da régua nem das cheias de 2020 e 2022, e que a câmera da ponte não grava. Por isso os relatos dos moradores são a principal fonte para calibrar o mapa. Os números serão revistos quando o mapeamento de risco de 2023 da Prefeitura for disponibilizado.</p>
   <p class="autoria"><strong>Morou ou mora na beira do rio?</strong> <a href="https://monitoramentodosriossabara.github.io/relato/" style="color:var(--accent)">Conte o que você lembra das enchentes</a>.</p>
@@ -1178,6 +1196,13 @@ const shade=L.imageOverlay(D.shade,D.bounds,{opacity:.55}).addTo(map);
 map.createPane('geoPane').style.zIndex=440; map.getPane('geoPane').style.pointerEvents='none';
 const geoL=L.imageOverlay(GEO.png,D.bounds,{pane:'geoPane',opacity:.85});
 const ocL=L.layerGroup().addTo(map);
+const relL=L.layerGroup().addTo(map);
+const RELATOS=[[-19.9144,-43.82281,'Rua São Cristóvão (Paciência)','Rio das Velhas. Água dentro de casa em 1997 e 2020 (cerca de 45 cm) e em 2022 (mais de 1 m). Em dez/1995 parou um pouco abaixo.'],
+ [-19.91391,-43.82486,'Av. Albert Scharlé (Paciência)','Rio das Velhas. Em jan/2020, por volta das 20h, uma família perdeu tudo; atingida de novo em 2022. Perto do antigo Supimpa, outro morador relata água só na rua.'],
+ [-19.8931,-43.836,'Roça Grande','Rio das Velhas. Mais de 1 m de água dentro de casa em duas cheias, provavelmente 2020 e 2022.'],
+ [-19.8925,-43.80576,'Rua José Brochado Gomes (Laranjeiras)','Rio Sabará. Madrugada de 16/01/2003: cerca de 1 m dentro de casa; água também nas Laranjeiras e até o asilo.'],
+ [-19.89192,-43.80595,'Rua João Hamaceck (Praia dos Bandeirantes)','Rio Sabará. Água no beco do portão, sem entrar na casa; subiu devagar, de manhã, sem chuva no local.']];
+for(const [la,lo,t,x] of RELATOS){ L.circleMarker([la,lo],{radius:7,color:'#0c2640',weight:2,fillColor:'#d4ad55',fillOpacity:1}).bindPopup('<b></b><br><span></span>').on('popupopen',e=>{const el=e.popup.getElement();el.querySelector('b').textContent=t;el.querySelector('span').textContent=x;}).addTo(relL); }
 for(const e of EVTS){L.marker([e.la,e.lo],{icon:L.divIcon({className:'',html:`<div style="width:12px;height:12px;background:#6b3fa0;border:2px solid #fff;transform:rotate(45deg)"></div>`,iconSize:[12,12]})}).bindPopup(`<b>${e.t} · ${e.d}</b><br>${e.n}`).addTo(ocL);}
 map.createPane('floodPane').style.zIndex=450; map.getPane('floodPane').style.pointerEvents='none';
 const flood=L.imageOverlay('',D.bounds,{className:'flood',pane:'floodPane'}).addTo(map);
@@ -1198,9 +1223,15 @@ const fmt=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDi
 let LVd=null, LSd=null;
 function px(src){return new Promise(r=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas');c.width=D.w;c.height=D.h;const x=c.getContext('2d');x.drawImage(i,0,0);r(x.getImageData(0,0,D.w,D.h).data);};i.src=src;});}
 const cv=document.createElement('canvas'); cv.width=D.w; cv.height=D.h; const cx=cv.getContext('2d');
+// Ajuste: altura acima do rio no relevo ≈ nível em Raposos − OFF (pontos da Defesa Civil e cheias de 2020/2022)
+const OFF=3.0, R=()=>+sv.value*0.5;
+const REGUA=r=>r<3.5?'abaixo de 1,7 m':r>7.8?'acima de 3,9 m':'≈ '+fmt(2.10+0.476*(r-4.45))+' m';
+const OFIC={'Santo Antônio de Roça Grande':'3,10 m','Centro':'3,10 m','Arraial Velho':'3,50 m','Siderúrgica':'3,50 m','Gaia':'3,50 m','Vila Michel':'3,50 m','Caieira':'3,50 m'};
+document.querySelectorAll('.presets button').forEach(b=>b.onclick=()=>{sv.value=Math.round(+b.dataset.r*2);update();});
 function update(){
-  const a=+sv.value, b=+ss.value, La=a?D.levels[a-1]:0, Lb=b?D.levels[b-1]:0;
-  document.getElementById('rv').textContent='+'+fmt(La)+' m'; document.getElementById('rs').textContent='+'+fmt(Lb)+' m';
+  const r=R(), a=Math.max(0,Math.min(24,Math.round((r-OFF)/0.5))), b=+ss.value, La=a?D.levels[a-1]:0, Lb=b?D.levels[b-1]:0;
+  document.getElementById('rv').textContent=fmt(r)+' m'; document.getElementById('rs').textContent='+'+fmt(Lb)+' m';
+  document.getElementById('rvr').textContent='Régua da Ponte Saldanha Marinho '+REGUA(r)+'. Normal: Raposos perto de 2 m. Cota de inundação: 5,65 m.';
   if(LVd){ const im=cx.createImageData(D.w,D.h), o=im.data, cv1=hex(tok('--velhas')), cs1=hex(tok('--sabara'));
     for(let p=0;p<D.w*D.h;p++){const v=LVd[p*4], s=LSd[p*4]; let c=null;
       if(v===0) c=cv1; else if(v<255&&v<=a) c=cv1; else if(s<255&&s>0&&s<=b) c=cs1; else if(s===0) c=cs1;
@@ -1211,13 +1242,14 @@ function update(){
   for(const [n,la,lo,fv,fs] of D.places){ const hv=fv!==null&&a&&fv<=La, hs=fs!==null&&b&&fs<=Lb, hit=hv||hs;
     L.circleMarker([la,lo],{radius:hit?6:3.5,color:'#fff',weight:1.5,fillColor:hit?tok('--hit'):tok('--muted'),fillOpacity:1}).bindTooltip(n,{permanent:hit,direction:'right',offset:[6,0],className:'bairro-label'+(hit?' hit':'')}).addTo(placeLayer); }
   for(const [n,la,lo,fv,fs] of rows){ const hv=fv!==null&&a&&fv<=La, hs=fs!==null&&b&&fs<=Lb; const tr=document.createElement('tr'); if(hv||hs) tr.className='on';
-    tr.innerHTML=`<td></td><td class="n${hv?' onv':''}">${fv===null?'—':fmt(fv)+' m'}</td><td class="n${hs?' ons':''}">${fs===null?'—':fmt(fs)+' m'}</td>`; tr.firstChild.textContent=n; tb.appendChild(tr);
+    tr.innerHTML=`<td></td><td class="n${hv?' onv':''}">${fv===null?'—':fmt(fv+OFF)+' m'}</td><td class="n${hs?' ons':''}">${fs===null?'—':'+'+fmt(fs)+' m'}</td><td class="n">${OFIC[n]||'—'}</td>`; tr.firstChild.textContent=n; tb.appendChild(tr);
     tr.style.cursor='pointer'; tr.onclick=()=>map.setView([la,lo],16.5); }
 }
 function labelsByZoom(){ if(map.getZoom()>=15.5) labelLayer.addTo(map); else labelLayer.remove(); }
 map.on('zoomend',labelsByZoom);
 document.getElementById('geo').onchange=e=>{e.target.checked?geoL.addTo(map):geoL.remove();document.getElementById('lgeo').hidden=!e.target.checked;};
 document.getElementById('ocor').onchange=e=>e.target.checked?ocL.addTo(map):ocL.remove();
+document.getElementById('rel').onchange=e=>e.target.checked?relL.addTo(map):relL.remove();
 document.getElementById('relevo').onchange=e=>e.target.checked?shade.addTo(map):shade.remove();
 sv.oninput=update; ss.oninput=update;
 function retheme(){drawVectors(); labelsByZoom(); update();}
