@@ -416,6 +416,26 @@ const CIDADES=[['Sabará',-19.886,-43.807],['Caeté',-19.880,-43.669],['Raposos'
 const WMO={0:'Céu limpo',1:'Poucas nuvens',2:'Parcialmente nublado',3:'Nublado',45:'Neblina',48:'Neblina',51:'Garoa fraca',53:'Garoa',55:'Garoa forte',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',66:'Chuva gelada',67:'Chuva gelada',71:'Neve',73:'Neve',75:'Neve',80:'Pancadas fracas',81:'Pancadas de chuva',82:'Pancadas fortes',95:'Trovoadas',96:'Trovoadas com granizo',99:'Trovoadas com granizo'};
 const ICO=c=>c==null?'':c<=1?'☀️':c<=2?'⛅':c<=48?'☁️':c<=67?'🌧️':c<=82?'🌦️':'⛈️';
 let tempoCache=null,tempoEm=0;
+// "Agora" do cartão Tempo em Sabará: chuva MEDIDA nos pluviômetros da cidade (Cemaden) vale mais que o modelo de previsão.
+let sabPrev=null, medSab=null;
+const PLUV_SAB=[['CEM-6224','Borba Gato'],['CEM-6211','Ravena'],['CEM-6222','N. S. de Fátima'],['CEM-3126','Santa Inês'],['315670023H','Av. Longitudinal']];
+function calcMedSab(res){
+  const by=Object.fromEntries(res.map(r=>[r.codigo,r])),agora=Date.now();let m=null;
+  for(const [cod,loc] of PLUV_SAB){const r=by[cod];if(!r||!r.ultima_chuva||agora-new Date(r.ultima_chuva).getTime()>2*3600e3)continue;
+    const c1=Number(r.chuva_1h)||0;if(!m||c1>m.c1)m={c1,c3:Number(r.chuva_3h)||0,loc,t:r.ultima_chuva};}
+  medSab=m;pintaSab();
+}
+function pintaSab(){
+  if(!sabPrev)return;const {cur,s24,prob}=sabPrev;const el=document.getElementById('sabD');
+  const hora=t=>new Date(t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit'});
+  let chov,desc=(ICO(cur.weather_code)+' '+(WMO[cur.weather_code]||'')).trim();
+  if(medSab&&medSab.c1>=0.2){chov=`<b>chovendo</b>: ${fmt(medSab.c1,1)} mm na última hora no pluviômetro ${medSab.loc} (Cemaden, até ${hora(medSab.t)})`;
+    if(!(cur.weather_code>=51))desc=medSab.c1>=10?'🌧️ Chuva forte':medSab.c1>=2?'🌧️ Chuva':'🌦️ Chuva fraca';}
+  else if(medSab)chov=`sem chuva medida na última hora (pluviômetros do Cemaden em Sabará)`;
+  else chov=cur.precipitation>0?`previsão indica ${fmt(cur.precipitation,1)} mm agora`:'sem chuva prevista agora';
+  el.innerHTML=`<b></b><br>${chov}<br>Próximas 24 h: <b>${s24<1?'menos de 1':'cerca de '+fmt(s24,0)} mm</b>, chance máxima ${fmt(prob,0)}%`;
+  el.querySelector('b').textContent=desc;
+}
 async function tempo(){
   const box=document.getElementById('tabtempo'),av=document.getElementById('prevaviso');
   try{
@@ -443,9 +463,7 @@ async function tempo(){
        .filter(h=>h.t>=agora-3600e3+1&&h.t<agora+24*3600e3).slice(0,24);
      const l=linhas[0];
      document.getElementById('sabT').textContent=fmt(cur.temperature_2m,0)+'°';
-     const chov=cur.precipitation>0?`chovendo ${fmt(cur.precipitation,1)} mm agora`:'sem chuva agora';
-     document.getElementById('sabD').innerHTML=`<b></b><br>${chov}<br>Próximas 24 h: <b>${l.s24<1?'menos de 1':'cerca de '+fmt(l.s24,0)} mm</b>, chance máxima ${fmt(l.prob,0)}%`;
-     document.querySelector('#sabD b').textContent=(ICO(cur.weather_code)+' '+(WMO[cur.weather_code]||'')).trim();
+     sabPrev={cur,s24:l.s24,prob:l.prob}; pintaSab();
      document.getElementById('sabH').innerHTML=hs.map(h=>`<i class="${h.p>=1?'mm':''}" style="height:${Math.max(2,h.pr)}%" title="${new Date(h.t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})}h: ${h.pr}% de chance, ${fmt(h.p,1)} mm"></i>`).join('');
      const hh=t=>new Date(t).toLocaleTimeString('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit'})+'h';
      const hn=t=>+new Date(t).toLocaleString('en-US',{timeZone:'America/Sao_Paulo',hour:'numeric',hour12:false})%24;
@@ -523,7 +541,7 @@ async function carregar(){
       api('alerta_usinas?select=*').catch(()=>null),
       api('alerta_rio_acima?select=*').catch(()=>null)]);
     {const q=lr.filter(x=>x.vazao_m3s!=null);vazaoRaposos=q.length?Number(q[q.length-1].vazao_m3s):null;}
-    cards(sit,res);
+    cards(sit,res); calcMedSab(res);
     grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:500,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',
       limites:[[450,'rio subindo','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
     const sens=lc.filter(q=>q.estacao==='315670023H'&&q.nivel_cm!=null), cae=lc.filter(q=>q.estacao==='41210001');
