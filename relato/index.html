@@ -92,12 +92,31 @@ header h1{font-family:var(--f-serif);font-weight:900;font-size:32px}
 .eyebrow{color:var(--gold)!important}
 .card{border-radius:16px}
 .cheia{border-left-color:var(--goldb)}
+@media (max-width:680px){.commenu body{padding-bottom:64px}}
+header.site .in{display:flex;justify-content:space-between;align-items:center;gap:12px}
 </style>
 </head>
 <body>
 <header class="site"><div class="in">
   <a class="brand" href="../">Rios de <span>Sabará</span></a>
 </div></header>
+<script>
+// Menu do painel só para quem chegou aqui clicando em "Contar" dentro do painel.
+// O endereço do painel não fica escrito nesta página: ele vem do próprio link de onde a pessoa veio.
+(function(){
+  var base=null;
+  try{var m=document.referrer.match(/^https:\/\/monitoramentodosriossabara\.github\.io\/([a-z0-9]{6,})\//);if(m&&m[1]!=='relato')base=m[1];}catch(e){}
+  try{if(base)sessionStorage.setItem('painelBase',base);else base=sessionStorage.getItem('painelBase');}catch(e){}
+  if(!base||!/^[a-z0-9]{6,}$/.test(base))return;
+  var u='https://monitoramentodosriossabara.github.io/'+base+'/';
+  var nav=document.createElement('nav');nav.className='abas';nav.setAttribute('aria-label','Seções');
+  [['Agora',u],['Mapa',u+'painel/#mapa'],['Prever',u+'painel/#prever'],['Histórico',u+'painel/#historico'],['Contar',null]].forEach(function(x){
+    var a=document.createElement('a');a.textContent=x[0];a.href=x[1]||location.pathname;if(!x[1])a.setAttribute('aria-current','page');nav.appendChild(a);});
+  var hin=document.querySelector('header.site .in');hin.appendChild(nav);
+  var b=hin.querySelector('.brand');b.href=u;
+  document.documentElement.classList.add('commenu');
+})();
+</script>
 <div class="wrap">
 <header>
   <div class="eyebrow">Sabará · Enchentes</div>
