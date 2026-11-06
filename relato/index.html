@@ -67,7 +67,7 @@ nav.abas a{padding:15px 10px 13px;color:var(--muted);text-decoration:none;font-w
 nav.abas a:hover{color:var(--fg)}
 nav.abas a[aria-current]{color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
 @media (max-width:680px){
- nav.abas{position:fixed;left:0;right:0;bottom:0;z-index:1200;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+ nav.abas{position:fixed;left:0;right:0;bottom:0;z-index:1200;background:var(--bg);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding:0 env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
  nav.abas a{text-align:center;padding:13px 2px 12px;font-size:13px}
  nav.abas a[aria-current]{box-shadow:inset 0 3px 0 var(--accent)}
  body{padding-bottom:calc(52px + env(safe-area-inset-bottom,0px))}}
@@ -94,6 +94,8 @@ header h1{font-family:var(--f-serif);font-weight:900;font-size:32px}
 .cheia{border-left-color:var(--goldb)}
 @media (max-width:680px){.commenu body{padding-bottom:64px}}
 header.site .in{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+@media (max-width:680px){nav.abas a,nav.abas button{white-space:normal!important;line-height:1.15;font-size:12px!important;padding:10px 1px 9px!important;display:flex;align-items:center;justify-content:center}}
 </style>
 </head>
 <body>
@@ -101,7 +103,7 @@ header.site .in{display:flex;justify-content:space-between;align-items:center;ga
   <a class="brand" href="../">Rios de <span>Sabará</span></a>
 </div></header>
 <script>
-// Menu do painel só para quem chegou aqui clicando em "Contar" dentro do painel.
+// Menu do painel só para quem chegou aqui clicando em "Participe" dentro do painel.
 // O endereço do painel não fica escrito nesta página: ele vem do próprio link de onde a pessoa veio.
 (function(){
   var base=null;
@@ -110,7 +112,7 @@ header.site .in{display:flex;justify-content:space-between;align-items:center;ga
   if(!base||!/^[a-z0-9]{6,}$/.test(base))return;
   var u='https://monitoramentodosriossabara.github.io/'+base+'/';
   var nav=document.createElement('nav');nav.className='abas';nav.setAttribute('aria-label','Seções');
-  [['Agora',u],['Mapa',u+'painel/#mapa'],['Prever',u+'painel/#prever'],['Histórico',u+'painel/#historico'],['Contar',null]].forEach(function(x){
+  [['Agora',u],['Previsão',u+'previsao/'],['Mapa',u+'painel/#mapa'],['Histórico',u+'painel/#historico'],['Como funciona',u+'painel/#como-funciona'],['Participe',null]].forEach(function(x){
     var a=document.createElement('a');a.textContent=x[0];a.href=x[1]||location.pathname;if(!x[1])a.setAttribute('aria-current','page');nav.appendChild(a);});
   var hin=document.querySelector('header.site .in');hin.appendChild(nav);
   var b=hin.querySelector('.brand');b.href=u;
