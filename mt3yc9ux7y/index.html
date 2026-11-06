@@ -167,6 +167,8 @@ details.mais>summary::after{color:var(--gold)}
 footer .lai{border-left-color:var(--goldb)}
 
 @media (max-width:680px){nav.abas a,nav.abas button{white-space:normal!important;line-height:1.15;font-size:12px!important;padding:10px 1px 9px!important;display:flex;align-items:center;justify-content:center}}
+[hidden]{display:none!important}
+tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font-size:16px;padding-top:10px;padding-bottom:6px}
 </style>
 </head>
 <body>
@@ -210,16 +212,6 @@ footer .lai{border-left-color:var(--goldb)}
   </section>
 </div>
 
-<a class="link" href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa"><span>Até onde a água chega em cada bairro<small>Suba o nível do rio no mapa e veja as ruas que ficam abaixo da água</small></span><span aria-hidden="true">→</span></a>
-
-<section class="card">
-  <h2>Chuva medida agora</h2>
-  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (amarelo) e 60 mm ou mais (laranja; nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
-  <div class="tbl"><table id="tabchuva" style="min-width:0"></table></div>
-  <p class="muted" style="font-size:13px" id="pluvoff"></p>
-</section>
-
-
 <section class="card">
   <h3>Rio das Velhas, medido em Raposos: últimas 72 horas</h3>
   <p class="muted">Raposos fica logo acima de Sabará. As linhas tracejadas são os níveis em que, nas cheias passadas, a água chegou a cada lugar.</p>
@@ -231,6 +223,20 @@ footer .lai{border-left-color:var(--goldb)}
   <p class="muted">Sensor do Cemaden dentro de Sabará. As linhas tracejadas são as cotas oficiais do Cemaden para este ponto. As barras são a chuva por hora em Caeté, na cabeceira do rio: o Rio Sabará costuma subir 2 a 4 horas depois de chuva forte lá.</p>
   <div id="gsabara"></div>
 </section>
+
+<a class="link" id="linkmapa" hidden href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa"><span>Até onde a água chega em cada bairro<small>Suba o nível do rio no mapa e veja as ruas que ficam abaixo da água</small></span><span aria-hidden="true">→</span></a>
+
+<section class="card">
+  <h2>Chuva medida agora</h2>
+  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (amarelo) e 60 mm ou mais (laranja; nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
+  <div class="tbl"><table id="tabchuva" style="min-width:0"></table></div>
+  <p class="muted" style="font-size:13px" id="pluvoff"></p>
+</section>
+
+<details class="mais">
+  <summary>Nível dos rios: todas as réguas</summary>
+  <div><div class="tbl"><table id="tab"></table></div></div>
+</details>
 
 <details class="mais">
   <summary>A água vem das represas ou da chuva perto de Sabará?</summary>
@@ -248,10 +254,13 @@ footer .lai{border-left-color:var(--goldb)}
   </div>
 </details>
 
-<details class="mais">
-  <summary>Nível dos rios: todas as réguas</summary>
-  <div><div class="tbl"><table id="tab"></table></div></div>
-</details>
+
+
+
+
+
+
+
 
 <section class="card contatos" aria-label="Contatos da Defesa Civil de Sabará">
   <h2>Contatos da Defesa Civil de Sabará</h2>
@@ -324,7 +333,7 @@ let dcHero='';
 function heroRios(){
   if(!sitCache)return;
   const n=Math.max(0,...sitCache.map(s=>s.nivel_alerta||0));nivelGeral=n;
-  const hero=document.getElementById('hero');hero.style.setProperty('--c',css(CORES[n]));
+  const hero=document.getElementById('hero');hero.style.setProperty('--c',css(CORES[n]));{const lm=document.getElementById('linkmapa');if(lm)lm.hidden=n===0;}
   const pior=sitCache.find(s=>(s.nivel_alerta||0)===n);
   document.getElementById('herok').textContent=n?pior.estagio:'Rio normal';
   document.getElementById('heroh').textContent=TIT[n];
@@ -370,11 +379,13 @@ function chuvaTab(res){
   const by=Object.fromEntries(res.map(r=>[r.codigo,r])),agora=Date.now();
   const cel=(v,d,lim)=>{if(v==null)return '<td class="n">—</td>';const c=lim&&v>=lim[1]?'--s2':lim&&v>=lim[0]?'--s1':null;return `<td class="n"${c?` style="font-weight:700;color:${css(c)}"`:''}>${fmt(v,d)}</td>`;};
   const off=[];
+  let ultCid='';
   const rows=PLUV.map(([cid,cod,loc])=>{const r=by[cod];const ult=r&&r.ultima_chuva?new Date(r.ultima_chuva).getTime():0;const velho=!ult||agora-ult>3*3600e3;
     if(velho){off.push(cid+' – '+loc);}
-    return `<tr${velho?' style="opacity:.55"':''}><td style="white-space:normal;min-width:140px"><b>${cid}</b><br><span class="muted" style="font-size:13px">${loc}</span></td>`+(velho?'<td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td>':
+    const cab=cid!==ultCid?`<tr class="cid"><td colspan="6">${cid}</td></tr>`:'';ultCid=cid;
+    return cab+`<tr${velho?' style="opacity:.55"':''}><td style="white-space:normal;min-width:140px">${loc}</td>`+(velho?'<td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td>':
       cel(r.chuva_1h,1)+cel(r.chuva_6h,0,[30,60])+cel(r.chuva_24h,0,[50,100])+cel(r.chuva_72h,0,[120,200]))+`<td>${ult?hora(r.ultima_chuva):'sem dado'}</td></tr>`;}).join('');
-  document.getElementById('tabchuva').innerHTML='<thead><tr><th>Onde</th><th class="n">1 h (mm)</th><th class="n">6 h</th><th class="n">24 h</th><th class="n">72 h</th><th>Última leitura</th></tr></thead><tbody>'+rows+'</tbody>';
+  document.getElementById('tabchuva').innerHTML='<thead><tr><th>Pluviômetro</th><th class="n">1 h (mm)</th><th class="n">6 h</th><th class="n">24 h</th><th class="n">72 h</th><th>Última leitura</th></tr></thead><tbody>'+rows+'</tbody>';
   document.getElementById('pluvoff').textContent=off.length?'Sem leitura nas últimas 3 horas (em cinza): '+off.join(', ')+'. Pluviômetro da estação da Av. Longitudinal com defeito desde 02/11/2026, fora da tabela. Pluviômetros do Cemaden que estão fora do ar há meses e não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).':'Pluviômetro da estação da Av. Longitudinal com defeito desde 02/11/2026, fora da tabela. Pluviômetros do Cemaden fora do ar há meses, que não aparecem na tabela: Raposos (Água Limpa), Rio Acima (Morgans), Caeté (Bom Sucesso) e Nova Lima (Centro, Retiro, Rodovia MG-30, Vale do Sereno, Oswaldo Barbosa Penna II).';
 }
 
