@@ -848,7 +848,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
     <div class="presets" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-r="6.5">Régua 3,10 m</button><button type="button" data-r="7.3">Régua 3,50 m</button><button type="button" data-r="9.3">Cheia de 2022</button><button type="button" data-r="9.8">Cheia de 2020</button></div></div>
   <div class="ctl s"><div class="top"><label for="ss">Rio Sabará (Córrego/Ribeirão Sabará)</label><span class="read" id="rs"></span></div>
     <input type="range" id="ss" min="0" max="24" step="1" value="0"><div class="staff" aria-hidden="true"></div>
-    <small>Subida própria do Rio Sabará, por chuva forte na bacia dele. Este rio não tem medição oficial de nível nem marcas de cheias registradas; use para simular.</small></div>
+    <small>Subida própria do Rio Sabará, por chuva forte na bacia dele, acima do nível normal (cerca de 0,5 m no sensor do Cemaden da Av. Longitudinal). Os botões usam as duas cheias medidas pelo sensor, que funcionou de 2021 a 2023; das cheias de 2020 e 2003 não há medição desse rio.</small><div class="presets presets-s" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-s="7">Dez/2022 (sensor 3,82 m)</button><button type="button" data-s="6" data-r="9.3">Jan/2022 (sensor 3,69 m, com o Rio das Velhas alto)</button></div></div>
 </div>
 <div class="mapbox"><div id="map" role="region" aria-label="Mapa de Sabará com manchas de inundação"></div>
   <div class="tog"><label><input type="checkbox" id="relevo" checked> Relevo</label><label><input type="checkbox" id="geo"> Risco geológico</label><label><input type="checkbox" id="ocor" checked> Ocorrências</label><label><input type="checkbox" id="rel" checked> Relatos de moradores</label></div>
@@ -1237,7 +1237,8 @@ const cv=document.createElement('canvas'); cv.width=D.w; cv.height=D.h; const cx
 const OFF=3.0, R=()=>+sv.value*0.5;
 const REGUA=r=>r<3.5?'abaixo de 1,7 m':r>7.8?'acima de 3,9 m':'≈ '+fmt(2.10+0.476*(r-4.45))+' m';
 const OFIC={'Santo Antônio de Roça Grande':'3,10 m','Centro':'3,10 m','Arraial Velho':'3,50 m','Siderúrgica':'3,50 m','Gaia':'3,50 m','Vila Michel':'3,50 m','Caieira':'3,50 m'};
-document.querySelectorAll('.presets button').forEach(b=>b.onclick=()=>{sv.value=Math.round(+b.dataset.r*2);update();});
+document.querySelectorAll('.presets:not(.presets-s) button').forEach(b=>b.onclick=()=>{sv.value=Math.round(+b.dataset.r*2);update();});
+document.querySelectorAll('.presets-s button').forEach(b=>b.onclick=()=>{ss.value=+b.dataset.s;sv.value=b.dataset.r?Math.round(+b.dataset.r*2):sv.min;update();});
 function update(){
   const r=R(), a=Math.max(0,Math.min(24,Math.round((r-OFF)/0.5))), b=+ss.value, La=a?D.levels[a-1]:0, Lb=b?D.levels[b-1]:0;
   document.getElementById('rv').textContent=fmt(r)+' m'; document.getElementById('rs').textContent='+'+fmt(Lb)+' m';
