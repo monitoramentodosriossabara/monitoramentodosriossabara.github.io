@@ -241,14 +241,14 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
 <details class="mais">
   <summary>A água vem das represas ou da chuva perto de Sabará?</summary>
   <div>
-    <p class="muted" style="margin:0">O Rio das Velhas passa por estas réguas antes de chegar a Sabará. Duas ficam em rios que deságuam nele, junto a pequenas usinas com represa (PCHs):</p>
+    <p class="muted" style="margin:0">Rio acima de Sabará há pequenas usinas hidrelétricas (PCHs). A <b>PCH Rio de Pedras</b> fica no próprio Rio das Velhas, em Itabirito; outra pequena usina fica no Rio do Peixe, em Nova Lima. O painel acompanha estas réguas da ANA, na ordem em que a água passa:</p>
     <ol class="caminho">
-      <li><b>Rio Itabirito, em Itabirito</b>, na usina PCH Rio de Pedras (Cemig)</li>
-      <li><b>Rio do Peixe, em Nova Lima</b>, logo abaixo de uma usina (PCH)</li>
-      <li><b>Rio das Velhas, em Rio Acima</b>, depois que esses dois rios já entraram nele</li>
-      <li><b>Rio das Velhas, em Raposos</b>, a última régua antes de Sabará</li>
+      <li><b>Rio Itabirito, em Itabirito</b>: afluente do Rio das Velhas; a estação faz parte da rede de monitoramento da PCH Rio de Pedras</li>
+      <li><b>Rio do Peixe, em Nova Lima</b>: logo abaixo de uma pequena usina</li>
+      <li><b>Rio das Velhas, em Rio Acima</b>: depois da PCH Rio de Pedras e da entrada desses dois rios</li>
+      <li><b>Rio das Velhas, em Raposos</b>: a última régua antes de Sabará</li>
     </ol>
-    <p class="muted" style="margin:0">O gráfico mostra quanto cada régua subiu nos últimos 3 dias. Quando as réguas 1 e 2 sobem primeiro, a água está vindo de cima (chuva lá ou operação das usinas) e chega a Raposos horas depois. <b>Quando só Raposos sobe</b>, a água vem da chuva perto de Sabará. As réguas mostram o nível, não a operação das comportas; esse registro é da própria usina.</p>
+    <p class="muted" style="margin:0">O gráfico mostra quanto cada régua subiu nos últimos 3 dias. Quando as réguas de cima sobem primeiro, a água está vindo de lá (chuva ou operação das usinas) e chega a Raposos horas depois. Se Rio Acima sobe rápido sem chuva forte, vale atenção: a PCH Rio de Pedras fica acima dessa régua. <b>Quando só Raposos sobe</b>, a água vem da chuva perto de Sabará. As réguas mostram o nível, não a operação das comportas; esse registro é da própria usina.</p>
     <p class="prevbox" id="usinastatus" style="--c:var(--s0)">Lendo as réguas das usinas…</p>
     <div id="gorigem"></div>
   </div>
@@ -276,7 +276,7 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
 <footer>
   <div><strong>Morou ou mora na beira do rio?</strong> <a href="https://monitoramentodosriossabara.github.io/relato/">Conte o que você lembra das enchentes</a> (pode mandar áudio e fotos).</div>
   <div class="lai">Este painel reúne dados públicos da ANA e do Cemaden e informações obtidas junto à Defesa Civil de Sabará, por meio da Lei de Acesso à Informação. Parte dos dados solicitados não consta nos registros municipais; todo o material disponível foi fornecido, inclusive o Mapeamento de Áreas de Risco de 2023. Para complementar as informações históricas, contamos com os relatos dos moradores.</div>
-  <div>Dados: ANA (Agência Nacional de Águas), estações telemétricas 41195050 Rio das Velhas em Rio Acima, 41200430 Rio das Velhas em Raposos, 41210001 Ribeirão Caeté em Caeté, 41180500 Rio Itabirito na PCH Rio de Pedras e 41193000 Rio do Peixe em Nova Lima; Cemaden, estação hidrológica 315670023H Ribeirão Sabará (Av. Longitudinal) e pluviômetros automáticos. Coleta automática a cada 15 minutos; a ANA costuma publicar com 30 a 60 minutos de atraso. A página se atualiza sozinha a cada 5 minutos.</div>
+  <div>Dados: ANA (Agência Nacional de Águas), estações telemétricas 41195050 Rio das Velhas em Rio Acima, 41200430 Rio das Velhas em Raposos, 41210001 Ribeirão Caeté em Caeté, 41180500 Rio Itabirito (rede da PCH Rio de Pedras) e 41193000 Rio do Peixe (abaixo de PCH) em Nova Lima; Cemaden, estação hidrológica 315670023H Ribeirão Sabará (Av. Longitudinal) e pluviômetros automáticos. Coleta automática a cada 15 minutos; a ANA costuma publicar com 30 a 60 minutos de atraso. A página se atualiza sozinha a cada 5 minutos.</div>
   <div>Painel desenvolvido por <strong>Simone de Figueiredo Cunha</strong> com auxílio de IA.</div>
 </footer>
 </main>
@@ -398,7 +398,7 @@ function tabela(res){
 
 function origem(host,dados){
   host.innerHTML='';
-  const EST=[['41180500','1. Rio Itabirito em Itabirito (usina)','--s1'],['41193000','2. Rio do Peixe em Nova Lima (usina)','--s2'],['41195050','3. Rio das Velhas em Rio Acima','--s0'],['41200430','4. Rio das Velhas em Raposos','--velhas']];
+  const EST=[['41180500','1. Rio Itabirito em Itabirito','--s1'],['41193000','2. Rio do Peixe em Nova Lima (abaixo de usina)','--s2'],['41195050','3. Rio das Velhas em Rio Acima','--s0'],['41200430','4. Rio das Velhas em Raposos','--velhas']];
   const W=Math.max(320,Math.round(host.clientWidth||860)),mob=W<600,R=mob?12:250,L=44,T=12,ch=mob?150:170,H=ch+40;
   const t1=Date.now(),t0=t1-72*3600e3,x=t=>L+(t-t0)/(t1-t0)*(W-L-R);
   const ser=EST.map(([c,n,cor])=>{const p=dados.filter(q=>q.estacao===c);const mn=p.length?Math.min(...p.map(q=>q.nivel_cm)):0;return {n,cor,p:p.map(q=>({t:new Date(q.datahora),v:q.nivel_cm-mn}))};});
