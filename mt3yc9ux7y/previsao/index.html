@@ -60,6 +60,7 @@ h3{font-size:17px;line-height:1.25;text-wrap:balance}
 .hours{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:2px;align-items:end;height:60px;border-bottom:1px solid var(--line)}
 .hours i{display:block;background:var(--chuva);border-radius:2px 2px 0 0;opacity:.35;min-height:1px}
 .hours i.mm{opacity:1}
+.fonteP{margin:0 0 16px;color:var(--fg);padding:10px 12px;border-left:4px solid var(--c,var(--accent));background:var(--fill,rgba(0,0,0,.04));border-radius:8px;font-size:14px;line-height:1.45}
 .hl{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:2px;font-size:11px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
 .hl span{white-space:nowrap;overflow:visible}
 .hl span.d0{color:var(--fg);font-weight:700}
@@ -221,7 +222,9 @@ table.res td,table.res th{white-space:nowrap}
   <div class="k">Previsão do tempo</div>
   <h1>Chuva e temperatura previstas para hoje, amanhã e os próximos 7 dias</h1>
   <p>Para Sabará e para as cidades por onde passam os rios antes de chegar aqui. Previsão é estimativa e erra, principalmente nas tempestades de verão, que são muito localizadas.</p>
+
 </section>
+<p class="fonteP" style="--c:var(--accent)"><b>Fonte:</b> estimativa de modelos numéricos (<a href="https://open-meteo.com/">Open-Meteo</a>). A previsão oficial para Sabará é a da <b>Defesa Civil de Sabará</b> e do <a href="https://portal.inmet.gov.br/">INMET</a>. Por isso os números podem ser diferentes dos publicados por eles.</p>
 
 <section class="card">
   <h2 id="cidT">Sabará</h2>
@@ -233,6 +236,7 @@ table.res td,table.res th{white-space:nowrap}
   <h2>Chuva prevista nas cidades da bacia</h2>
   <p class="muted">Chuva forte em Caeté faz o Rio Sabará subir em poucas horas. Chuva forte rio acima (Itabirito, Nova Lima, Rio Acima e Raposos) faz o Rio das Velhas subir de 12 a 24 horas depois.</p>
   <div class="tbl"><table id="resumo" class="res" style="min-width:0"></table></div>
+  <p class="muted" style="font-size:13px;margin:6px 0 0">Valores em milímetros, em faixas, porque a previsão não tem precisão de casa decimal.</p>
   <div id="sinal"></div>
 </section>
 
@@ -256,6 +260,8 @@ table.res td,table.res th{white-space:nowrap}
 </main>
 <script>
 const fmt=(v,d=0)=>v==null||isNaN(v)?'—':Number(v).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const faixa=v=>v==null||isNaN(v)?'—':v<1?'menos de 1 mm':v<5?'até 5 mm':v<15?'5 a 15 mm':v<30?'15 a 30 mm':v<60?'30 a 60 mm':v<100?'60 a 100 mm':'mais de 100 mm';
+const fx=v=>v==null||isNaN(v)?'—':v<1?'&lt;1':v<5?'até 5':v<15?'5–15':v<30?'15–30':v<60?'30–60':v<100?'60–100':'&gt;100';
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const CIDADES=[['Sabará',-19.886,-43.807],['Caeté',-19.880,-43.669],['Raposos',-19.966,-43.804],['Nova Lima',-19.985,-43.847],['Rio Acima',-20.088,-43.788],['Itabirito',-20.253,-43.801]];
 const WMO={0:'Céu limpo',1:'Poucas nuvens',2:'Parcialmente nublado',3:'Nublado',45:'Neblina',48:'Neblina',51:'Garoa fraca',53:'Garoa',55:'Garoa forte',56:'Garoa gelada',57:'Garoa gelada',61:'Chuva fraca',63:'Chuva',65:'Chuva forte',66:'Chuva gelada',67:'Chuva gelada',71:'Neve',73:'Neve',75:'Neve',80:'Pancadas fracas',81:'Pancadas de chuva',82:'Pancadas fortes',95:'Trovoadas',96:'Trovoadas com granizo',99:'Trovoadas com granizo'};
@@ -287,14 +293,14 @@ function resumo(){
     let m6=0;for(let i=0;i<Math.min(48,fut.length);i++)m6=Math.max(m6,fut.slice(i,i+6).reduce((a,h)=>a+h.p,0));
     const di=d.daily;const ia=di.time.indexOf(am);const s7=di.precipitation_sum.slice(0,7).reduce((a,v)=>a+(v||0),0);
     return {nome:CIDADES[k][0],s24,m6,am:ia>=0?di.precipitation_sum[ia]:null,s7,s48:fut.slice(0,48).reduce((a,h)=>a+h.p,0)};});
-  document.getElementById('resumo').innerHTML='<thead><tr><th>Cidade</th><th class="n">Próximas 24 h</th><th class="n">Amanhã</th><th class="n">Maior em 6 h</th><th class="n">7 dias</th></tr></thead><tbody>'+
-    linhas.map(l=>`<tr><td><b>${l.nome}</b></td><td class="n"><b>${fmt(l.s24)} mm</b></td><td class="n">${fmt(l.am)} mm</td><td class="n">${fmt(l.m6)} mm</td><td class="n">${fmt(l.s7)} mm</td></tr>`).join('')+'</tbody>';
+  document.getElementById('resumo').innerHTML='<thead><tr><th>Cidade</th><th class="n">Próx. 24 h</th><th class="n">Amanhã</th><th class="n">Maior em 6 h</th><th class="n">7 dias</th></tr></thead><tbody>'+
+    linhas.map(l=>`<tr><td><b>${l.nome}</b></td><td class="n"><b>${fx(l.s24)}</b></td><td class="n">${fx(l.am)}</td><td class="n">${fx(l.m6)}</td><td class="n">${fx(l.s7)}</td></tr>`).join('')+'</tbody>';
   const cae=linhas.find(l=>l.nome==='Caeté'),cima=linhas.filter(l=>['Raposos','Nova Lima','Rio Acima','Itabirito'].includes(l.nome));
   const m48=cima.reduce((a,l)=>a+l.s48,0)/cima.length;
   let n=0,t=[];
-  if(cae.m6>=60){n=2;t.push(`Previsão de até ${fmt(cae.m6)} mm em 6 horas em Caeté. Nas cheias passadas, 60 mm em 6 h na cabeceira levaram o Rio Sabará a sair do leito em 2 a 4 horas.`);}
-  else if(cae.m6>=30){n=1;t.push(`Previsão de até ${fmt(cae.m6)} mm em 6 horas em Caeté. Chuva assim já fez o Rio Sabará subir bastante.`);}
-  if(m48>=120){n=Math.max(n,1);t.push(`Previsão de ${fmt(m48)} mm em 48 h rio acima (média de Raposos, Nova Lima, Rio Acima e Itabirito): o Rio das Velhas pode subir nos próximos dias.`);}
+  if(cae.m6>=60){n=2;t.push(`Previsão de ${faixa(cae.m6)} em 6 horas em Caeté. Nas cheias passadas, 60 mm em 6 h na cabeceira levaram o Rio Sabará a sair do leito em 2 a 4 horas.`);}
+  else if(cae.m6>=30){n=1;t.push(`Previsão de ${faixa(cae.m6)} em 6 horas em Caeté. Chuva assim já fez o Rio Sabará subir bastante.`);}
+  if(m48>=120){n=Math.max(n,1);t.push(`Previsão de ${faixa(m48)} em 48 h rio acima (média de Raposos, Nova Lima, Rio Acima e Itabirito): o Rio das Velhas pode subir nos próximos dias.`);}
   if(!t.length)t.push('Sem chuva forte prevista para Caeté e rio acima nas próximas 48 horas.');
   const p=document.createElement('p');p.className='prevbox';p.style.setProperty('--c',css(['--s0','--s1','--s2'][n]));p.textContent=t.join(' ');
   const b=document.getElementById('sinal');b.innerHTML='';b.appendChild(p);
@@ -308,7 +314,9 @@ function cidade(){
   document.getElementById('cidT').textContent=CIDADES[sel][0];
   document.querySelectorAll('#chips button').forEach((b,k)=>b.setAttribute('aria-pressed',k===sel));
   const di=d.daily;
-  document.getElementById('agoraP').innerHTML=`<span class="t">${fmt(cur.temperature_2m)}°</span><span class="d"><b>${ICO(cur.weather_code)} ${WMO[cur.weather_code]||''}</b><br>Hoje: máxima ${fmt(di.temperature_2m_max[0])}°, mínima ${fmt(di.temperature_2m_min[0])}° · chuva prevista ${fmt(di.precipitation_sum[0],1)} mm · chance ${fmt(di.precipitation_probability_max[0])}%<br>Umidade agora (estimativa): ${fmt(cur.relative_humidity_2m)}%</span>`;
+  const hs0=horas(d),hj0=hojeStr(),ha0=horaAgora();
+  const s24=hs0.filter(h=>(h.dia===hj0&&h.h>=ha0)||h.dia>hj0).slice(0,24).reduce((a,h)=>a+h.p,0);
+  document.getElementById('agoraP').innerHTML=`<span class="t">${fmt(cur.temperature_2m)}°</span><span class="d"><b>${ICO(cur.weather_code)} ${WMO[cur.weather_code]||''}</b><br>Hoje: máxima ${fmt(di.temperature_2m_max[0])}°, mínima ${fmt(di.temperature_2m_min[0])}° <br>Chuva nas próximas 24 h: <b>${faixa(s24)}</b> · chance hoje ${fmt(di.precipitation_probability_max[0])}%<br>Umidade agora (estimativa): ${fmt(cur.relative_humidity_2m)}%</span>`;
   const hs=horas(d),hj=hojeStr(),am=amanhaStr(),ha=horaAgora();
   const cel=h=>`<div class="hr${h.p>=1?' mm':''}" title="${h.h}h: ${WMO[h.c]||''}, ${fmt(h.tp)}°, ${h.pr}% de chance, ${fmt(h.p,1)} mm"><span class="h">${h.h}h</span><span class="i">${ICO(h.c)}</span><span class="tp">${fmt(h.tp)}°</span><span class="pb"><i style="height:${Math.max(0,h.pr)}%"></i></span><span class="pc">${h.pr}%</span><span class="mmv">${h.p>=0.1?fmt(h.p,1):''}</span></div>`;
   const H=hs.filter(h=>h.dia===hj&&h.h>=ha);
@@ -316,7 +324,7 @@ function cidade(){
   document.getElementById('amanha').innerHTML=hs.filter(h=>h.dia===am).map(cel).join('');
   document.getElementById('dias').innerHTML=di.time.slice(0,8).map((t,i)=>{const dt=new Date(t+'T12:00:00-03:00');
     const nome=i===0?'Hoje':i===1?'Amanhã':DIAS[dt.getUTCDay()].replace(/^./,c=>c.toUpperCase());
-    return `<div class="dia"><span class="n">${nome}<small>${t.slice(8,10)}/${t.slice(5,7)}</small></span><span class="i">${ICO(di.weather_code[i])}</span><span class="c">${WMO[di.weather_code[i]]||''}</span><span class="tt"><b>${fmt(di.temperature_2m_max[i])}°</b> <span>${fmt(di.temperature_2m_min[i])}°</span></span><span class="ch">${fmt(di.precipitation_sum[i],di.precipitation_sum[i]<10?1:0)} mm<small>${fmt(di.precipitation_probability_max[i])}%</small></span></div>`;}).join('');
+    return `<div class="dia"><span class="n">${nome}<small>${t.slice(8,10)}/${t.slice(5,7)}</small></span><span class="i">${ICO(di.weather_code[i])}</span><span class="c">${WMO[di.weather_code[i]]||''}</span><span class="tt"><b>${fmt(di.temperature_2m_max[i])}°</b> <span>${fmt(di.temperature_2m_min[i])}°</span></span><span class="ch">${faixa(di.precipitation_sum[i])}<small>${fmt(di.precipitation_probability_max[i])}%</small></span></div>`;}).join('');
 }
 carregar();setInterval(carregar,30*60e3);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&dados)carregar();});
