@@ -950,7 +950,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 <section class="card" id="crank"></section>
 <section class="card" id="atlas"><div class="head"><h2>O que dizem os registros oficiais de desastre</h2><span class="chip">Atlas Digital de Desastres no Brasil</span></div>
 <p class="muted">Registros que a Prefeitura de Sabará enviou ao governo federal de 1991 a 2025: cerca de 9,3 mil desalojados e desabrigados, 4 óbitos e R$ 111,8 milhões em danos materiais, quase tudo em janeiro e fevereiro. As inundações respondem por cerca de 40% das pessoas desalojadas; o resto vem de chuvas intensas.</p>
-<div class="tbl"><table><thead><tr><th>Ano</th><th>Mês do registro</th><th class="n">Desalojados e desabrigados</th><th class="n">Óbitos</th><th class="n">Danos materiais</th><th>Observação</th></tr></thead><tbody>
+<div class="tbl"><table data-sel="1"><thead><tr><th>Ano</th><th>Mês do registro</th><th class="n">Desalojados e desabrigados</th><th class="n">Óbitos</th><th class="n">Danos materiais</th><th>Observação</th></tr></thead><tbody>
 <tr><td>2003</td><td>janeiro (reconhecido em 06/02)</td><td class="n">3.672</td><td class="n">1</td><td class="n">R$ 36 mi</td><td>Maior registro, com <b>estado de calamidade pública</b> reconhecido (Portaria 038, de 06/02/2003). Relatório de danos de 25/02/2003: 3.709 afetados. Moradores lembram do Rio Sabará nas Laranjeiras na madrugada de 16/01/2003.</td></tr>
 <tr><td>2022</td><td>janeiro</td><td class="n">≈ 2.600</td><td class="n">0</td><td class="n">R$ 13 mi</td><td>Cheia do Rio das Velhas de 08 a 10/01/2022. Maior prejuízo privado (R$ 29 mi).</td></tr>
 <tr><td>2020</td><td>janeiro</td><td class="n">2.284</td><td class="n">1</td><td class="n">R$ 35 mi</td><td>Cheia de 24 e 25/01/2020.</td></tr>
@@ -995,7 +995,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 <section class="card"><h2>O Rio das Velhas represa o Rio Sabará</h2>
   <p>O Rio Sabará passa pelo Centro, ao lado da Praça de Esportes, e deságua no Rio das Velhas logo abaixo da Ponte Saldanha Marinho. Quando o Velhas sobe, ele funciona como uma barragem na foz: a água do Rio Sabará para de escoar e volta, subindo primeiro na Praça de Esportes e na Caieira e depois rio acima, na direção da Rua das Laranjeiras, da Rodoviária Nova e da E.E. Dona Bilu.</p>
   <p>Os dados das cheias mostram esse efeito:</p>
-  <div class="tbl"><table><thead><tr><th>Momento</th><th>Rio das Velhas</th><th class="n">Caeté (cabeceira)</th><th class="n">Rio Sabará (Siderúrgica)</th><th>O que aconteceu</th></tr></thead><tbody>
+  <div class="tbl"><table data-sel="1"><thead><tr><th>Momento</th><th>Rio das Velhas</th><th class="n">Caeté (cabeceira)</th><th class="n">Rio Sabará (Siderúrgica)</th><th>O que aconteceu</th></tr></thead><tbody>
   <tr><td>21/12/2022, 5h</td><td>Baixo (Raposos 3,7 m, abaixo da cota de 5,65 m)</td><td class="n">2,37 m</td><td class="n">3,82 m</td><td>Transbordou pela própria chuva (112 mm em 6 h em Caeté, 85 mm no Centro) e atingiu a E.E. Dona Bilu</td></tr>
   <tr><td>09/01/2022, 9h–11h</td><td>No pico (Rio Acima 9,55 m, Raposos acima de 9,3 m)</td><td class="n">1,67 m</td><td class="n">3,69 m</td><td>Invadiu a área da Rodoviária Nova (Rua das Laranjeiras). Com Caeté bem mais baixo, o Rio Sabará chegou quase à mesma altura de dez/2022: efeito do represamento</td></tr>
   <tr><td>08/01/2022, 10h37 e 17h</td><td>Subindo (Raposos 5,8 a 6,9 m)</td><td class="n">1,0–1,3 m</td><td class="n">1,6 m</td><td>O Velhas saiu do leito em Roças Grandes e na Caieira; o Rio Sabará ainda estava baixo no Centro</td></tr>
@@ -1292,4 +1292,4 @@ let saved=null;try{saved=localStorage.getItem('aba')}catch(e){}
 show(fromHash||saved||'tab-mapa');
 })();
 </script>
-
+<script src="../rt.js"></script>
