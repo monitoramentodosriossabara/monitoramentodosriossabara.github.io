@@ -194,7 +194,7 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
 </section>
 
 <div id="alertasdc"></div>
-<div class="oficial" role="note"><p class="of-tit"><span class="of-ic" aria-hidden="true">!</span>Atenção: esta não é uma ferramenta oficial.</p><p>É um painel informativo, feito de forma voluntária, e os estágios do painel (rio normal, subindo, alto e muito alto) são regras tiradas das cheias passadas que podem errar. Em caso de risco, siga a Defesa Civil: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong> e receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>. Os contatos estão no fim da página.</p></div>
+<div class="oficial" role="note"><p class="of-tit"><span class="of-ic" aria-hidden="true">!</span>Esta não é uma ferramenta oficial e não emite alertas.</p><p>É um painel informativo e voluntário, que reúne dados públicos da ANA e do Cemaden. Ele mostra como os rios e a chuva estão, mas <strong>não diz se vai ou não alagar</strong>. Em caso de risco, siga sempre a Defesa Civil de Sabará: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong>. Emergência: Corpo de Bombeiros, <strong>193</strong>. Receba os alertas oficiais por SMS enviando seu CEP para <strong>40199</strong>.</p></div>
 
 
 <div id="usinas"></div>
@@ -214,21 +214,21 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
 
 <section class="card">
   <h3>Rio das Velhas, medido em Raposos: últimas 72 horas</h3>
-  <p class="muted">Raposos fica logo acima de Sabará. As linhas tracejadas são os níveis em que, nas cheias passadas, a água chegou a cada lugar.</p>
+  <p class="muted">Raposos fica logo acima de Sabará, no mesmo rio.</p>
   <div id="gvelhas"></div>
 </section>
 
 <section class="card">
   <h3>Rio Sabará, medido em Sabará (ponte da Av. Longitudinal): últimas 72 horas</h3>
-  <p class="muted">Sensor do Cemaden dentro de Sabará. As linhas tracejadas são as cotas oficiais do Cemaden para este ponto. As barras são a chuva por hora em Caeté, na cabeceira do rio: o Rio Sabará costuma subir 2 a 4 horas depois de chuva forte lá.</p>
+  <p class="muted">Sensor do Cemaden dentro de Sabará. As barras são a chuva por hora em Caeté, na cabeceira do rio.</p>
   <div id="gsabara"></div>
 </section>
 
-<a class="link" id="linkmapa" hidden href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa"><span>Até onde a água chega em cada bairro<small>Suba o nível do rio no mapa e veja as ruas que ficam abaixo da água</small></span><span aria-hidden="true">→</span></a>
+<a class="link" id="linkmapa" href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/painel/#mapa"><span>Mapa das áreas mais baixas<small>Simulação aproximada, feita com o relevo de satélite e as cheias passadas</small></span><span aria-hidden="true">→</span></a>
 
 <section class="card">
   <h2>Chuva medida agora</h2>
-  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque: 30 mm ou mais em 6 horas (amarelo) e 60 mm ou mais (laranja; nas cheias passadas, o Rio Sabará saiu do leito 2 a 4 horas depois de chuva assim em Caeté).</p>
+  <p class="muted">Chuva que já caiu, nos pluviômetros automáticos do Cemaden e da ANA. Em destaque, os maiores volumes: 30 mm ou mais em 6 horas (amarelo) e 60 mm ou mais (laranja).</p>
   <div class="tbl"><table id="tabchuva" style="min-width:0"></table></div>
   <p class="muted" style="font-size:13px" id="pluvoff"></p>
 </section>
@@ -248,7 +248,7 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
       <li><b>Rio das Velhas, em Rio Acima</b>: depois da PCH Rio de Pedras e da entrada desses dois rios</li>
       <li><b>Rio das Velhas, em Raposos</b>: a última régua antes de Sabará</li>
     </ol>
-    <p class="muted" style="margin:0">O gráfico mostra quanto cada régua subiu nos últimos 3 dias. Quando as réguas de cima sobem primeiro, a água está vindo de lá (chuva ou operação das usinas) e chega a Raposos horas depois. Se Rio Acima sobe rápido sem chuva forte, vale atenção: a PCH Rio de Pedras fica acima dessa régua. <b>Quando só Raposos sobe</b>, a água vem da chuva perto de Sabará. As réguas mostram o nível, não a operação das comportas; esse registro é da própria usina.</p>
+    <p class="muted" style="margin:0">O gráfico mostra quanto cada régua subiu nos últimos 3 dias. Quando as réguas de cima sobem primeiro, a água está vindo de lá (chuva ou operação das usinas) e passa depois por Raposos. Se Rio Acima sobe rápido sem chuva forte, vale acompanhar: a PCH Rio de Pedras fica acima dessa régua. <b>Quando só Raposos sobe</b>, a água vem da chuva perto de Sabará. As réguas mostram o nível, não a operação das comportas; esse registro é da própria usina.</p>
     <p class="prevbox" id="usinastatus" style="--c:var(--s0)">Lendo as réguas das usinas…</p>
     <div id="gorigem"></div>
   </div>
@@ -265,7 +265,8 @@ tr.cid td{background:var(--fill);font-weight:700;font-family:var(--f-serif);font
 <section class="card contatos" aria-label="Contatos da Defesa Civil de Sabará">
   <h2>Contatos da Defesa Civil de Sabará</h2>
   <div class="ct">
-    <a href="tel:199"><b>199</b><span>Emergência, 24 horas</span></a>
+    <a href="tel:199"><b>199</b><span>Defesa Civil, 24 horas</span></a>
+    <a href="tel:193"><b>193</b><span>Corpo de Bombeiros, emergência</span></a>
     <a href="tel:+553136727722"><b>(31) 3672-7722</b><span>Defesa Civil de Sabará</span></a>
     <a href="https://wa.me/5531997234853"><b>(31) 99723-4853</b><span>WhatsApp da Defesa Civil</span></a>
     <a href="sms:40199"><b>40199</b><span>Envie seu CEP por SMS e receba os alertas oficiais</span></a>
@@ -292,12 +293,10 @@ const NS='http://www.w3.org/2000/svg';
 const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
 async function api(p){const r=await fetch(URL_API+p,{headers:{apikey:KEY}});if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
-const ESCALA={velhas:{max:750,lim:[450,565,670],nomes:['subindo 4,50','Roças Grandes 5,65','Caieira 6,70']},
-  sabara:{max:520,lim:[269,359,448],nomes:['2,69 (Cemaden)','alerta 3,59','transborda 4,48']}};
-const TIT=['Rio normal: sem risco de enchente agora','Rio subindo: fique atento','Rio alto: risco de enchente','Rio muito alto: risco alto de enchente'];
+// Sem estágios de risco: as cotas de referência estão em revisão. O painel mostra só a tendência (subindo, estável, baixando).
+const TEND=v=>v==null?null:v>=50?['subindo rápido',2]:v>5?['subindo',1]:v<-5?['baixando',0]:['estável',0];
 let nivelGeral=0, sitCache=null;
 let vazaoRaposos=null;
-const GUIA=q=>q==null?null:q>=400?['Emergência','--s3']:q>=150?['Alerta','--s2']:q>=100?['Atenção','--s1']:['Normal','--s0'];
 function cards(sit,res){
   sitCache=sit;
   const box=document.getElementById('cards');box.innerHTML='';
@@ -305,26 +304,19 @@ function cards(sit,res){
   for(const s of sit){
     const velhas=s.rio==='Rio das Velhas', sensor=!!(s.onde&&s.onde.includes('Longitudinal'));
     const ref=velhas?by['41200430']:(sensor?by['CEM-6224']:by['41210001']); // chuva do Rio Sabará: Borba Gato (pluviômetro da Av. Longitudinal com defeito)
-    const cor=css(CORES[s.nivel_alerta]||'--s0');
+    const tt=TEND(s.variacao_3h_cm), cor=css(tt&&tt[1]?'--s1':'--s0');
     const d=document.createElement('div');d.className='rio';d.style.setProperty('--c',cor);
     const varr=s.variacao_3h_cm;
-    const tend=varr==null?'':(varr>5?'subindo':varr<-5?'baixando':'estável')+' ('+(varr>0?'+':'')+fmt(varr/100)+' m em 3 h)';
+    const tend=varr==null?'':'variação em 3 h: '+(varr>0?'+':'')+fmt(varr/100)+' m';
     const onde=!s.onde?'':s.onde.includes('Raposos')?'medido em Raposos':sensor?'medido em Sabará, Av. Longitudinal':'medido em Caeté';
-    const esc=velhas?ESCALA.velhas:(sensor?ESCALA.sabara:null);
-    let barra='';
-    if(esc&&s.nivel_referencia_cm!=null){
-      const pc=v=>Math.max(0,Math.min(100,v/esc.max*100));
-      barra=`<div class="barwrap"><div class="bar" style="--t1:${pc(esc.lim[0])}%;--t2:${pc(esc.lim[1])}%;--t3:${pc(esc.lim[2])}%"></div><span class="mk" style="left:${pc(s.nivel_referencia_cm)}%"></span></div>
-      <div class="sc"><span style="left:0">0</span><span style="left:${pc(esc.lim[0])}%">${esc.nomes[0]}</span><span style="left:100%">${fmt(esc.max/100,1)} m</span></div>`;
-    }
-    d.innerHTML=`<div class="l"><span class="nm">${s.rio}<small>${onde}</small></span><span class="v">${fmt(s.nivel_referencia_cm/100)} m<small></small></span></div>${barra}
+    d.innerHTML=`<div class="l"><span class="nm">${s.rio}<small>${onde}</small></span><span class="v">${fmt(s.nivel_referencia_cm/100)} m<small></small></span></div>
       <p class="info">${tend?tend+' · ':''}chuva 6 h / 24 h: ${fmt(ref?.chuva_6h,0)} / ${fmt(ref?.chuva_24h,0)} mm · leitura ${hora(s.ultima_leitura)}</p>
       <p class="info guia"></p>
       <p class="motivo"></p>`;
-    {const g=d.querySelector('.guia');const gg=velhas?GUIA(vazaoRaposos):null;
-     if(gg){g.innerHTML=`Vazão em Raposos: <b>${fmt(vazaoRaposos,0)} m³/s</b> · guia da Defesa Civil: <b style="color:${css(gg[1])}">${gg[0].toLowerCase()}</b> (atenção a partir de 100 m³/s, alerta 150, emergência 400)`;}else g.remove();}
-    d.querySelector('.v small').textContent=s.estagio;
-    if(s.nivel_alerta>0)d.querySelector('.motivo').textContent=s.motivo;else d.querySelector('.motivo').remove();
+    {const g=d.querySelector('.guia');
+     if(velhas&&vazaoRaposos!=null){g.innerHTML=`Vazão em Raposos: <b>${fmt(vazaoRaposos,0)} m³/s</b>`;}else g.remove();}
+    d.querySelector('.v small').textContent=tt?tt[0]:'';
+    d.querySelector('.motivo').remove();
     box.appendChild(d);
   }
   heroRios();
@@ -332,13 +324,15 @@ function cards(sit,res){
 let dcHero='';
 function heroRios(){
   if(!sitCache)return;
-  const n=Math.max(0,...sitCache.map(s=>s.nivel_alerta||0));nivelGeral=n;
-  const hero=document.getElementById('hero');hero.style.setProperty('--c',css(CORES[n]));{const lm=document.getElementById('linkmapa');if(lm)lm.hidden=n===0;}
-  const pior=sitCache.find(s=>(s.nivel_alerta||0)===n);
-  document.getElementById('herok').textContent=n?pior.estagio:'Rio normal';
-  document.getElementById('heroh').textContent=TIT[n];
-  const txt=n?sitCache.filter(s=>s.nivel_alerta>0).map(s=>s.rio+': '+s.motivo).join(' '):'O Rio das Velhas e o Rio Sabará estão no nível normal.';
-  document.getElementById('herop').textContent=txt+(dcHero?' '+dcHero:'');
+  const hero=document.getElementById('hero');
+  const ts=sitCache.map(s=>({s,t:TEND(s.variacao_3h_cm)}));
+  const sobe=ts.filter(x=>x.t&&x.t[1]>0);
+  hero.style.setProperty('--c',css(dcHero?'--s2':'--accent'));
+  document.getElementById('herok').textContent=dcHero?'Alerta oficial em vigor':'Situação dos rios agora';
+  const frase=x=>x.s.rio+' '+(x.t?x.t[0]:'sem leitura recente');
+  document.getElementById('heroh').textContent=sobe.length?sobe.map(frase).join(' · '):'Rios sem subida nas últimas 3 horas';
+  const txt=ts.map(x=>x.s.rio+': '+fmt(x.s.nivel_referencia_cm/100)+' m'+(x.t?', '+x.t[0]:'')+'.').join(' ');
+  document.getElementById('herop').textContent=txt+' Este painel não indica risco de enchente; para isso, siga a Defesa Civil.'+(dcHero?' '+dcHero:'');
 }
 
 function grafico(host,serie,opt){
@@ -428,10 +422,8 @@ function chuvaSab(res){
   T.textContent=fmt(c1,1)+' mm';
   D.innerHTML=(c1>=0.2?`<b>${c1>=10?'Chuva forte':c1>=2?'Chovendo':'Chuva fraca'}</b> na última hora`:'<b>Sem chuva</b> na última hora')+
     ` (maior valor: pluviômetro ${h1.loc}, leitura até ${hr(h1.ultima_chuva)})<br>Últimas 24 h: <b>${fmt(h24.chuva_24h,0)} mm</b> (${h24.loc})`;
-  const v72=Number(h72.chuva_72h)||0, pc=Math.min(100,v72);
-  X.innerHTML=`<p class="muted" style="margin:14px 0 6px">Últimas 72 h: <b>${fmt(v72,0)} mm</b> (${h72.loc}). Pelo Plano Municipal, a partir de <b>100 mm em 72 h</b> a Defesa Civil deve acionar a contingência.</p>
-   <div class="barwrap"><div class="bar" style="--t1:50%;--t2:80%;--t3:99%"></div><span class="mk" style="left:${pc}%"></span></div>
-   <div class="sc"><span style="left:0">0</span><span style="left:100%">100 mm</span></div>`;
+  const v72=Number(h72.chuva_72h)||0;
+  X.innerHTML=`<p class="muted" style="margin:14px 0 0">Últimas 72 h: <b>${fmt(v72,0)} mm</b> (${h72.loc}).</p>`;
 }
 
 function usinas(au){
@@ -452,7 +444,7 @@ function aguaChegando(ar){
   if(a.subida_usina_cm)partes.push(`A régua de ${a.usinas} subiu ${fmt(a.subida_usina_cm/100)} m em cerca de 1 hora.`);
   const sec=document.createElement('section');sec.className='card aviso';sec.style.borderLeftColor=css('--s1');sec.style.borderWidth='2px 2px 2px 6px';sec.style.borderColor=css('--s1');
   const p=document.createElement('p');p.innerHTML='<strong>Subida rápida rio acima.</strong> ';
-  p.append(partes.join(' ')+' Essa água costuma chegar a Raposos de 3 a 8 horas depois, e a Sabará logo em seguida. Acompanhe o nível em Raposos logo abaixo.');
+  p.append(partes.join(' ')+' Acompanhe o nível em Raposos logo abaixo e as orientações da Defesa Civil.');
   sec.appendChild(p);box.appendChild(sec);
 }
 
@@ -493,13 +485,12 @@ async function carregar(){
       api('alerta_rio_acima?select=*').catch(()=>null)]);
     {const q=lr.filter(x=>x.vazao_m3s!=null);vazaoRaposos=q.length?Number(q[q.length-1].vazao_m3s):null;}
     cards(sit,res); chuvaSab(res);
-    grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:500,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',
-      limites:[[450,'rio subindo','--s1'],[565,'Roças Grandes','--s2'],[670,'Caieira / Ponte','--s3']]});
+    grafico(document.getElementById('gvelhas'),lr,{cor:'--velhas',ymin:300,titulo:'Nível do Rio das Velhas em Raposos nas últimas 72 horas',limites:[]});
     const sens=lc.filter(q=>q.estacao==='315670023H'&&q.nivel_cm!=null), cae=lc.filter(q=>q.estacao==='41210001');
     const serieSab=(sens.length?sens.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null})):cae.map(q=>({datahora:q.datahora,nivel_cm:q.nivel_cm,chuva_mm:null}))).concat(cae.map(q=>({datahora:q.datahora,nivel_cm:null,chuva_mm:q.chuva_mm})));
     serieSab.sort((x,y)=>new Date(x.datahora)-new Date(y.datahora));
-    grafico(document.getElementById('gsabara'),serieSab,{cor:'--sabara',ymin:sens.length?500:150,chuva:true,chuvaLab:'Chuva em Caeté',titulo:'Nível do Rio Sabará e chuva em Caeté nas últimas 72 horas',
-      limites:sens.length?[[269,'atenção (Cemaden)','--s1'],[359,'alerta (Cemaden)','--s2'],[448,'transbordamento','--s3']]:[[237,'pico de dez/2022','--s2']]});
+    grafico(document.getElementById('gsabara'),serieSab,{cor:'--sabara',ymin:sens.length?200:150,chuva:true,chuvaLab:'Chuva em Caeté',titulo:'Nível do Rio Sabará e chuva em Caeté nas últimas 72 horas',
+      limites:[]});
     origem(document.getElementById('gorigem'),lo);
     usinas(au);
     aguaChegando(ar);
