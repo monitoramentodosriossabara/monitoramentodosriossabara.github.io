@@ -848,7 +848,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div class="ctl v"><div class="top"><label for="sv">Rio das Velhas, nível em Raposos</label><span class="read" id="rv"></span></div>
     <input type="range" id="sv" min="4" max="21" step="1" value="19"><div class="staff" aria-hidden="true"></div>
     <small id="rvr"></small>
-    <div class="presets" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-r="9.3">Cheia de 2022</button><button type="button" data-r="9.8">Cheia de 2020</button></div></div>
+    <div class="presets" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-r="6.5">Régua 3,10 m</button><button type="button" data-r="7.3">Régua 3,50 m</button><button type="button" data-r="9.3">Cheia de 2022</button><button type="button" data-r="9.8">Cheia de 2020</button></div></div>
   <div class="ctl s"><div class="top"><label for="ss">Rio Sabará (Córrego/Ribeirão Sabará)</label><span class="read" id="rs"></span></div>
     <input type="range" id="ss" min="0" max="24" step="1" value="0"><div class="staff" aria-hidden="true"></div>
     <small>Subida própria do Rio Sabará, por chuva forte na bacia dele, acima do nível normal (cerca de 0,5 m no sensor do Cemaden da Av. Longitudinal). Os botões usam as duas cheias medidas pelo sensor, que funcionou de 2021 a 2023; das cheias de 2020 e 2003 não há medição desse rio.</small><div class="presets presets-s" style="display:flex;flex-wrap:wrap;gap:6px"><button type="button" data-s="7">Dez/2022 (sensor 3,82 m)</button><button type="button" data-s="6" data-r="9.3">Jan/2022 (sensor 3,69 m, com o Rio das Velhas alto)</button></div></div>
@@ -859,8 +859,8 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 </div>
 <div class="grid2">
   <section style="grid-column:1/-1"><h2>Bairros e a subida que os atinge</h2>
-    <p style="color:var(--muted);margin:0 0 8px">Nível em Raposos (Rio das Velhas) ou subida do Rio Sabará em que a água chega a menos de ~400 m do ponto do bairro. Em destaque, os atingidos com os níveis escolhidos.</p>
-    <div style="overflow-x:auto"><table><thead><tr><th>Bairro</th><th class="n">Velhas: Raposos</th><th class="n">Sabará: subida</th></tr></thead><tbody id="tb"></tbody></table></div>
+    <p style="color:var(--muted);margin:0 0 8px">Nível em Raposos (Rio das Velhas) ou subida do Rio Sabará em que a água chega a menos de ~400 m do ponto do bairro. A última coluna é o nível da régua em que a Defesa Civil desloca equipes para o bairro (Mapeamento de Áreas de Risco de 2023). Em destaque, os atingidos com os níveis escolhidos.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Bairro</th><th class="n">Velhas: Raposos</th><th class="n">Sabará: subida</th><th class="n">Régua (Def. Civil)</th></tr></thead><tbody id="tb"></tbody></table></div>
     <p style="margin:10px 0 0;padding:10px 12px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;font-size:14px"><b>Pelo Plano de Contingência da Prefeitura</b> (estudo do Serviço Geológico do Brasil), são 18 bairros em área de risco de inundação, com 2.388 pessoas: Sobradinho (100 famílias), Caieira (80), Arraial Velho (74), Roça Grande (50), Paciência (48), Borges (45), Centro (40), Siderúrgica (40), Praia dos Bandeirantes (35), Córrego da Ilha (30), Nações Unidas (25), N. S. de Fátima (25), Pereira Vieira (22), Beira Linha (20), General Carneiro (20), Itacolomi (20), Marzagão (20) e Fogo Apagou (15).</p></section>
   <section class="note" style="grid-column:1/-1"><h2>Ruas atingidas e pontos de encontro</h2>
   <p style="margin:0 0 8px;color:var(--muted)">Do Plano de Contingência 2021–2024 da Prefeitura, reproduzido no Relatório de Mapeamento de Áreas de Risco de 2023. Em caso de inundação, este é o ponto de encontro de cada bairro.</p>
@@ -911,7 +911,20 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 </section>
 <div class="legend" aria-label="Legenda dos gráficos"><span><i style="background:var(--s1)"></i>Rio Acima (Rio das Velhas)</span><span><i style="background:var(--s2)"></i>Raposos (Rio das Velhas)</span><span><i style="background:var(--s3)"></i>Caeté (bacia do Rio Sabará)</span><span><i style="background:var(--s4)"></i>Rio Sabará na Siderúrgica (Cemaden, sensor da Av. Longitudinal)</span><span>Barras finas: chuva a cada hora (estações automáticas)</span><span><i style="background:var(--sab);height:8px;vertical-align:1px"></i>Chuva em Sabará (Cemaden, hora a hora)</span><span><i class="d"></i>Cota de inundação em Raposos (5,65 m)</span><span>① ② Momentos observados em Sabará</span></div>
 <section class="card" id="prever"><h2>Como o painel estima a situação dos rios</h2>
-  <p>Na aba Agora, cada rio aparece como <b>normal, subindo, alto ou muito alto</b>. É uma <b>estimativa do próprio painel, feita com os dados disponíveis</b>: o nível do Rio das Velhas em Raposos (ANA), o sensor do Cemaden no Rio Sabará, a chuva nos pluviômetros e o que aconteceu nas cheias de 2020 e 2022. Não é a classificação oficial da Defesa Civil.</p>
+  <p>Na aba Agora, cada rio aparece como <b>normal, subindo, alto ou muito alto</b>. É uma <b>estimativa do próprio painel, feita com os dados disponíveis</b>: o nível do Rio das Velhas em Raposos (ANA), o sensor do Cemaden no Rio Sabará, a chuva nos pluviômetros e o que aconteceu nas cheias de 2020 e 2022. Os estágios também consideram os níveis que a Defesa Civil usa como referência, abaixo. Não é a classificação oficial da Defesa Civil.</p>
+  <div style="padding:12px 14px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;display:grid;gap:6px"><h3 style="margin:0">Referências oficiais da Prefeitura (podem ser revistas)</h3>
+  <p style="margin:0"><b>Plano de Contingência 2021–2024:</b> régua da Ponte Saldanha Marinho em atenção até 1,90 m, alerta de 1,90 a 3,90 m e emergência acima de 3,90 m.</p>
+  <p style="margin:0"><b>Plano Municipal de Gerenciamento de Riscos 2025/2028:</b> acionar a contingência quando o Rio das Velhas passar de 2,0 m na régua da Ponte do Paciência (a mesma Ponte Saldanha Marinho) ou quando chover 100 mm ou mais em 72 horas. O painel acompanha esse segundo gatilho pelos pluviômetros de Sabará, na aba Agora.</p>
+  <p style="margin:0;color:var(--muted);font-size:14px">A régua é lida no local pela Defesa Civil e não tem registro automático. Em 03/11/2026 a Defesa Civil confirmou que a referência em uso é 1,90 m: abaixo disso é normal; a partir de 1,90 m começa o acompanhamento e as medidas preventivas.</p></div>
+  <div style="padding:12px 14px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;display:grid;gap:8px"><h3 style="margin:0">Guia de alerta de inundação do Rio das Velhas (Defesa Civil)</h3>
+  <p style="margin:0">Do Plano de Contingência de 2021, reproduzido no Relatório de Mapeamento de Áreas de Risco de 2023. Usa a vazão do Rio das Velhas em Raposos (estação 41200430 da ANA, a mesma do painel) e a régua da Ponte Saldanha Marinho:</p>
+  <div class="tbl"><table><thead><tr><th>Situação</th><th>Vazão em Raposos</th><th>Raposos (nível aprox.)</th><th>Régua de Sabará</th><th>Chuva acumulada</th></tr></thead><tbody>
+  <tr><td>Atenção</td><td>100 a 149 m³/s</td><td>≈ 3,1 a 3,6 m</td><td>a partir de 1,90 m</td><td>até 100 mm em 48 h</td></tr>
+  <tr><td>Alerta</td><td>150 a 399 m³/s</td><td>≈ 3,7 a 6,0 m</td><td>1,90 a 3,90 m</td><td>100 a 150 mm em 48 h</td></tr>
+  <tr><td>Emergência</td><td>400 m³/s ou mais</td><td>≈ 6,0 m ou mais</td><td>acima de 3,90 m</td><td>200 a 250 mm em 72 h</td></tr>
+  </tbody></table></div>
+  <p style="margin:0"><b>Onde a água chega primeiro, pela régua:</b> com <b>3,10 m</b>, Roças Grandes (R. Beira Rio e R. Santa Efigênia), Centro (Praça de Esportes), Pompéu (R. José Augusto Pinto), Praia dos Bandeirantes e Pereira Vieira. Com <b>3,50 m</b>, também Arraial Velho, Centro, Siderúrgica/Gaia, Vila Michel, Caieiras, Roça Grande, Sobradinho, General Carneiro/Marzagão, Nações Unidas e Borges.</p>
+  <p style="margin:0;color:var(--muted);font-size:14px">O nível aproximado de Raposos foi convertido pela curva de vazão da própria ANA nas cheias de jan. e mar. de 2026. O guia é chamado de "hipotético" no plano. A aba Agora mostra a vazão de Raposos com esse guia, ao lado dos estágios do painel.</p></div>
   <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
   <div style="display:grid;gap:8px;min-width:0"><h3>Rio das Velhas (Roças Grandes, Caieira, Paciência)</h3>
    <p class="muted">Cheia lenta, que vem de longe.</p>
@@ -924,7 +937,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div style="display:grid;gap:8px;min-width:0"><h3>Rio Sabará (Centro, Laranjeiras, Rodoviária, Dona Bilu)</h3>
    <p class="muted">Cheia rápida, de chuva forte na própria bacia.</p>
    <div class="tbl"><table><thead><tr><th>Situação no painel</th><th>Quando aparece</th><th>O que aconteceu nas cheias passadas</th></tr></thead><tbody>
-   <tr><td><b>Rio subindo</b></td><td>30 mm de chuva em 3 h em Caeté, <b>ou</b> sensor do Cemaden com 2,69 m ou mais (cota de atenção do Cemaden)</td><td>Dez/2024: 34 mm em 6 h e o rio subiu sem sair do leito</td></tr>
+   <tr><td><b>Rio subindo</b></td><td>30 mm de chuva em 3 h em Caeté, <b>ou</b> sensor do Cemaden com 2,69 m ou mais (cota de atenção do Cemaden), <b>ou</b> 100 mm em 72 h em Sabará (referência do Plano Municipal)</td><td>Dez/2024: 34 mm em 6 h e o rio subiu sem sair do leito</td></tr>
    <tr><td><b>Rio alto</b></td><td>60 mm de chuva em 6 h em Caeté, <b>ou</b> sensor com 3,59 m ou mais (cota de alerta do Cemaden)</td><td>Dez/2022: o rio foi de 2,0 m a 3,8 m em cerca de 3 h e saiu do leito perto da Dona Bilu</td></tr>
    <tr><td><b>Rio muito alto</b></td><td>Sensor com 4,48 m ou mais (cota de transbordamento do Cemaden)</td><td>Nas duas cheias medidas, o rio saiu do leito com 3,7 a 3,8 m</td></tr>
    </tbody></table></div>
@@ -939,7 +952,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div style="padding:12px 14px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;display:grid;gap:6px"><h3 style="margin:0">O que o painel ainda não sabe</h3>
   <ul style="margin:0;padding-left:18px;display:grid;gap:4px">
    <li><b>Não há medição automática do Rio das Velhas dentro de Sabará.</b> A referência mais próxima é Raposos, rio acima. Ainda não se sabe com segurança quanto uma subida em Raposos representa na régua da Ponte Saldanha Marinho.</li>
-   <li><b>As referências da régua de Sabará estão em revisão</b> após a limpeza do rio, por isso o painel não usa as faixas da régua.</li>
+   <li><b>As referências de nível podem mudar</b>, por exemplo depois da limpeza do rio. O painel é ajustado quando chegam novos valores dos órgãos públicos e novos relatos dos moradores.</li>
    <li><b>O sensor do Rio Sabará mediu só duas cheias</b> (jan e dez/2022): ficou parado de 2023 a outubro de 2026.</li>
    <li><b>As regras vêm de poucas cheias</b> (2020 e 2022) e dos relatos de moradores. Cada cheia é diferente, e os números serão revistos a cada nova cheia.</li>
    <li><b>Alguns pluviômetros estão com defeito ou fora do ar</b>, o que deixa lacunas na chuva medida.</li>
@@ -966,7 +979,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 <section class="card" id="c1997"></section>
 <section class="card" id="c2011"></section>
 <section class="card" id="regua"><h2>Régua da Ponte Saldanha Marinho</h2>
-  <p>É a régua que a Defesa Civil usa para acompanhar o Rio das Velhas em Sabará. As leituras publicadas foram cruzadas com Raposos, que fica rio acima e manda dados a cada 15 minutos:</p>
+  <p>É a régua que a Defesa Civil usa para acompanhar o Rio das Velhas em Sabará. Faixas do Plano de Contingência 2021–2024 (podem ser revistas): <b>até 1,90 m</b> normalidade; <b>1,90 a 3,90 m</b> atenção/alerta; <b>acima de 3,90 m</b> emergência. As leituras publicadas foram cruzadas com Raposos, que fica rio acima e manda dados a cada 15 minutos:</p>
   <div class="tbl"><table><thead><tr><th>Data e hora</th><th class="n">Régua de Sabará</th><th>Classificação publicada</th><th class="n">Raposos (ANA) no momento</th><th>Fonte</th></tr></thead><tbody>
    <tr><td>05/01/2026, 19h</td><td class="n">1,30 m</td><td>Normal (nível verde)</td><td class="n">sem dado (Rio Acima ≈ 3,1 m)</td><td>Defesa Civil de Sabará (arte de monitoramento)</td></tr>
    <tr><td>07/01/2026</td><td class="n">"nível zero"</td><td>Normalidade</td><td class="n">sem dado (Rio Acima ≈ 1,8 m)</td><td>Instagram @defesacivilsabara</td></tr>
@@ -1239,6 +1252,7 @@ function px(src){return new Promise(r=>{const i=new Image();i.onload=()=>{const 
 const cv=document.createElement('canvas'); cv.width=D.w; cv.height=D.h; const cx=cv.getContext('2d');
 // Ajuste: altura acima do rio no relevo ≈ nível em Raposos − OFF (pontos da Defesa Civil e cheias de 2020/2022)
 const OFF=3.0, R=()=>+sv.value*0.5;
+const OFIC={'Santo Antônio de Roça Grande':'3,10 m','Centro':'3,10 m','Arraial Velho':'3,50 m','Siderúrgica':'3,50 m','Gaia':'3,50 m','Vila Michel':'3,50 m','Caieira':'3,50 m'};
 document.querySelectorAll('.presets:not(.presets-s) button').forEach(b=>b.onclick=()=>{sv.value=Math.round(+b.dataset.r*2);update();});
 document.querySelectorAll('.presets-s button').forEach(b=>b.onclick=()=>{ss.value=+b.dataset.s;sv.value=b.dataset.r?Math.round(+b.dataset.r*2):sv.min;update();});
 function update(){
@@ -1255,7 +1269,7 @@ function update(){
   for(const [n,la,lo,fv,fs] of D.places){ const hv=fv!==null&&a&&fv<=La, hs=fs!==null&&b&&fs<=Lb, hit=hv||hs;
     L.circleMarker([la,lo],{radius:hit?6:3.5,color:'#fff',weight:1.5,fillColor:hit?tok('--hit'):tok('--muted'),fillOpacity:1}).bindTooltip(n,{permanent:hit,direction:'right',offset:[6,0],className:'bairro-label'+(hit?' hit':'')}).addTo(placeLayer); }
   for(const [n,la,lo,fv,fs] of rows){ const hv=fv!==null&&a&&fv<=La, hs=fs!==null&&b&&fs<=Lb; const tr=document.createElement('tr'); if(hv||hs) tr.className='on';
-    tr.innerHTML=`<td></td><td class="n${hv?' onv':''}">${fv===null?'—':fmt(fv+OFF)+' m'}</td><td class="n${hs?' ons':''}">${fs===null?'—':'+'+fmt(fs)+' m'}</td>`; tr.firstChild.textContent=n; tb.appendChild(tr);
+    tr.innerHTML=`<td></td><td class="n${hv?' onv':''}">${fv===null?'—':fmt(fv+OFF)+' m'}</td><td class="n${hs?' ons':''}">${fs===null?'—':'+'+fmt(fs)+' m'}</td><td class="n">${OFIC[n]||'—'}</td>`; tr.firstChild.textContent=n; tb.appendChild(tr);
     tr.style.cursor='pointer'; tr.onclick=()=>map.setView([la,lo],16.5); }
 }
 function labelsByZoom(){ if(map.getZoom()>=15.5) labelLayer.addTo(map); else labelLayer.remove(); }
