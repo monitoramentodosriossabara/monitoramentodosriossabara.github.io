@@ -838,9 +838,9 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 <div class="wrap">
 <div class="intro">
   <h1 id="tit">Riscos de chuva em Sabará</h1>
-  <p class="muted">Mapa de riscos (enchente e deslizamento), histórico das cheias e como ler os dados. Feito de forma voluntária, com dados públicos da ANA, do Cemaden e da Defesa Civil. <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/" style="color:var(--accent)">Veja como estão os rios agora →</a></p>
+  <p class="muted">Mapa de riscos (enchente e deslizamento), histórico das cheias e como o painel estima a situação dos rios. Feito de forma voluntária, com dados públicos da ANA, do Cemaden e da Defesa Civil. <a href="https://monitoramentodosriossabara.github.io/mt3yc9ux7y/" style="color:var(--accent)">Veja como estão os rios agora →</a></p>
 </div>
-<div class="oficial" role="note" style="margin:0 0 18px"><p class="of-tit">Esta não é uma ferramenta oficial e não emite alertas.</p><p>É um painel informativo e voluntário, com dados públicos e simulações aproximadas. Ele <strong>não diz se vai ou não alagar</strong>. Em caso de risco, siga sempre a Defesa Civil de Sabará: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong>. Emergência: Corpo de Bombeiros, <strong>193</strong>. Alertas oficiais por SMS: envie seu CEP para <strong>40199</strong>.</p></div>
+<div class="oficial" role="note" style="margin:0 0 18px"><p class="of-tit">Esta não é uma ferramenta oficial.</p><p>É um painel informativo e voluntário, com dados públicos e simulações aproximadas. As situações e o mapa são <strong>estimativas feitas com os dados disponíveis</strong> e podem errar; veja em "Como funciona" o que o painel ainda não sabe. Em caso de risco, siga sempre a Defesa Civil de Sabará: ligue <strong>199</strong> ou <strong>(31) 3672-7722</strong>. Emergência: Corpo de Bombeiros, <strong>193</strong>. Alertas oficiais por SMS: envie seu CEP para <strong>40199</strong>.</p></div>
 <div class="tab" id="tab-mapa" role="tabpanel"><section id="riscos" style="display:grid;gap:18px;min-width:0;grid-template-columns:minmax(0,1fr)">
 <p class="muted" style="margin:0">Suba cada rio no seu controle e veja no mapa, rua por rua, o que fica abaixo da água. Marque "Risco geológico" para ver as encostas ocupadas e os deslizamentos já registrados. Use o zoom para ver os nomes das ruas.</p>
 <div class="calib" role="note"><strong>Simulação aproximada, em ajuste com base nos relatos dos moradores.</strong> A mancha vem do relevo de satélite (quadrados de 30 m, com erro típico de 2 a 4 m na altura) e foi ajustada com os pontos da Defesa Civil (régua em 3,10 m e 3,50 m, do Mapeamento de Áreas de Risco de 2023), as cheias de 2020 e 2022 e os relatos recebidos até agora. Por isso <strong>ainda não é exato</strong>: em alguns bairros pode mostrar água antes ou depois do que já aconteceu. Cada relato corrige o mapa na rua informada, e ele só ficará preciso quando houver vários relatos em cada bairro. Use para saber quais ruas são mais baixas, não para medir a altura da água.</div>
@@ -910,16 +910,42 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
   <div class="find"><span class="muted">Em 2020 e 2022, do momento em que Raposos passou de 5,65 m até o pico da cheia</span><b class="k">≈ 20 horas</b><span class="note">2020: 04h45 → 00h15 do dia seguinte. 2022: 09h00 → 04h45. É o registro de duas cheias, não uma previsão: cada cheia se comporta de um jeito.</span></div>
 </section>
 <div class="legend" aria-label="Legenda dos gráficos"><span><i style="background:var(--s1)"></i>Rio Acima (Rio das Velhas)</span><span><i style="background:var(--s2)"></i>Raposos (Rio das Velhas)</span><span><i style="background:var(--s3)"></i>Caeté (bacia do Rio Sabará)</span><span><i style="background:var(--s4)"></i>Rio Sabará na Siderúrgica (Cemaden, sensor da Av. Longitudinal)</span><span>Barras finas: chuva a cada hora (estações automáticas)</span><span><i style="background:var(--sab);height:8px;vertical-align:1px"></i>Chuva em Sabará (Cemaden, hora a hora)</span><span><i class="d"></i>Cota de inundação em Raposos (5,65 m)</span><span>① ② Momentos observados em Sabará</span></div>
-<section class="card" id="prever"><h2>Como ler os dados deste painel</h2>
-  <p>O painel mostra o nível dos rios e a chuva medidos pelas estações públicas da ANA e do Cemaden, e compara com o que aconteceu nas cheias passadas. Ele <b>não classifica o risco</b> e <b>não faz previsão de quando ou onde a água vai chegar</b>.</p>
-  <div style="padding:12px 14px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;display:grid;gap:6px"><h3 style="margin:0">Referências de atenção e alerta em revisão</h3>
-  <p style="margin:0">As referências de nível usadas para classificar a situação dos rios em Sabará estão em revisão. Até lá, o painel não mostra cotas de atenção e alerta nem regras de acionamento. A classificação oficial e as orientações à população são da <b>Defesa Civil de Sabará</b>.</p></div>
+<section class="card" id="prever"><h2>Como o painel estima a situação dos rios</h2>
+  <p>Na aba Agora, cada rio aparece como <b>normal, subindo, alto ou muito alto</b>. É uma <b>estimativa do próprio painel, feita com os dados disponíveis</b>: o nível do Rio das Velhas em Raposos (ANA), o sensor do Cemaden no Rio Sabará, a chuva nos pluviômetros e o que aconteceu nas cheias de 2020 e 2022. Não é a classificação oficial da Defesa Civil.</p>
+  <div class="grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+  <div style="display:grid;gap:8px;min-width:0"><h3>Rio das Velhas (Roças Grandes, Caieira, Paciência)</h3>
+   <p class="muted">Cheia lenta, que vem de longe.</p>
+   <div class="tbl"><table><thead><tr><th>Situação no painel</th><th>Quando aparece</th><th>O que aconteceu nas cheias passadas</th></tr></thead><tbody>
+   <tr><td><b>Rio subindo</b></td><td>Raposos com 4,50 m ou mais, <b>ou</b> 120 mm de chuva em 72 h rio acima (média de Rio Acima, Nova Lima e Itabirito)</td><td>Jan/2026: Raposos 4,5 m e o rio não saiu do leito em Sabará. Mar/2026: Raposos 5,5 m, depois de 124 mm em um dia em Itabirito</td></tr>
+   <tr><td><b>Rio alto</b></td><td>Raposos com 5,65 m ou mais (cota de inundação da estação)</td><td>Jan/2022: a água começou a sair do leito em Roças Grandes</td></tr>
+   <tr><td><b>Rio muito alto</b></td><td>Raposos com 6,70 m ou mais</td><td>Jan/2022: a água saiu do leito na Caieira, sob a Ponte Saldanha Marinho</td></tr>
+   </tbody></table></div>
+   <p class="note">Nas duas grandes cheias choveu 100 mm ou mais em 24 h rio acima, com os 15 dias anteriores já acima de 270 mm.</p></div>
+  <div style="display:grid;gap:8px;min-width:0"><h3>Rio Sabará (Centro, Laranjeiras, Rodoviária, Dona Bilu)</h3>
+   <p class="muted">Cheia rápida, de chuva forte na própria bacia.</p>
+   <div class="tbl"><table><thead><tr><th>Situação no painel</th><th>Quando aparece</th><th>O que aconteceu nas cheias passadas</th></tr></thead><tbody>
+   <tr><td><b>Rio subindo</b></td><td>30 mm de chuva em 3 h em Caeté, <b>ou</b> sensor do Cemaden com 2,69 m ou mais (cota de atenção do Cemaden)</td><td>Dez/2024: 34 mm em 6 h e o rio subiu sem sair do leito</td></tr>
+   <tr><td><b>Rio alto</b></td><td>60 mm de chuva em 6 h em Caeté, <b>ou</b> sensor com 3,59 m ou mais (cota de alerta do Cemaden)</td><td>Dez/2022: o rio foi de 2,0 m a 3,8 m em cerca de 3 h e saiu do leito perto da Dona Bilu</td></tr>
+   <tr><td><b>Rio muito alto</b></td><td>Sensor com 4,48 m ou mais (cota de transbordamento do Cemaden)</td><td>Nas duas cheias medidas, o rio saiu do leito com 3,7 a 3,8 m</td></tr>
+   </tbody></table></div>
+   <p class="note">O nível normal do Rio Sabará no sensor da Av. Longitudinal (Siderúrgica) é cerca de 0,5 m. A chuva forte é o primeiro sinal; o nível só confirma.</p></div>
+  </div>
+  <h3 style="margin-top:6px">Os dois juntos: represamento</h3>
+  <div class="tbl"><table><thead><tr><th>Rio das Velhas (Raposos)</th><th>Efeito no Rio Sabará, no painel</th></tr></thead><tbody>
+   <tr><td>Abaixo de 5,65 m</td><td>Valem as regras normais do Rio Sabará</td></tr>
+   <tr><td>5,65 m ou mais</td><td>O Rio Sabará sobe um nível quando há chuva forte, porque não consegue escoar (jan/2022: Caeté em 1,67 m e mesmo assim 3,69 m no Centro)</td></tr>
+   <tr><td>6,70 m ou mais</td><td>O Rio Sabará aparece pelo menos como "alto", mesmo sem chuva forte na bacia dele</td></tr>
+  </tbody></table></div>
+  <div style="padding:12px 14px;border-left:4px solid var(--goldb);background:var(--fill);border-radius:8px;display:grid;gap:6px"><h3 style="margin:0">O que o painel ainda não sabe</h3>
   <ul style="margin:0;padding-left:18px;display:grid;gap:4px">
-    <li><b>Rio das Velhas:</b> cheia lenta, que vem de longe. A régua de Raposos, logo acima de Sabará, mostra se o rio está subindo, estável ou baixando.</li>
-    <li><b>Rio Sabará:</b> cheia rápida, de chuva forte na própria bacia (Caeté e Sabará). A chuva por hora nos pluviômetros é o primeiro sinal; o nível no sensor do Cemaden mostra a resposta do rio.</li>
-    <li><b>Os dois juntos:</b> quando o Rio das Velhas está alto, ele represa o Rio Sabará, que sobe mais com menos chuva (veja o Histórico).</li>
-  </ul>
-  <p class="note">Os números das cheias passadas servem para entender o comportamento dos rios. Não são regras de alerta.</p></section>
+   <li><b>Não há medição automática do Rio das Velhas dentro de Sabará.</b> A referência mais próxima é Raposos, rio acima. Ainda não se sabe com segurança quanto uma subida em Raposos representa na régua da Ponte Saldanha Marinho.</li>
+   <li><b>As referências da régua de Sabará estão em revisão</b> após a limpeza do rio, por isso o painel não usa as faixas da régua.</li>
+   <li><b>O sensor do Rio Sabará mediu só duas cheias</b> (jan e dez/2022): ficou parado de 2023 a outubro de 2026.</li>
+   <li><b>As regras vêm de poucas cheias</b> (2020 e 2022) e dos relatos de moradores. Cada cheia é diferente, e os números serão revistos a cada nova cheia.</li>
+   <li><b>Alguns pluviômetros estão com defeito ou fora do ar</b>, o que deixa lacunas na chuva medida.</li>
+   <li><b>Os dados chegam com atraso</b> de 30 a 60 minutos, e a ANA às vezes fica fora do ar.</li>
+  </ul></div>
+  <p class="note">Em caso de risco, a orientação é sempre a da Defesa Civil de Sabará.</p></section>
 <section class="card" id="crank"></section>
 <section class="card" id="atlas"><div class="head"><h2>O que dizem os registros oficiais de desastre</h2><span class="chip">Atlas Digital de Desastres no Brasil</span></div>
 <p class="muted">Registros que a Prefeitura de Sabará enviou ao governo federal de 1991 a 2025: cerca de 9,3 mil desalojados e desabrigados, 4 óbitos e R$ 111,8 milhões em danos materiais, quase tudo em janeiro e fevereiro. As inundações respondem por cerca de 40% das pessoas desalojadas; o resto vem de chuvas intensas.</p>
@@ -993,7 +1019,7 @@ nav.abas a[aria-current],nav.abas button[aria-selected="true"]{color:#fff!import
 <section class="card"><h2>Limites e próximos passos</h2>
   <ul style="margin:0;padding-left:18px;display:grid;gap:4px">
     <li>A chuva diária de Sabará é lida às 7h e soma as 24 horas anteriores, por isso aparece como uma barra larga terminando às 7h.</li>
-    <li>São números de 2 a 4 eventos por rio. Servem para entender o comportamento dos rios, não como regra de alerta.</li>
+    <li>São números de 2 a 4 eventos por rio. Servem como primeiro ajuste das estimativas do painel, não como regra definitiva.</li>
     <li>Os dados de telemetria são brutos (não consistidos pela ANA). Alguns pluviômetros pararam de registrar em certos eventos.</li>
     <li>As estações do IGAM em Sabará medem qualidade da água, não nível. A régua da Prefeitura não tem série pública. Pedir à Defesa Civil as leituras da régua nesses dias permitiria converter "Raposos" em "régua de Sabará".</li>
     <li>Em janeiro de 2020 o pluviômetro de Caeté não registrou chuva (defeito), e em janeiro de 2026 o de Raposos também não.</li>
